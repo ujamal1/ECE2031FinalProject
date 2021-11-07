@@ -1,0 +1,180 @@
+-- Altera Memory Initialization File (MIF)
+
+DEPTH = 2048;
+WIDTH = 16;
+
+ADDRESS_RADIX = HEX;
+DATA_RADIX = HEX;
+
+CONTENT
+  BEGIN
+    [000..7FF] : 0000;  -- Default to NOP
+
+           000 : B867;  -- 	LOADI RandArray
+           001 : 1062;  -- 	STORE Ind
+           002 : B800;  -- 	LOADI 0
+           003 : 1066;  -- 	STORE Cont
+           004 : 505D;  -- 	OR    CR
+           005 : 6006;  -- 	SHIFT 6
+           006 : 505E;  -- 	OR    CG
+           007 : 6005;  -- 	SHIFT 5
+           008 : 505F;  -- 	OR    CB
+           009 : 4860;  -- 	AND   B4
+           00A : 98A0;  -- 	OUT   NeoPixel
+           00B : 7062;  -- 	ILOAD Ind
+           00C : 4863;  -- 	AND   BR
+           00D : 4018;  -- 	JZERO RedDown
+           00E : 085D;  -- 	LOAD  CR
+           00F : 6801;  -- 	ADDI  1
+           010 : 600A;  -- 	SHIFT 10
+           011 : 601A;  -- 	SHIFT -10
+           012 : 301E;  -- 	JNEG  CheckGreen
+           013 : 4861;  -- 	AND   B5
+           014 : 105D;  -- 	STORE CR
+           015 : B801;  -- 	LOADI 1
+           016 : 1066;  -- 	STORE Cont
+           017 : 281E;  -- 	JUMP  CheckGreen
+           018 : 085D;  -- 	LOAD  CR
+           019 : 6FFF;  -- 	ADDI  -1
+           01A : 301E;  -- 	JNEG  CheckGreen
+           01B : 105D;  -- 	STORE CR
+           01C : B801;  -- 	LOADI 1
+           01D : 1066;  -- 	STORE Cont
+           01E : 7062;  -- 	ILOAD Ind
+           01F : 4864;  -- 	AND   BG
+           020 : 402B;  -- 	JZERO GreenDown
+           021 : 085E;  -- 	LOAD  CG
+           022 : 6801;  -- 	ADDI  1
+           023 : 600A;  -- 	SHIFT 10
+           024 : 601A;  -- 	SHIFT -10
+           025 : 3031;  -- 	JNEG  CheckBlue
+           026 : 4861;  -- 	AND   B5
+           027 : 105E;  -- 	STORE CG
+           028 : B801;  -- 	LOADI 1
+           029 : 1066;  -- 	STORE Cont
+           02A : 2831;  -- 	JUMP  CheckBlue
+           02B : 085E;  -- 	LOAD  CG
+           02C : 6FFF;  -- 	ADDI  -1
+           02D : 3031;  -- 	JNEG  CheckBlue
+           02E : 105E;  -- 	STORE CG
+           02F : B801;  -- 	LOADI 1
+           030 : 1066;  -- 	STORE Cont
+           031 : 7062;  -- 	ILOAD Ind
+           032 : 4865;  -- 	AND   BB
+           033 : 403E;  -- 	JZERO BlueDown
+           034 : 085F;  -- 	LOAD  CB
+           035 : 6801;  -- 	ADDI  1
+           036 : 600A;  -- 	SHIFT 10
+           037 : 601A;  -- 	SHIFT -10
+           038 : 3044;  -- 	JNEG  CheckAll
+           039 : 4861;  -- 	AND   B5
+           03A : 105F;  -- 	STORE CB
+           03B : B801;  -- 	LOADI 1
+           03C : 1066;  -- 	STORE Cont
+           03D : 2844;  -- 	JUMP  CheckAll
+           03E : 085F;  -- 	LOAD  CB
+           03F : 6FFF;  -- 	ADDI  -1
+           040 : 3044;  -- 	JNEG  CheckAll
+           041 : 105F;  -- 	STORE CB
+           042 : B801;  -- 	LOADI 1
+           043 : 1066;  -- 	STORE Cont
+           044 : BC18;  -- 	LOADI  -1000
+           045 : 6C18;  -- 	ADDI   -1000
+           046 : 6C18;  -- 	ADDI   -1000
+           047 : 6C18;  -- 	ADDI   -1000
+           048 : 6C18;  -- 	ADDI   -1000
+           049 : 6C18;  -- 	ADDI   -1000
+           04A : 6C18;  -- 	ADDI   -1000
+           04B : 6C18;  -- 	ADDI   -1000
+           04C : 6FFF;  -- 	ADDI   -1
+           04D : 404F;  -- 	JZERO  SDRet
+           04E : 284C;  -- 	JUMP   DelayLoop
+           04F : 0866;  -- 	LOAD  Cont
+           050 : 3802;  -- 	JPOS  Start
+           051 : B867;  -- 	LOADI RandArray
+           052 : 2062;  -- 	SUB   Ind
+           053 : 1062;  -- 	STORE Ind
+           054 : B800;  -- 	LOADI 0
+           055 : 2062;  -- 	SUB   Ind
+           056 : 6801;  -- 	ADDI  1
+           057 : 4861;  -- 	AND   B5
+           058 : 1062;  -- 	STORE Ind
+           059 : B867;  -- 	LOADI RandArray
+           05A : 1862;  -- 	ADD   Ind
+           05B : 1062;  -- 	STORE Ind
+           05C : 2802;  -- 	JUMP  Start	
+           05D : 0000;  -- CR:   DW 0
+           05E : 0000;  -- CG:   DW 0
+           05F : 0000;  -- CB:   DW 0
+           060 : 7BEF;  -- B4:   DW &B0111101111101111
+           061 : 001F;  -- B5:   DW &B11111
+           062 : 0000;  -- Ind:  DW 0
+           063 : 0004;  -- BR:   DW 4
+           064 : 0002;  -- BG:   DW 2
+           065 : 0001;  -- BB:   DW 1
+           066 : 0000;  -- Cont: DW 0
+           067 : 0000;  -- DW 0
+           068 : 0001;  -- DW 1
+           069 : 0002;  -- DW 2
+           06A : 0003;  -- DW 3
+           06B : 0004;  -- DW 4
+           06C : 0005;  -- DW 5
+           06D : 0006;  -- DW 6
+           06E : 0007;  -- DW 7
+           06F : 0000;  -- DW 0
+           070 : 0000;  -- DW 0
+           071 : 0007;  -- DW 7
+           072 : 0000;  -- DW 0
+           073 : 0001;  -- DW 1
+           074 : 0005;  -- DW 5
+           075 : 0000;  -- DW 0
+           076 : 0006;  -- DW 6
+           077 : 0006;  -- DW 6
+           078 : 0007;  -- DW 7
+           079 : 0001;  -- DW 1
+           07A : 0000;  -- DW 0
+           07B : 0007;  -- DW 7
+           07C : 0006;  -- DW 6
+           07D : 0006;  -- DW 6
+           07E : 0003;  -- DW 3
+           07F : 0005;  -- DW 5
+           080 : 0007;  -- DW 7
+           081 : 0001;  -- DW 1
+           082 : 0007;  -- DW 7
+           083 : 0001;  -- DW 1
+           084 : 0000;  -- DW 0
+           085 : 0005;  -- DW 5
+           086 : 0004;  -- DW 4
+           087 : 0003;  -- DW 3
+           088 : 0007;  -- DW 7
+           089 : 0001;  -- DW 1
+           08A : 0006;  -- DW 6
+           08B : 0003;  -- DW 3
+           08C : 0007;  -- DW 7
+           08D : 0000;  -- DW 0
+           08E : 0004;  -- DW 4
+           08F : 0002;  -- DW 2
+           090 : 0006;  -- DW 6
+           091 : 0006;  -- DW 6
+           092 : 0004;  -- DW 4
+           093 : 0004;  -- DW 4
+           094 : 0005;  -- DW 5
+           095 : 0005;  -- DW 5
+           096 : 0007;  -- DW 7
+           097 : 0007;  -- DW 7
+           098 : 0000;  -- DW 0
+           099 : 0002;  -- DW 2
+           09A : 0006;  -- DW 6
+           09B : 0004;  -- DW 4
+           09C : 0007;  -- DW 7
+           09D : 0005;  -- DW 5
+           09E : 0005;  -- DW 5
+           09F : 0005;  -- DW 5
+           0A0 : 0002;  -- DW 2
+           0A1 : 0002;  -- DW 2
+           0A2 : 0001;  -- DW 1
+           0A3 : 0001;  -- DW 1
+           0A4 : 0003;  -- DW 3
+           0A5 : 0003;  -- DW 3
+           0A6 : 0006;  -- DW 6
+  END;

@@ -1,0 +1,35 @@
+-- Altera Memory Initialization File (MIF)
+
+DEPTH = 2048;
+WIDTH = 16;
+
+ADDRESS_RADIX = HEX;
+DATA_RADIX = HEX;
+
+CONTENT
+  BEGIN
+    [000..7FF] : 0000;  -- Default to NOP
+
+           000 : B800;  -- 	LOADI 0
+           001 : 1012;  -- 	STORE OutColor
+           002 : 9000;  -- 	IN    Switches
+           003 : 4813;  -- 	AND   RedMask
+           004 : 6007;  -- 	SHIFT 7
+           005 : 5012;  -- 	OR    OutColor
+           006 : 1012;  -- 	STORE OutColor
+           007 : 9000;  -- 	IN    Switches
+           008 : 4814;  -- 	AND   GreenMask
+           009 : 6004;  -- 	SHIFT 4
+           00A : 5012;  -- 	OR    OutColor
+           00B : 1012;  -- 	STORE OutColor
+           00C : 9000;  -- 	IN    Switches
+           00D : 4815;  -- 	AND   BlueMask
+           00E : 5012;  -- 	OR    OutColor
+           00F : 1012;  -- 	STORE OutColor
+           010 : 98A0;  -- 	OUT   NeoPixel
+           011 : 2800;  -- 	JUMP  Start	
+           012 : 0000;  -- OutColor:  DW 0
+           013 : 0030;  -- RedMask:   DW &B110000
+           014 : 000C;  -- GreenMask: DW &B1100
+           015 : 0003;  -- BlueMask:  DW &B11
+  END;
