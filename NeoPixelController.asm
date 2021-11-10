@@ -4,6 +4,8 @@ Start:
 	STORE	Mode ; Reset the mode on reset
 
 ChooseMode:
+	LOADI	1
+	OUT		LEDs
 	CALL	WaitForButton
 	IN		Switches		; Get the values of the switches after
 	JZERO	SetSingle16		; the confirmation button is pressed
@@ -64,6 +66,8 @@ WaitForButton:
 
 ; Gets the Neopixel address from the switches and writes it to the address peripheral
 OutAddress:
+	LOADI	2
+	OUT		LEDs
 	CALL	WaitForButton
 	IN		Switches
 	AND		EightBits		; Mask off the rightmost eight bits to fit the
@@ -72,6 +76,8 @@ OutAddress:
 
 ; Gets the values for a 16 bit color and stores the value in the Color16 variable
 GetColors16:
+	LOADI	4
+	OUT		LEDs
 	; Read in the red color
 	CALL	WaitForButton
 	IN		Switches
@@ -79,6 +85,8 @@ GetColors16:
 	SHIFT	7
 	STORE	Color16
 	
+	LOADI	8
+	OUT		LEDs
 	; Read in the green color
 	CALL	WaitForButton
 	IN		Switches
@@ -87,6 +95,8 @@ GetColors16:
 	OR		Color16
 	STORE	Color16
 	
+	LOADI	16
+	OUT		LEDs
 	; Read in the blue color
 	CALL	WaitForButton
 	IN		Switches
@@ -103,12 +113,16 @@ GetColors24:
 	; Zeros    Red      Green    Blue
 	; 00000000 00000000 00000000 00000000
 	
+	LOADI	4
+	OUT		LEDs
 	; Read in the red color
 	CALL	WaitForButton
 	IN		Switches
 	AND		EightBits
 	STORE	Color24_R
 	
+	LOADI	8
+	OUT		LEDs
 	; Read in the green color
 	CALL	WaitForButton
 	IN		Switches
@@ -116,6 +130,8 @@ GetColors24:
 	SHIFT	8
 	STORE	Color24_GB
 	
+	LOADI	16
+	OUT		LEDs
 	; Read in the blue color
 	CALL	WaitForButton
 	IN		Switches
