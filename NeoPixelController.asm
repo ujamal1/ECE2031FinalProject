@@ -19,7 +19,7 @@ SetSingle16:
 	CALL	GetColors16
 	LOAD	Color16
 	OUT		Neo_Single16
-	JUMP	SetSingle16
+	JUMP	ChooseMode
 	
 
 SetSingle24:
@@ -29,13 +29,13 @@ SetSingle24:
 	OUT		Neo_Single24_R
 	LOAD	Color24_GB
 	OUT		Neo_Single24_GB
-	JUMP	SetSingle24
+	JUMP	ChooseMode
 
 SetAll16:
 	CALL	GetColors16
 	LOAD	Color16
 	OUT		Neo_All16
-	JUMP	SetAll16
+	JUMP	ChooseMode
 
 AutoIncrement:
 	LOADI 0
@@ -55,10 +55,10 @@ AutoIncrement:
 		
 
 WaitForButton:
-	IN		Key0
+	IN		Key1
 	JPOS	WaitForButton	; Button is not pressed, check again
 	WaitForRelease:
-		IN		Key0		; Button was just pressed, wait for it to be released
+		IN		Key1		; Button was just pressed, wait for it to be released
 		JZERO	WaitForRelease
 	RETURN
 
@@ -149,8 +149,9 @@ I2C_data:	EQU &H091
 I2C_rdy:	EQU &H092
 
 
-Neo_All16:		EQU &H0A0
-Neo_Addr:		EQU &H0A1
-Neo_Single16:	EQU &H0A2
-Neo_Single24_R:	EQU &H0A3
-Neo_Single24_GB:EQU &H0A4
+Neo_All16:			EQU &H0A0
+Neo_Addr:			EQU &H0A1
+Neo_Single16:		EQU &H0A2
+Neo_Single24_R:		EQU &H0A3
+Neo_Single24_GB:	EQU &H0A4
+Key1:				EQU &H0AF
