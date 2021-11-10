@@ -7,17 +7,11 @@ use ieee.numeric_std.all;
 entity NeoPixelController is
 
 	port(
-		
-		clk_10M  			: in   	std_logic;
-		resetn   			: in   	std_logic;
-		latch    			: in   	std_logic;
-		data     			: in   	std_logic_vector(15 downto 0);
-		ALL_COLOR_EN		: in 		STD_LOGIC;
-		ONE_LED_ADDR_EN	: in 		STD_LOGIC;
-		ONE_COLOR_16_EN	: in 		STD_LOGIC;
-		GB_ONE_COLOR_24_EN: in 		STD_LOGIC;
-		R_ONE_COLOR_24_EN	: in 		STD_LOGIC;
-		sda      			: out  	std_logic
+		clk_10M  : in   std_logic;
+		resetn   : in   std_logic;
+		latch    : in   std_logic;
+		data     : in   std_logic_vector(15 downto 0);
+		sda      : out  std_logic
 	); 
 
 end entity;
@@ -27,14 +21,8 @@ architecture internals of NeoPixelController is
 	-- Signal to store the pixel's color data
 	signal led_buffer : std_logic_vector(23 downto 0);
 	
-	type color_array is array (0 to 255) of std_logic_vector(23 downto 0);
-	
-	signal data_arr : color_array;
-	
-
 	
 begin
-	
 
 	process (clk_10M, resetn)
 		-- protocol timing values (in 100s of ns)
@@ -72,36 +60,34 @@ begin
 				
 			else -- not in reset period (i.e. currently sending data)
 				-- handle reaching end of a bit
-				for I in 0 to 255 loop
-					if data_arr(I)(bit_count) = '1' then -- current bit is 1
-						if enc_count = (t1h+t1l-1) then -- is end of the bit?
-							enc_count := 0;
-							if bit_count = 0 then -- is end of the LED's data?
-								-- begin the reset period
-								reset_count := 1000;
-							else
-								-- if not end of data, decrement count
-								bit_count := bit_count - 1;
-							end if;
+				if led_buffer(bit_count) = '1' then -- current bit is 1
+					if enc_count = (t1h+t1l-1) then -- is end of the bit?
+						enc_count := 0;
+						if bit_count = 0 then -- is end of the LED's data?
+							-- begin the reset period
+							reset_count := 1000;
 						else
-							-- within a bit, count to achieve correct pulse widths
-							enc_count := enc_count + 1;
+							-- if not end of data, decrement count
+							bit_count := bit_count - 1;
 						end if;
-					else -- current bit is 0
-						if enc_count = (t0h+t0l-1) then -- is end of the bit?
-							enc_count := 0;
-							if bit_count = 0 then -- is end of the LED's data?
-								-- begin the reset period
-								reset_count := 1000;
-							else
-								bit_count := bit_count - 1;
-							end if;
-						else
-							-- within a bit, count to achieve correct pulse widths
-							enc_count := enc_count + 1;
-						end if;
+					else
+						-- within a bit, count to achieve correct pulse widths
+						enc_count := enc_count + 1;
 					end if;
-				end loop;
+				else -- current bit is 0
+					if enc_count = (t0h+t0l-1) then -- is end of the bit?
+						enc_count := 0;
+						if bit_count = 0 then -- is end of the LED's data?
+							-- begin the reset period
+							reset_count := 1000;
+						else
+							bit_count := bit_count - 1;
+						end if;
+					else
+						-- within a bit, count to achieve correct pulse widths
+						enc_count := enc_count + 1;
+					end if;
+				end if;
 			end if;
 			
 			-- This IF block controls sda
@@ -124,18 +110,10 @@ begin
 	-- Process to handle OUTs from SCOMP
 	process(latch)
 	begin
-		if rising_edge(latch)  and ALL_COLOR_EN = '1' then
-			led_buffer <= data(10 downto 5) & "00" & data(15 downto 11) & "000" & data(4 downto 0) & "000" ;
-			for I in 0 to 255 loop
-				data_arr(I) <= led_buffer;
-			end loop;
-	
---		if rising_edge(latch) then
+		if rising_edge(latch) then
 			-- Convert RGB 565 to Neopixel format,
 			-- in this case just padding with 0s.
---			led_buffer <= data(10 downto 5) & "00" & data(15 downto 11) & "000" & data(4 downto 0) & "000" ;
---		else
---			led_buffer <= data;
+			led_buffer <= data(10 downto 5) & "00" & data(15 downto 11) & "000" & data(4 downto 0) & "000" ;
 		end if;
 	end process;
 
