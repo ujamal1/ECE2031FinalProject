@@ -10,10 +10,7 @@ USE LPM.LPM_COMPONENTS.ALL;
 ENTITY DIG_IN IS
   PORT(
     CS          : IN    STD_LOGIC;
-	 KEY1_EN		 : IN		STD_LOGIC;
-	 IO_WRITE    : IN    STD_LOGIC;
     DI          : IN    STD_LOGIC_VECTOR(15 DOWNTO 0);
-	 KEY_DI          : IN    STD_LOGIC_VECTOR(15 DOWNTO 0);
     IO_DATA     : INOUT STD_LOGIC_VECTOR(15 DOWNTO 0)
   );
 END DIG_IN;
@@ -33,15 +30,11 @@ ARCHITECTURE a OF DIG_IN IS
       tridata  => IO_DATA
     );
 
-    PROCESS
+    PROCESS (CS)
     BEGIN
-      WAIT UNTIL RISING_EDGE(CS);
-		if KEY1_EN = '1' then
+      if (RISING_EDGE(CS)) then
 			B_DI <= DI; -- sample the input on the rising edge of CS
-		else
-			B_DI <= KEY_DI;
 		end if;
     END PROCESS;
 
 END a;
-

@@ -183,4 +183,5 @@ set_global_assignment -name VECTOR_WAVEFORM_FILE SCOMP_test.vwf
 set_global_assignment -name QIP_FILE PLL_main.qip
 set_global_assignment -name BDF_FILE HEX_DISP_6.bdf
 set_global_assignment -name VHDL_FILE NeoPixelController.vhd
+set_global_assignment -name VHDL_FILE KEY1_IN.vhd
 set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top

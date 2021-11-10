@@ -1,0 +1,21 @@
+-- Altera Memory Initialization File (MIF)
+
+DEPTH = 2048;
+WIDTH = 16;
+
+ADDRESS_RADIX = HEX;
+DATA_RADIX = HEX;
+
+CONTENT
+  BEGIN
+    000 : 9000; -- IN Switches
+    001 : 9801; -- OUT LEDs
+    002 : 2800; -- JUMP  Start
+    003 : 0000; -- OutColor:  DW 0
+    004 : 0030; -- RedMask:   DW &B110000
+    005 : 000c; -- GreenMask: DW &B1100
+    006 : 0003; -- BlueMask:  DW &B11
+
+    [007..7ff] : 0000; -- Empty memory
+
+  END;
