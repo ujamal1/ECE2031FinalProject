@@ -42,14 +42,14 @@ AutoIncrement:
 	STORE AutoAddress
 	
 	IncLoop:
-		LOAD AutoAddress
-		OUT Neo_Addr
-		CALL GetColors16
-		OUT Neo_Single16
+		LOAD	AutoAddress
+		OUT		Neo_Addr
+		CALL	GetColors16
+		OUT		Neo_Single16
 		
-		LOAD AutoAddress
-		ADDI 1
-		STORE AutoAddress
+		LOAD	AutoAddress
+		ADDI	1
+		STORE	AutoAddress
 		
 		JUMP IncLoop
 		
@@ -57,6 +57,9 @@ AutoIncrement:
 WaitForButton:
 	IN		Key0
 	JPOS	WaitForButton	; Button is not pressed, check again
+	WaitForRelease:
+		IN		Key0		; Button was just pressed, wait for it to be released
+		JZERO	WaitForRelease
 	RETURN
 
 ; Gets the Neopixel address from the switches and writes it to the address peripheral
