@@ -1,5 +1,5 @@
 Analysis & Synthesis report for SCOMP
-Wed Nov 10 18:13:40 2021
+Sun Nov 14 17:49:44 2021
 Quartus Prime Version 19.1.0 Build 670 09/22/2019 SJ Lite Edition
 
 
@@ -20,24 +20,23 @@ Quartus Prime Version 19.1.0 Build 670 09/22/2019 SJ Lite Edition
  12. State Machine - |SCOMP_System|SCOMP:inst|state
  13. User-Specified and Inferred Latches
  14. Registers Removed During Synthesis
- 15. Removed Registers Triggering Further Register Optimizations
- 16. General Register Statistics
- 17. Inverted Register Statistics
- 18. Multiplexer Restructuring Statistics (Restructuring Performed)
- 19. Source assignments for SCOMP:inst|altsyncram:altsyncram_component|altsyncram_f1s3:auto_generated
- 20. Parameter Settings for User Entity Instance: PLL_main:inst1|altpll:altpll_component
- 21. Parameter Settings for User Entity Instance: SCOMP:inst|altsyncram:altsyncram_component
- 22. Parameter Settings for User Entity Instance: SCOMP:inst|LPM_CLSHIFT:shifter
- 23. Parameter Settings for User Entity Instance: SCOMP:inst|LPM_BUSTRI:io_bus
- 24. Parameter Settings for User Entity Instance: TIMER:inst4|LPM_BUSTRI:IO_BUS
- 25. Parameter Settings for User Entity Instance: I2C_INTERFACE:inst14|i2c_master:inst
- 26. Parameter Settings for User Entity Instance: KEY1_IN:inst17|LPM_BUSTRI:IO_BUS
- 27. Parameter Settings for User Entity Instance: DIG_IN:inst7|LPM_BUSTRI:IO_BUS
- 28. altpll Parameter Settings by Entity Instance
- 29. altsyncram Parameter Settings by Entity Instance
- 30. Post-Synthesis Netlist Statistics for Top Partition
- 31. Elapsed Time Per Partition
- 32. Analysis & Synthesis Messages
+ 15. General Register Statistics
+ 16. Inverted Register Statistics
+ 17. Multiplexer Restructuring Statistics (Restructuring Performed)
+ 18. Source assignments for SCOMP:inst|altsyncram:altsyncram_component|altsyncram_hks3:auto_generated
+ 19. Parameter Settings for User Entity Instance: PLL_main:inst1|altpll:altpll_component
+ 20. Parameter Settings for User Entity Instance: SCOMP:inst|altsyncram:altsyncram_component
+ 21. Parameter Settings for User Entity Instance: SCOMP:inst|LPM_CLSHIFT:shifter
+ 22. Parameter Settings for User Entity Instance: SCOMP:inst|LPM_BUSTRI:io_bus
+ 23. Parameter Settings for User Entity Instance: TIMER:inst4|LPM_BUSTRI:IO_BUS
+ 24. Parameter Settings for User Entity Instance: I2C_INTERFACE:inst14|i2c_master:inst
+ 25. Parameter Settings for User Entity Instance: KEY1_IN:inst17|LPM_BUSTRI:IO_BUS
+ 26. Parameter Settings for User Entity Instance: DIG_IN:inst7|LPM_BUSTRI:IO_BUS
+ 27. altpll Parameter Settings by Entity Instance
+ 28. altsyncram Parameter Settings by Entity Instance
+ 29. Post-Synthesis Netlist Statistics for Top Partition
+ 30. Elapsed Time Per Partition
+ 31. Analysis & Synthesis Messages
 
 
 
@@ -64,15 +63,15 @@ https://fpgasoftware.intel.com/eula.
 +----------------------------------------------------------------------------------+
 ; Analysis & Synthesis Summary                                                     ;
 +------------------------------------+---------------------------------------------+
-; Analysis & Synthesis Status        ; Successful - Wed Nov 10 18:13:40 2021       ;
+; Analysis & Synthesis Status        ; Successful - Sun Nov 14 17:49:44 2021       ;
 ; Quartus Prime Version              ; 19.1.0 Build 670 09/22/2019 SJ Lite Edition ;
 ; Revision Name                      ; SCOMP                                       ;
 ; Top-level Entity Name              ; SCOMP_System                                ;
 ; Family                             ; MAX 10                                      ;
-; Total logic elements               ; 1,500                                       ;
-;     Total combinational functions  ; 1,379                                       ;
-;     Dedicated logic registers      ; 412                                         ;
-; Total registers                    ; 412                                         ;
+; Total logic elements               ; 1,049                                       ;
+;     Total combinational functions  ; 912                                         ;
+;     Dedicated logic registers      ; 431                                         ;
+; Total registers                    ; 431                                         ;
 ; Total pins                         ; 69                                          ;
 ; Total virtual pins                 ; 0                                           ;
 ; Total memory bits                  ; 32,768                                      ;
@@ -183,11 +182,11 @@ https://fpgasoftware.intel.com/eula.
 ;                            ;             ;
 ; Usage by Processor         ; % Time Used ;
 ;     Processor 1            ; 100.0%      ;
-;     Processor 2            ;   0.0%      ;
-;     Processor 3            ;   0.0%      ;
-;     Processor 4            ;   0.0%      ;
-;     Processor 5            ;   0.0%      ;
-;     Processor 6            ;   0.0%      ;
+;     Processor 2            ;   0.1%      ;
+;     Processor 3            ;   0.1%      ;
+;     Processor 4            ;   0.1%      ;
+;     Processor 5            ;   0.1%      ;
+;     Processor 6            ;   0.1%      ;
 +----------------------------+-------------+
 
 
@@ -224,8 +223,8 @@ https://fpgasoftware.intel.com/eula.
 ; altrom.inc                       ; yes             ; Megafunction                             ; /home/justin/intelFPGA_lite/19.1/quartus/libraries/megafunctions/altrom.inc               ;         ;
 ; altram.inc                       ; yes             ; Megafunction                             ; /home/justin/intelFPGA_lite/19.1/quartus/libraries/megafunctions/altram.inc               ;         ;
 ; altdpram.inc                     ; yes             ; Megafunction                             ; /home/justin/intelFPGA_lite/19.1/quartus/libraries/megafunctions/altdpram.inc             ;         ;
-; db/altsyncram_f1s3.tdf           ; yes             ; Auto-Generated Megafunction              ; /home/justin/Documents/Courses/ece2031/project/ECE2031FinalProject/db/altsyncram_f1s3.tdf ;         ;
-; test_switch.mif                  ; yes             ; Auto-Found Memory Initialization File    ; /home/justin/Documents/Courses/ece2031/project/ECE2031FinalProject/test_switch.mif        ;         ;
+; db/altsyncram_hks3.tdf           ; yes             ; Auto-Generated Megafunction              ; /home/justin/Documents/Courses/ece2031/project/ECE2031FinalProject/db/altsyncram_hks3.tdf ;         ;
+; simple_all_colors.mif            ; yes             ; Auto-Found Memory Initialization File    ; /home/justin/Documents/Courses/ece2031/project/ECE2031FinalProject/simple_all_colors.mif  ;         ;
 ; lpm_clshift.tdf                  ; yes             ; Megafunction                             ; /home/justin/intelFPGA_lite/19.1/quartus/libraries/megafunctions/lpm_clshift.tdf          ;         ;
 ; db/lpm_clshift_fuc.tdf           ; yes             ; Auto-Generated Megafunction              ; /home/justin/Documents/Courses/ece2031/project/ECE2031FinalProject/db/lpm_clshift_fuc.tdf ;         ;
 ; lpm_bustri.tdf                   ; yes             ; Megafunction                             ; /home/justin/intelFPGA_lite/19.1/quartus/libraries/megafunctions/lpm_bustri.tdf           ;         ;
@@ -238,20 +237,20 @@ https://fpgasoftware.intel.com/eula.
 +---------------------------------------------+----------------------------------------------------------------------------------------+
 ; Resource                                    ; Usage                                                                                  ;
 +---------------------------------------------+----------------------------------------------------------------------------------------+
-; Estimated Total logic elements              ; 1,500                                                                                  ;
+; Estimated Total logic elements              ; 1,049                                                                                  ;
 ;                                             ;                                                                                        ;
-; Total combinational functions               ; 1379                                                                                   ;
+; Total combinational functions               ; 912                                                                                    ;
 ; Logic element usage by number of LUT inputs ;                                                                                        ;
-;     -- 4 input functions                    ; 645                                                                                    ;
-;     -- 3 input functions                    ; 566                                                                                    ;
-;     -- <=2 input functions                  ; 168                                                                                    ;
+;     -- 4 input functions                    ; 512                                                                                    ;
+;     -- 3 input functions                    ; 287                                                                                    ;
+;     -- <=2 input functions                  ; 113                                                                                    ;
 ;                                             ;                                                                                        ;
 ; Logic elements by mode                      ;                                                                                        ;
-;     -- normal mode                          ; 1051                                                                                   ;
-;     -- arithmetic mode                      ; 328                                                                                    ;
+;     -- normal mode                          ; 836                                                                                    ;
+;     -- arithmetic mode                      ; 76                                                                                     ;
 ;                                             ;                                                                                        ;
-; Total registers                             ; 412                                                                                    ;
-;     -- Dedicated logic registers            ; 412                                                                                    ;
+; Total registers                             ; 431                                                                                    ;
+;     -- Dedicated logic registers            ; 431                                                                                    ;
 ;     -- I/O registers                        ; 0                                                                                      ;
 ;                                             ;                                                                                        ;
 ; I/O pins                                    ; 69                                                                                     ;
@@ -263,9 +262,9 @@ https://fpgasoftware.intel.com/eula.
 ;     -- PLLs                                 ; 1                                                                                      ;
 ;                                             ;                                                                                        ;
 ; Maximum fan-out node                        ; PLL_main:inst1|altpll:altpll_component|PLL_main_altpll:auto_generated|wire_pll1_clk[0] ;
-; Maximum fan-out                             ; 250                                                                                    ;
-; Total fan-out                               ; 6178                                                                                   ;
-; Average fan-out                             ; 3.17                                                                                   ;
+; Maximum fan-out                             ; 256                                                                                    ;
+; Total fan-out                               ; 4740                                                                                   ;
+; Average fan-out                             ; 3.16                                                                                   ;
 +---------------------------------------------+----------------------------------------------------------------------------------------+
 
 
@@ -274,45 +273,43 @@ https://fpgasoftware.intel.com/eula.
 +-------------------------------------------+---------------------+---------------------------+-------------+------------+--------------+---------+-----------+------+--------------+------------+-----------------------------------------------------------------------------------------+--------------------+--------------+
 ; Compilation Hierarchy Node                ; Combinational ALUTs ; Dedicated Logic Registers ; Memory Bits ; UFM Blocks ; DSP Elements ; DSP 9x9 ; DSP 18x18 ; Pins ; Virtual Pins ; ADC blocks ; Full Hierarchy Name                                                                     ; Entity Name        ; Library Name ;
 +-------------------------------------------+---------------------+---------------------------+-------------+------------+--------------+---------+-----------+------+--------------+------------+-----------------------------------------------------------------------------------------+--------------------+--------------+
-; |SCOMP_System                             ; 1379 (6)            ; 412 (0)                   ; 32768       ; 0          ; 0            ; 0       ; 0         ; 69   ; 0            ; 0          ; |SCOMP_System                                                                           ; SCOMP_System       ; work         ;
-;    |DIG_IN:inst7|                         ; 1 (0)               ; 10 (10)                   ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |SCOMP_System|DIG_IN:inst7                                                              ; DIG_IN             ; work         ;
-;       |lpm_bustri:IO_BUS|                 ; 1 (1)               ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |SCOMP_System|DIG_IN:inst7|lpm_bustri:IO_BUS                                            ; lpm_bustri         ; work         ;
+; |SCOMP_System                             ; 912 (9)             ; 431 (0)                   ; 32768       ; 0          ; 0            ; 0       ; 0         ; 69   ; 0            ; 0          ; |SCOMP_System                                                                           ; SCOMP_System       ; work         ;
+;    |DIG_IN:inst7|                         ; 0 (0)               ; 10 (10)                   ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |SCOMP_System|DIG_IN:inst7                                                              ; DIG_IN             ; work         ;
 ;    |DIG_OUT:inst6|                        ; 0 (0)               ; 10 (10)                   ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |SCOMP_System|DIG_OUT:inst6                                                             ; DIG_OUT            ; work         ;
-;    |HEX_DISP_6:inst9|                     ; 44 (2)              ; 24 (0)                    ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |SCOMP_System|HEX_DISP_6:inst9                                                          ; HEX_DISP_6         ; work         ;
+;    |HEX_DISP_6:inst9|                     ; 46 (4)              ; 24 (0)                    ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |SCOMP_System|HEX_DISP_6:inst9                                                          ; HEX_DISP_6         ; work         ;
 ;       |HEX_DISP:inst1|                    ; 7 (7)               ; 4 (4)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |SCOMP_System|HEX_DISP_6:inst9|HEX_DISP:inst1                                           ; HEX_DISP           ; work         ;
 ;       |HEX_DISP:inst2|                    ; 7 (7)               ; 4 (4)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |SCOMP_System|HEX_DISP_6:inst9|HEX_DISP:inst2                                           ; HEX_DISP           ; work         ;
 ;       |HEX_DISP:inst3|                    ; 7 (7)               ; 4 (4)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |SCOMP_System|HEX_DISP_6:inst9|HEX_DISP:inst3                                           ; HEX_DISP           ; work         ;
 ;       |HEX_DISP:inst4|                    ; 7 (7)               ; 4 (4)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |SCOMP_System|HEX_DISP_6:inst9|HEX_DISP:inst4                                           ; HEX_DISP           ; work         ;
 ;       |HEX_DISP:inst5|                    ; 7 (7)               ; 4 (4)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |SCOMP_System|HEX_DISP_6:inst9|HEX_DISP:inst5                                           ; HEX_DISP           ; work         ;
 ;       |HEX_DISP:inst6|                    ; 7 (7)               ; 4 (4)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |SCOMP_System|HEX_DISP_6:inst9|HEX_DISP:inst6                                           ; HEX_DISP           ; work         ;
-;    |I2C_INTERFACE:inst14|                 ; 222 (64)            ; 125 (0)                   ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |SCOMP_System|I2C_INTERFACE:inst14                                                      ; I2C_INTERFACE      ; work         ;
-;       |i2c_ctrl:inst14|                   ; 58 (58)             ; 70 (70)                   ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |SCOMP_System|I2C_INTERFACE:inst14|i2c_ctrl:inst14                                      ; i2c_ctrl           ; work         ;
-;       |i2c_master:inst|                   ; 100 (100)           ; 55 (55)                   ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |SCOMP_System|I2C_INTERFACE:inst14|i2c_master:inst                                      ; i2c_master         ; work         ;
-;    |IO_DECODER:inst3|                     ; 8 (8)               ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |SCOMP_System|IO_DECODER:inst3                                                          ; IO_DECODER         ; work         ;
+;    |I2C_INTERFACE:inst14|                 ; 219 (58)            ; 125 (0)                   ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |SCOMP_System|I2C_INTERFACE:inst14                                                      ; I2C_INTERFACE      ; work         ;
+;       |i2c_ctrl:inst14|                   ; 59 (59)             ; 70 (70)                   ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |SCOMP_System|I2C_INTERFACE:inst14|i2c_ctrl:inst14                                      ; i2c_ctrl           ; work         ;
+;       |i2c_master:inst|                   ; 102 (102)           ; 55 (55)                   ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |SCOMP_System|I2C_INTERFACE:inst14|i2c_master:inst                                      ; i2c_master         ; work         ;
+;    |IO_DECODER:inst3|                     ; 12 (12)             ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |SCOMP_System|IO_DECODER:inst3                                                          ; IO_DECODER         ; work         ;
 ;    |KEY1_IN:inst17|                       ; 0 (0)               ; 1 (1)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |SCOMP_System|KEY1_IN:inst17                                                            ; KEY1_IN            ; work         ;
-;    |NeoPixelController:inst16|            ; 545 (545)           ; 18 (18)                   ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |SCOMP_System|NeoPixelController:inst16                                                 ; NeoPixelController ; work         ;
+;    |NeoPixelController:inst16|            ; 68 (68)             ; 37 (37)                   ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |SCOMP_System|NeoPixelController:inst16                                                 ; NeoPixelController ; work         ;
 ;    |PLL_main:inst1|                       ; 0 (0)               ; 1 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |SCOMP_System|PLL_main:inst1                                                            ; PLL_main           ; work         ;
 ;       |altpll:altpll_component|           ; 0 (0)               ; 1 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |SCOMP_System|PLL_main:inst1|altpll:altpll_component                                    ; altpll             ; work         ;
 ;          |PLL_main_altpll:auto_generated| ; 0 (0)               ; 1 (1)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |SCOMP_System|PLL_main:inst1|altpll:altpll_component|PLL_main_altpll:auto_generated     ; PLL_main_altpll    ; work         ;
-;    |SCOMP:inst|                           ; 480 (398)           ; 178 (178)                 ; 32768       ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |SCOMP_System|SCOMP:inst                                                                ; SCOMP              ; work         ;
+;    |SCOMP:inst|                           ; 488 (407)           ; 178 (178)                 ; 32768       ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |SCOMP_System|SCOMP:inst                                                                ; SCOMP              ; work         ;
 ;       |altsyncram:altsyncram_component|   ; 0 (0)               ; 0 (0)                     ; 32768       ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |SCOMP_System|SCOMP:inst|altsyncram:altsyncram_component                                ; altsyncram         ; work         ;
-;          |altsyncram_f1s3:auto_generated| ; 0 (0)               ; 0 (0)                     ; 32768       ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |SCOMP_System|SCOMP:inst|altsyncram:altsyncram_component|altsyncram_f1s3:auto_generated ; altsyncram_f1s3    ; work         ;
-;       |lpm_clshift:shifter|               ; 82 (0)              ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |SCOMP_System|SCOMP:inst|lpm_clshift:shifter                                            ; lpm_clshift        ; work         ;
-;          |lpm_clshift_fuc:auto_generated| ; 82 (82)             ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |SCOMP_System|SCOMP:inst|lpm_clshift:shifter|lpm_clshift_fuc:auto_generated             ; lpm_clshift_fuc    ; work         ;
-;    |TIMER:inst4|                          ; 37 (33)             ; 16 (16)                   ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |SCOMP_System|TIMER:inst4                                                               ; TIMER              ; work         ;
-;       |lpm_bustri:IO_BUS|                 ; 4 (4)               ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |SCOMP_System|TIMER:inst4|lpm_bustri:IO_BUS                                             ; lpm_bustri         ; work         ;
+;          |altsyncram_hks3:auto_generated| ; 0 (0)               ; 0 (0)                     ; 32768       ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |SCOMP_System|SCOMP:inst|altsyncram:altsyncram_component|altsyncram_hks3:auto_generated ; altsyncram_hks3    ; work         ;
+;       |lpm_clshift:shifter|               ; 81 (0)              ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |SCOMP_System|SCOMP:inst|lpm_clshift:shifter                                            ; lpm_clshift        ; work         ;
+;          |lpm_clshift_fuc:auto_generated| ; 81 (81)             ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |SCOMP_System|SCOMP:inst|lpm_clshift:shifter|lpm_clshift_fuc:auto_generated             ; lpm_clshift_fuc    ; work         ;
+;    |TIMER:inst4|                          ; 34 (34)             ; 16 (16)                   ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |SCOMP_System|TIMER:inst4                                                               ; TIMER              ; work         ;
 ;    |clk_div:inst5|                        ; 36 (36)             ; 29 (29)                   ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |SCOMP_System|clk_div:inst5                                                             ; clk_div            ; work         ;
 +-------------------------------------------+---------------------+---------------------------+-------------+------------+--------------+---------+-----------+------+--------------+------------+-----------------------------------------------------------------------------------------+--------------------+--------------+
 Note: For table entries with two numbers listed, the numbers in parentheses indicate the number of resources of the given type used by the specific entity alone. The numbers listed outside of parentheses indicate the total resources of the given type used by the specific entity and all of its sub-entities in the hierarchy.
 
 
-+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-; Analysis & Synthesis RAM Summary                                                                                                                                                                ;
-+--------------------------------------------------------------------------------------+------+-------------+--------------+--------------+--------------+--------------+-------+-----------------+
-; Name                                                                                 ; Type ; Mode        ; Port A Depth ; Port A Width ; Port B Depth ; Port B Width ; Size  ; MIF             ;
-+--------------------------------------------------------------------------------------+------+-------------+--------------+--------------+--------------+--------------+-------+-----------------+
-; SCOMP:inst|altsyncram:altsyncram_component|altsyncram_f1s3:auto_generated|ALTSYNCRAM ; AUTO ; Single Port ; 2048         ; 16           ; --           ; --           ; 32768 ; test_switch.mif ;
-+--------------------------------------------------------------------------------------+------+-------------+--------------+--------------+--------------+--------------+-------+-----------------+
++-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis RAM Summary                                                                                                                                                                      ;
++--------------------------------------------------------------------------------------+------+-------------+--------------+--------------+--------------+--------------+-------+-----------------------+
+; Name                                                                                 ; Type ; Mode        ; Port A Depth ; Port A Width ; Port B Depth ; Port B Width ; Size  ; MIF                   ;
++--------------------------------------------------------------------------------------+------+-------------+--------------+--------------+--------------+--------------+-------+-----------------------+
+; SCOMP:inst|altsyncram:altsyncram_component|altsyncram_hks3:auto_generated|ALTSYNCRAM ; AUTO ; Single Port ; 2048         ; 16           ; --           ; --           ; 32768 ; simple_all_colors.mif ;
++--------------------------------------------------------------------------------------+------+-------------+--------------+--------------+--------------+--------------+-------+-----------------------+
 
 
 +----------------------------------------------------------------------------------------------------------------+
@@ -422,58 +419,19 @@ Encoding Type:  One-Hot
 Note: All latches listed above may not be present at the end of synthesis due to various synthesis optimizations.
 
 
-+---------------------------------------------------------------------------------------------+
-; Registers Removed During Synthesis                                                          ;
-+-----------------------------------------------+---------------------------------------------+
-; Register name                                 ; Reason for Removal                          ;
-+-----------------------------------------------+---------------------------------------------+
-; DIG_IN:inst7|B_DI[10..15]                     ; Stuck at GND due to stuck port data_in      ;
-; KEY1_IN:inst17|B_DI[1..15]                    ; Stuck at GND due to stuck port data_in      ;
-; I2C_INTERFACE:inst14|i2c_master:inst|scl_clk  ; Stuck at GND due to stuck port data_in      ;
-; NeoPixelController:inst16|led_buffer[0..23]   ; Stuck at GND due to stuck port clock_enable ;
-; I2C_INTERFACE:inst14|i2c_master:inst|count[2] ; Stuck at GND due to stuck port data_in      ;
-; SCOMP:inst|state.ex_nop                       ; Lost fanout                                 ;
-; NeoPixelController:inst16|enc_count[0,1,4]    ; Stuck at GND due to stuck port data_in      ;
-; Total Number of Removed Registers = 51        ;                                             ;
-+-----------------------------------------------+---------------------------------------------+
-
-
-+-----------------------------------------------------------------------------------------------+
-; Removed Registers Triggering Further Register Optimizations                                   ;
-+------------------------+---------------------------+------------------------------------------+
-; Register name          ; Reason for Removal        ; Registers Removed due to This Register   ;
-+------------------------+---------------------------+------------------------------------------+
-; DIG_IN:inst7|B_DI[10]  ; Stuck at GND              ; NeoPixelController:inst16|led_buffer[23] ;
-;                        ; due to stuck port data_in ;                                          ;
-; DIG_IN:inst7|B_DI[11]  ; Stuck at GND              ; NeoPixelController:inst16|led_buffer[11] ;
-;                        ; due to stuck port data_in ;                                          ;
-; DIG_IN:inst7|B_DI[12]  ; Stuck at GND              ; NeoPixelController:inst16|led_buffer[12] ;
-;                        ; due to stuck port data_in ;                                          ;
-; DIG_IN:inst7|B_DI[13]  ; Stuck at GND              ; NeoPixelController:inst16|led_buffer[13] ;
-;                        ; due to stuck port data_in ;                                          ;
-; DIG_IN:inst7|B_DI[14]  ; Stuck at GND              ; NeoPixelController:inst16|led_buffer[14] ;
-;                        ; due to stuck port data_in ;                                          ;
-; DIG_IN:inst7|B_DI[15]  ; Stuck at GND              ; NeoPixelController:inst16|led_buffer[15] ;
-;                        ; due to stuck port data_in ;                                          ;
-; KEY1_IN:inst17|B_DI[1] ; Stuck at GND              ; NeoPixelController:inst16|led_buffer[4]  ;
-;                        ; due to stuck port data_in ;                                          ;
-; KEY1_IN:inst17|B_DI[2] ; Stuck at GND              ; NeoPixelController:inst16|led_buffer[5]  ;
-;                        ; due to stuck port data_in ;                                          ;
-; KEY1_IN:inst17|B_DI[3] ; Stuck at GND              ; NeoPixelController:inst16|led_buffer[6]  ;
-;                        ; due to stuck port data_in ;                                          ;
-; KEY1_IN:inst17|B_DI[4] ; Stuck at GND              ; NeoPixelController:inst16|led_buffer[7]  ;
-;                        ; due to stuck port data_in ;                                          ;
-; KEY1_IN:inst17|B_DI[5] ; Stuck at GND              ; NeoPixelController:inst16|led_buffer[18] ;
-;                        ; due to stuck port data_in ;                                          ;
-; KEY1_IN:inst17|B_DI[6] ; Stuck at GND              ; NeoPixelController:inst16|led_buffer[19] ;
-;                        ; due to stuck port data_in ;                                          ;
-; KEY1_IN:inst17|B_DI[7] ; Stuck at GND              ; NeoPixelController:inst16|led_buffer[20] ;
-;                        ; due to stuck port data_in ;                                          ;
-; KEY1_IN:inst17|B_DI[8] ; Stuck at GND              ; NeoPixelController:inst16|led_buffer[21] ;
-;                        ; due to stuck port data_in ;                                          ;
-; KEY1_IN:inst17|B_DI[9] ; Stuck at GND              ; NeoPixelController:inst16|led_buffer[22] ;
-;                        ; due to stuck port data_in ;                                          ;
-+------------------------+---------------------------+------------------------------------------+
++-------------------------------------------------------------------------------------------------+
+; Registers Removed During Synthesis                                                              ;
++--------------------------------------------------------+----------------------------------------+
+; Register name                                          ; Reason for Removal                     ;
++--------------------------------------------------------+----------------------------------------+
+; DIG_IN:inst7|B_DI[10..15]                              ; Stuck at GND due to stuck port data_in ;
+; KEY1_IN:inst17|B_DI[1..15]                             ; Stuck at GND due to stuck port data_in ;
+; I2C_INTERFACE:inst14|i2c_master:inst|scl_clk           ; Stuck at GND due to stuck port data_in ;
+; NeoPixelController:inst16|led_buffer[0..2,8..10,16,17] ; Stuck at GND due to stuck port data_in ;
+; I2C_INTERFACE:inst14|i2c_master:inst|count[2]          ; Stuck at GND due to stuck port data_in ;
+; SCOMP:inst|state.ex_nop                                ; Lost fanout                            ;
+; Total Number of Removed Registers = 32                 ;                                        ;
++--------------------------------------------------------+----------------------------------------+
 
 
 +------------------------------------------------------+
@@ -481,10 +439,10 @@ Note: All latches listed above may not be present at the end of synthesis due to
 +----------------------------------------------+-------+
 ; Statistic                                    ; Value ;
 +----------------------------------------------+-------+
-; Total registers                              ; 412   ;
+; Total registers                              ; 431   ;
 ; Number of registers using Synchronous Clear  ; 25    ;
 ; Number of registers using Synchronous Load   ; 0     ;
-; Number of registers using Asynchronous Clear ; 157   ;
+; Number of registers using Asynchronous Clear ; 160   ;
 ; Number of registers using Asynchronous Load  ; 0     ;
 ; Number of registers using Clock Enable       ; 217   ;
 ; Number of registers using Preset             ; 0     ;
@@ -496,20 +454,20 @@ Note: All latches listed above may not be present at the end of synthesis due to
 +-------------------------------------------------+---------+
 ; Inverted Register                               ; Fan out ;
 +-------------------------------------------------+---------+
-; NeoPixelController:inst16|reset_count[3]        ; 3       ;
-; NeoPixelController:inst16|reset_count[9]        ; 3       ;
-; NeoPixelController:inst16|reset_count[8]        ; 3       ;
-; NeoPixelController:inst16|reset_count[7]        ; 3       ;
-; NeoPixelController:inst16|reset_count[6]        ; 3       ;
+; NeoPixelController:inst16|reset_count[8]        ; 2       ;
+; NeoPixelController:inst16|reset_count[7]        ; 2       ;
+; NeoPixelController:inst16|reset_count[6]        ; 2       ;
 ; NeoPixelController:inst16|reset_count[5]        ; 3       ;
-; NeoPixelController:inst16|bit_count[0]          ; 3       ;
+; NeoPixelController:inst16|reset_count[3]        ; 3       ;
+; NeoPixelController:inst16|bit_count[0]          ; 4       ;
 ; NeoPixelController:inst16|bit_count[4]          ; 2       ;
 ; NeoPixelController:inst16|bit_count[2]          ; 2       ;
 ; NeoPixelController:inst16|bit_count[1]          ; 2       ;
+; NeoPixelController:inst16|reset_count[9]        ; 2       ;
 ; I2C_INTERFACE:inst14|i2c_master:inst|sda_int    ; 2       ;
-; I2C_INTERFACE:inst14|i2c_master:inst|bit_cnt[2] ; 16      ;
-; I2C_INTERFACE:inst14|i2c_master:inst|bit_cnt[1] ; 30      ;
-; I2C_INTERFACE:inst14|i2c_master:inst|bit_cnt[0] ; 25      ;
+; I2C_INTERFACE:inst14|i2c_master:inst|bit_cnt[2] ; 17      ;
+; I2C_INTERFACE:inst14|i2c_master:inst|bit_cnt[1] ; 31      ;
+; I2C_INTERFACE:inst14|i2c_master:inst|bit_cnt[0] ; 26      ;
 ; Total number of inverted registers = 14         ;         ;
 +-------------------------------------------------+---------+
 
@@ -519,24 +477,24 @@ Note: All latches listed above may not be present at the end of synthesis due to
 +--------------------+-----------+---------------+----------------------+------------------------+------------+-----------------------------------------------------------------+
 ; Multiplexer Inputs ; Bus Width ; Baseline Area ; Area if Restructured ; Saving if Restructured ; Registered ; Example Multiplexer Output                                      ;
 +--------------------+-----------+---------------+----------------------+------------------------+------------+-----------------------------------------------------------------+
-; 3:1                ; 99 bits   ; 198 LEs       ; 99 LEs               ; 99 LEs                 ; Yes        ; |SCOMP_System|SCOMP:inst|PC_stack[2][4]                         ;
-; 4:1                ; 16 bits   ; 32 LEs        ; 0 LEs                ; 32 LEs                 ; Yes        ; |SCOMP_System|I2C_INTERFACE:inst14|i2c_master:inst|data_tx[2]   ;
-; 7:1                ; 8 bits    ; 32 LEs        ; 8 LEs                ; 24 LEs                 ; Yes        ; |SCOMP_System|I2C_INTERFACE:inst14|i2c_ctrl:inst14|tx_byte[2]   ;
-; 11:1               ; 11 bits   ; 77 LEs        ; 22 LEs               ; 55 LEs                 ; Yes        ; |SCOMP_System|SCOMP:inst|PC[6]                                  ;
-; 3:1                ; 3 bits    ; 6 LEs         ; 3 LEs                ; 3 LEs                  ; Yes        ; |SCOMP_System|I2C_INTERFACE:inst14|i2c_master:inst|bit_cnt[0]   ;
-; 5:1                ; 8 bits    ; 24 LEs        ; 16 LEs               ; 8 LEs                  ; Yes        ; |SCOMP_System|I2C_INTERFACE:inst14|i2c_ctrl:inst14|data_out[15] ;
-; 5:1                ; 8 bits    ; 24 LEs        ; 16 LEs               ; 8 LEs                  ; Yes        ; |SCOMP_System|I2C_INTERFACE:inst14|i2c_ctrl:inst14|data_out[4]  ;
-; 12:1               ; 16 bits   ; 128 LEs       ; 96 LEs               ; 32 LEs                 ; Yes        ; |SCOMP_System|SCOMP:inst|AC[11]                                 ;
+; 3:1                ; 99 bits   ; 198 LEs       ; 99 LEs               ; 99 LEs                 ; Yes        ; |SCOMP_System|SCOMP:inst|PC_stack[2][6]                         ;
+; 4:1                ; 16 bits   ; 32 LEs        ; 0 LEs                ; 32 LEs                 ; Yes        ; |SCOMP_System|I2C_INTERFACE:inst14|i2c_master:inst|data_tx[6]   ;
+; 7:1                ; 8 bits    ; 32 LEs        ; 8 LEs                ; 24 LEs                 ; Yes        ; |SCOMP_System|I2C_INTERFACE:inst14|i2c_ctrl:inst14|tx_byte[0]   ;
+; 11:1               ; 11 bits   ; 77 LEs        ; 22 LEs               ; 55 LEs                 ; Yes        ; |SCOMP_System|SCOMP:inst|PC[8]                                  ;
+; 3:1                ; 3 bits    ; 6 LEs         ; 3 LEs                ; 3 LEs                  ; Yes        ; |SCOMP_System|I2C_INTERFACE:inst14|i2c_master:inst|bit_cnt[2]   ;
+; 5:1                ; 8 bits    ; 24 LEs        ; 16 LEs               ; 8 LEs                  ; Yes        ; |SCOMP_System|I2C_INTERFACE:inst14|i2c_ctrl:inst14|data_out[12] ;
+; 5:1                ; 8 bits    ; 24 LEs        ; 16 LEs               ; 8 LEs                  ; Yes        ; |SCOMP_System|I2C_INTERFACE:inst14|i2c_ctrl:inst14|data_out[3]  ;
+; 12:1               ; 16 bits   ; 128 LEs       ; 96 LEs               ; 32 LEs                 ; Yes        ; |SCOMP_System|SCOMP:inst|AC[10]                                 ;
 ; 3:1                ; 5 bits    ; 10 LEs        ; 5 LEs                ; 5 LEs                  ; No         ; |SCOMP_System|NeoPixelController:inst16|enc_count               ;
 ; 3:1                ; 5 bits    ; 10 LEs        ; 10 LEs               ; 0 LEs                  ; No         ; |SCOMP_System|NeoPixelController:inst16|bit_count               ;
+; 3:1                ; 10 bits   ; 20 LEs        ; 20 LEs               ; 0 LEs                  ; No         ; |SCOMP_System|NeoPixelController:inst16|reset_count             ;
 ; 3:1                ; 3 bits    ; 6 LEs         ; 6 LEs                ; 0 LEs                  ; No         ; |SCOMP_System|I2C_INTERFACE:inst14|i2c_master:inst|count        ;
-; 5:1                ; 10 bits   ; 30 LEs        ; 10 LEs               ; 20 LEs                 ; No         ; |SCOMP_System|NeoPixelController:inst16|reset_count             ;
 ; 12:1               ; 16 bits   ; 128 LEs       ; 64 LEs               ; 64 LEs                 ; No         ; |SCOMP_System|SCOMP:inst|Add1                                   ;
 +--------------------+-----------+---------------+----------------------+------------------------+------------+-----------------------------------------------------------------+
 
 
 +--------------------------------------------------------------------------------------------------+
-; Source assignments for SCOMP:inst|altsyncram:altsyncram_component|altsyncram_f1s3:auto_generated ;
+; Source assignments for SCOMP:inst|altsyncram:altsyncram_component|altsyncram_hks3:auto_generated ;
 +---------------------------------+--------------------+------+------------------------------------+
 ; Assignment                      ; Value              ; From ; To                                 ;
 +---------------------------------+--------------------+------+------------------------------------+
@@ -920,62 +878,62 @@ Note: In order to hide this table in the UI and the text report file, please set
 
 +-----------------------------------------------------------------------------------------+
 ; Parameter Settings for User Entity Instance: SCOMP:inst|altsyncram:altsyncram_component ;
-+------------------------------------+----------------------+-----------------------------+
-; Parameter Name                     ; Value                ; Type                        ;
-+------------------------------------+----------------------+-----------------------------+
-; BYTE_SIZE_BLOCK                    ; 8                    ; Untyped                     ;
-; AUTO_CARRY_CHAINS                  ; ON                   ; AUTO_CARRY                  ;
-; IGNORE_CARRY_BUFFERS               ; OFF                  ; IGNORE_CARRY                ;
-; AUTO_CASCADE_CHAINS                ; ON                   ; AUTO_CASCADE                ;
-; IGNORE_CASCADE_BUFFERS             ; OFF                  ; IGNORE_CASCADE              ;
-; WIDTH_BYTEENA                      ; 1                    ; Untyped                     ;
-; OPERATION_MODE                     ; SINGLE_PORT          ; Untyped                     ;
-; WIDTH_A                            ; 16                   ; Signed Integer              ;
-; WIDTHAD_A                          ; 11                   ; Signed Integer              ;
-; NUMWORDS_A                         ; 2048                 ; Signed Integer              ;
-; OUTDATA_REG_A                      ; UNREGISTERED         ; Untyped                     ;
-; ADDRESS_ACLR_A                     ; NONE                 ; Untyped                     ;
-; OUTDATA_ACLR_A                     ; NONE                 ; Untyped                     ;
-; WRCONTROL_ACLR_A                   ; NONE                 ; Untyped                     ;
-; INDATA_ACLR_A                      ; NONE                 ; Untyped                     ;
-; BYTEENA_ACLR_A                     ; NONE                 ; Untyped                     ;
-; WIDTH_B                            ; 1                    ; Signed Integer              ;
-; WIDTHAD_B                          ; 1                    ; Signed Integer              ;
-; NUMWORDS_B                         ; 0                    ; Signed Integer              ;
-; INDATA_REG_B                       ; CLOCK1               ; Untyped                     ;
-; WRCONTROL_WRADDRESS_REG_B          ; CLOCK1               ; Untyped                     ;
-; RDCONTROL_REG_B                    ; CLOCK1               ; Untyped                     ;
-; ADDRESS_REG_B                      ; CLOCK1               ; Untyped                     ;
-; OUTDATA_REG_B                      ; UNREGISTERED         ; Untyped                     ;
-; BYTEENA_REG_B                      ; CLOCK1               ; Untyped                     ;
-; INDATA_ACLR_B                      ; NONE                 ; Untyped                     ;
-; WRCONTROL_ACLR_B                   ; NONE                 ; Untyped                     ;
-; ADDRESS_ACLR_B                     ; NONE                 ; Untyped                     ;
-; OUTDATA_ACLR_B                     ; NONE                 ; Untyped                     ;
-; RDCONTROL_ACLR_B                   ; NONE                 ; Untyped                     ;
-; BYTEENA_ACLR_B                     ; NONE                 ; Untyped                     ;
-; WIDTH_BYTEENA_A                    ; 1                    ; Signed Integer              ;
-; WIDTH_BYTEENA_B                    ; 1                    ; Signed Integer              ;
-; RAM_BLOCK_TYPE                     ; AUTO                 ; Untyped                     ;
-; BYTE_SIZE                          ; 8                    ; Signed Integer              ;
-; READ_DURING_WRITE_MODE_MIXED_PORTS ; DONT_CARE            ; Untyped                     ;
-; READ_DURING_WRITE_MODE_PORT_A      ; NEW_DATA_NO_NBE_READ ; Untyped                     ;
-; READ_DURING_WRITE_MODE_PORT_B      ; NEW_DATA_NO_NBE_READ ; Untyped                     ;
-; INIT_FILE                          ; test_switch.mif      ; Untyped                     ;
-; INIT_FILE_LAYOUT                   ; PORT_A               ; Untyped                     ;
-; MAXIMUM_DEPTH                      ; 0                    ; Signed Integer              ;
-; CLOCK_ENABLE_INPUT_A               ; BYPASS               ; Untyped                     ;
-; CLOCK_ENABLE_INPUT_B               ; NORMAL               ; Untyped                     ;
-; CLOCK_ENABLE_OUTPUT_A              ; BYPASS               ; Untyped                     ;
-; CLOCK_ENABLE_OUTPUT_B              ; NORMAL               ; Untyped                     ;
-; CLOCK_ENABLE_CORE_A                ; USE_INPUT_CLKEN      ; Untyped                     ;
-; CLOCK_ENABLE_CORE_B                ; USE_INPUT_CLKEN      ; Untyped                     ;
-; ENABLE_ECC                         ; FALSE                ; Untyped                     ;
-; ECC_PIPELINE_STAGE_ENABLED         ; FALSE                ; Untyped                     ;
-; WIDTH_ECCSTATUS                    ; 3                    ; Signed Integer              ;
-; DEVICE_FAMILY                      ; MAX 10               ; Untyped                     ;
-; CBXI_PARAMETER                     ; altsyncram_f1s3      ; Untyped                     ;
-+------------------------------------+----------------------+-----------------------------+
++------------------------------------+-----------------------+----------------------------+
+; Parameter Name                     ; Value                 ; Type                       ;
++------------------------------------+-----------------------+----------------------------+
+; BYTE_SIZE_BLOCK                    ; 8                     ; Untyped                    ;
+; AUTO_CARRY_CHAINS                  ; ON                    ; AUTO_CARRY                 ;
+; IGNORE_CARRY_BUFFERS               ; OFF                   ; IGNORE_CARRY               ;
+; AUTO_CASCADE_CHAINS                ; ON                    ; AUTO_CASCADE               ;
+; IGNORE_CASCADE_BUFFERS             ; OFF                   ; IGNORE_CASCADE             ;
+; WIDTH_BYTEENA                      ; 1                     ; Untyped                    ;
+; OPERATION_MODE                     ; SINGLE_PORT           ; Untyped                    ;
+; WIDTH_A                            ; 16                    ; Signed Integer             ;
+; WIDTHAD_A                          ; 11                    ; Signed Integer             ;
+; NUMWORDS_A                         ; 2048                  ; Signed Integer             ;
+; OUTDATA_REG_A                      ; UNREGISTERED          ; Untyped                    ;
+; ADDRESS_ACLR_A                     ; NONE                  ; Untyped                    ;
+; OUTDATA_ACLR_A                     ; NONE                  ; Untyped                    ;
+; WRCONTROL_ACLR_A                   ; NONE                  ; Untyped                    ;
+; INDATA_ACLR_A                      ; NONE                  ; Untyped                    ;
+; BYTEENA_ACLR_A                     ; NONE                  ; Untyped                    ;
+; WIDTH_B                            ; 1                     ; Signed Integer             ;
+; WIDTHAD_B                          ; 1                     ; Signed Integer             ;
+; NUMWORDS_B                         ; 0                     ; Signed Integer             ;
+; INDATA_REG_B                       ; CLOCK1                ; Untyped                    ;
+; WRCONTROL_WRADDRESS_REG_B          ; CLOCK1                ; Untyped                    ;
+; RDCONTROL_REG_B                    ; CLOCK1                ; Untyped                    ;
+; ADDRESS_REG_B                      ; CLOCK1                ; Untyped                    ;
+; OUTDATA_REG_B                      ; UNREGISTERED          ; Untyped                    ;
+; BYTEENA_REG_B                      ; CLOCK1                ; Untyped                    ;
+; INDATA_ACLR_B                      ; NONE                  ; Untyped                    ;
+; WRCONTROL_ACLR_B                   ; NONE                  ; Untyped                    ;
+; ADDRESS_ACLR_B                     ; NONE                  ; Untyped                    ;
+; OUTDATA_ACLR_B                     ; NONE                  ; Untyped                    ;
+; RDCONTROL_ACLR_B                   ; NONE                  ; Untyped                    ;
+; BYTEENA_ACLR_B                     ; NONE                  ; Untyped                    ;
+; WIDTH_BYTEENA_A                    ; 1                     ; Signed Integer             ;
+; WIDTH_BYTEENA_B                    ; 1                     ; Signed Integer             ;
+; RAM_BLOCK_TYPE                     ; AUTO                  ; Untyped                    ;
+; BYTE_SIZE                          ; 8                     ; Signed Integer             ;
+; READ_DURING_WRITE_MODE_MIXED_PORTS ; DONT_CARE             ; Untyped                    ;
+; READ_DURING_WRITE_MODE_PORT_A      ; NEW_DATA_NO_NBE_READ  ; Untyped                    ;
+; READ_DURING_WRITE_MODE_PORT_B      ; NEW_DATA_NO_NBE_READ  ; Untyped                    ;
+; INIT_FILE                          ; simple_all_colors.mif ; Untyped                    ;
+; INIT_FILE_LAYOUT                   ; PORT_A                ; Untyped                    ;
+; MAXIMUM_DEPTH                      ; 0                     ; Signed Integer             ;
+; CLOCK_ENABLE_INPUT_A               ; BYPASS                ; Untyped                    ;
+; CLOCK_ENABLE_INPUT_B               ; NORMAL                ; Untyped                    ;
+; CLOCK_ENABLE_OUTPUT_A              ; BYPASS                ; Untyped                    ;
+; CLOCK_ENABLE_OUTPUT_B              ; NORMAL                ; Untyped                    ;
+; CLOCK_ENABLE_CORE_A                ; USE_INPUT_CLKEN       ; Untyped                    ;
+; CLOCK_ENABLE_CORE_B                ; USE_INPUT_CLKEN       ; Untyped                    ;
+; ENABLE_ECC                         ; FALSE                 ; Untyped                    ;
+; ECC_PIPELINE_STAGE_ENABLED         ; FALSE                 ; Untyped                    ;
+; WIDTH_ECCSTATUS                    ; 3                     ; Signed Integer             ;
+; DEVICE_FAMILY                      ; MAX 10                ; Untyped                    ;
+; CBXI_PARAMETER                     ; altsyncram_hks3       ; Untyped                    ;
++------------------------------------+-----------------------+----------------------------+
 Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
 
 
@@ -1087,28 +1045,28 @@ Note: In order to hide this table in the UI and the text report file, please set
 ; Type                  ; Count                       ;
 +-----------------------+-----------------------------+
 ; boundary_port         ; 69                          ;
-; cycloneiii_ff         ; 412                         ;
-;     CLR               ; 146                         ;
+; cycloneiii_ff         ; 431                         ;
+;     CLR               ; 149                         ;
 ;     ENA               ; 206                         ;
 ;     ENA CLR           ; 11                          ;
 ;     SCLR              ; 25                          ;
-;     plain             ; 24                          ;
+;     plain             ; 40                          ;
 ; cycloneiii_io_obuf    ; 2                           ;
-; cycloneiii_lcell_comb ; 1386                        ;
-;     arith             ; 328                         ;
+; cycloneiii_lcell_comb ; 919                         ;
+;     arith             ; 76                          ;
 ;         2 data inputs ; 56                          ;
-;         3 data inputs ; 272                         ;
-;     normal            ; 1058                        ;
+;         3 data inputs ; 20                          ;
+;     normal            ; 843                         ;
 ;         0 data inputs ; 1                           ;
 ;         1 data inputs ; 15                          ;
-;         2 data inputs ; 103                         ;
-;         3 data inputs ; 294                         ;
-;         4 data inputs ; 645                         ;
+;         2 data inputs ; 48                          ;
+;         3 data inputs ; 267                         ;
+;         4 data inputs ; 512                         ;
 ; cycloneiii_pll        ; 1                           ;
 ; cycloneiii_ram_block  ; 16                          ;
 ;                       ;                             ;
-; Max LUT depth         ; 214.90                      ;
-; Average LUT depth     ; 77.64                       ;
+; Max LUT depth         ; 9.40                        ;
+; Average LUT depth     ; 4.11                        ;
 +-----------------------+-----------------------------+
 
 
@@ -1117,7 +1075,7 @@ Note: In order to hide this table in the UI and the text report file, please set
 +----------------+--------------+
 ; Partition Name ; Elapsed Time ;
 +----------------+--------------+
-; Top            ; 00:00:35     ;
+; Top            ; 00:00:01     ;
 +----------------+--------------+
 
 
@@ -1127,7 +1085,7 @@ Note: In order to hide this table in the UI and the text report file, please set
 Info: *******************************************************************
 Info: Running Quartus Prime Analysis & Synthesis
     Info: Version 19.1.0 Build 670 09/22/2019 SJ Lite Edition
-    Info: Processing started: Wed Nov 10 18:13:00 2021
+    Info: Processing started: Sun Nov 14 17:49:35 2021
 Info: Command: quartus_map --read_settings_files=on --write_settings_files=off SCOMP -c SCOMP
 Info (20030): Parallel compilation is enabled and will use 6 of the 6 processors detected
 Info (12021): Found 2 design units, including 1 entities, in source file i2c_master.vhd
@@ -1165,14 +1123,13 @@ Info (12021): Found 2 design units, including 1 entities, in source file PLL_mai
 Info (12021): Found 1 design units, including 1 entities, in source file HEX_DISP_6.bdf
     Info (12023): Found entity 1: HEX_DISP_6
 Info (12021): Found 2 design units, including 1 entities, in source file NeoPixelController.vhd
-    Info (12022): Found design unit 1: NeoPixelController-internals File: /home/justin/Documents/Courses/ece2031/project/ECE2031FinalProject/NeoPixelController.vhd Line: 25
+    Info (12022): Found design unit 1: NeoPixelController-internals File: /home/justin/Documents/Courses/ece2031/project/ECE2031FinalProject/NeoPixelController.vhd Line: 19
     Info (12023): Found entity 1: NeoPixelController File: /home/justin/Documents/Courses/ece2031/project/ECE2031FinalProject/NeoPixelController.vhd Line: 7
 Info (12021): Found 2 design units, including 1 entities, in source file KEY1_IN.vhd
-    Info (12022): Found design unit 1: KEY1_IN-b File: /home/justin/Documents/Courses/ece2031/project/ECE2031FinalProject/KEY1_IN.vhd Line: 18
+    Info (12022): Found design unit 1: KEY1_IN-a File: /home/justin/Documents/Courses/ece2031/project/ECE2031FinalProject/KEY1_IN.vhd Line: 18
     Info (12023): Found entity 1: KEY1_IN File: /home/justin/Documents/Courses/ece2031/project/ECE2031FinalProject/KEY1_IN.vhd Line: 10
 Info (12127): Elaborating entity "SCOMP_System" for the top level hierarchy
 Info (12128): Elaborating entity "NeoPixelController" for hierarchy "NeoPixelController:inst16"
-Warning (10492): VHDL Process Statement warning at NeoPixelController.vhd(127): signal "ALL_COLOR_EN" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: /home/justin/Documents/Courses/ece2031/project/ECE2031FinalProject/NeoPixelController.vhd Line: 127
 Info (12128): Elaborating entity "PLL_main" for hierarchy "PLL_main:inst1"
 Info (12128): Elaborating entity "altpll" for hierarchy "PLL_main:inst1|altpll:altpll_component" File: /home/justin/Documents/Courses/ece2031/project/ECE2031FinalProject/PLL_main.vhd Line: 141
 Info (12130): Elaborated megafunction instantiation "PLL_main:inst1|altpll:altpll_component" File: /home/justin/Documents/Courses/ece2031/project/ECE2031FinalProject/PLL_main.vhd Line: 141
@@ -1260,7 +1217,7 @@ Info (12133): Instantiated megafunction "SCOMP:inst|altsyncram:altsyncram_compon
     Info (12134): Parameter "indata_aclr_a" = "UNUSED"
     Info (12134): Parameter "indata_aclr_b" = "NONE"
     Info (12134): Parameter "indata_reg_b" = "CLOCK1"
-    Info (12134): Parameter "init_file" = "test_switch.mif"
+    Info (12134): Parameter "init_file" = "simple_all_colors.mif"
     Info (12134): Parameter "init_file_layout" = "PORT_A"
     Info (12134): Parameter "maximum_depth" = "0"
     Info (12134): Parameter "numwords_a" = "2048"
@@ -1290,9 +1247,9 @@ Info (12133): Instantiated megafunction "SCOMP:inst|altsyncram:altsyncram_compon
     Info (12134): Parameter "wrcontrol_wraddress_reg_b" = "CLOCK1"
     Info (12134): Parameter "lpm_hint" = "ENABLE_RUNTIME_MOD=NO"
     Info (12134): Parameter "lpm_type" = "altsyncram"
-Info (12021): Found 1 design units, including 1 entities, in source file db/altsyncram_f1s3.tdf
-    Info (12023): Found entity 1: altsyncram_f1s3 File: /home/justin/Documents/Courses/ece2031/project/ECE2031FinalProject/db/altsyncram_f1s3.tdf Line: 28
-Info (12128): Elaborating entity "altsyncram_f1s3" for hierarchy "SCOMP:inst|altsyncram:altsyncram_component|altsyncram_f1s3:auto_generated" File: /home/justin/intelFPGA_lite/19.1/quartus/libraries/megafunctions/altsyncram.tdf Line: 792
+Info (12021): Found 1 design units, including 1 entities, in source file db/altsyncram_hks3.tdf
+    Info (12023): Found entity 1: altsyncram_hks3 File: /home/justin/Documents/Courses/ece2031/project/ECE2031FinalProject/db/altsyncram_hks3.tdf Line: 28
+Info (12128): Elaborating entity "altsyncram_hks3" for hierarchy "SCOMP:inst|altsyncram:altsyncram_component|altsyncram_hks3:auto_generated" File: /home/justin/intelFPGA_lite/19.1/quartus/libraries/megafunctions/altsyncram.tdf Line: 792
 Info (12128): Elaborating entity "LPM_CLSHIFT" for hierarchy "SCOMP:inst|LPM_CLSHIFT:shifter" File: /home/justin/Documents/Courses/ece2031/project/ECE2031FinalProject/SCOMP.vhd Line: 88
 Info (12130): Elaborated megafunction instantiation "SCOMP:inst|LPM_CLSHIFT:shifter" File: /home/justin/Documents/Courses/ece2031/project/ECE2031FinalProject/SCOMP.vhd Line: 88
 Info (12133): Instantiated megafunction "SCOMP:inst|LPM_CLSHIFT:shifter" with the following parameter: File: /home/justin/Documents/Courses/ece2031/project/ECE2031FinalProject/SCOMP.vhd Line: 88
@@ -1340,52 +1297,52 @@ Info (12128): Elaborating entity "HEX_DISP_6" for hierarchy "HEX_DISP_6:inst9"
 Info (12128): Elaborating entity "HEX_DISP" for hierarchy "HEX_DISP_6:inst9|HEX_DISP:inst1"
 Info (12128): Elaborating entity "DIG_OUT" for hierarchy "DIG_OUT:inst6"
 Warning (13046): Tri-state node(s) do not directly drive top-level pin(s)
-    Warning (13047): Converted the fan-out from the tri-state buffer "I2C_INTERFACE:inst14|inst1[0]" to the node "I2C_INTERFACE:inst14|i2c_ctrl:inst14|data_in[0]" into an OR gate
-    Warning (13047): Converted the fan-out from the tri-state buffer "I2C_INTERFACE:inst14|inst1[1]" to the node "I2C_INTERFACE:inst14|i2c_ctrl:inst14|data_in[1]" into an OR gate
-    Warning (13047): Converted the fan-out from the tri-state buffer "I2C_INTERFACE:inst14|inst1[2]" to the node "I2C_INTERFACE:inst14|i2c_ctrl:inst14|data_in[2]" into an OR gate
-    Warning (13047): Converted the fan-out from the tri-state buffer "I2C_INTERFACE:inst14|inst1[3]" to the node "I2C_INTERFACE:inst14|i2c_ctrl:inst14|data_in[3]" into an OR gate
-    Warning (13047): Converted the fan-out from the tri-state buffer "I2C_INTERFACE:inst14|inst1[4]" to the node "I2C_INTERFACE:inst14|i2c_ctrl:inst14|data_in[4]" into an OR gate
-    Warning (13047): Converted the fan-out from the tri-state buffer "I2C_INTERFACE:inst14|inst1[5]" to the node "I2C_INTERFACE:inst14|i2c_ctrl:inst14|data_in[5]" into an OR gate
-    Warning (13047): Converted the fan-out from the tri-state buffer "I2C_INTERFACE:inst14|inst1[6]" to the node "I2C_INTERFACE:inst14|i2c_ctrl:inst14|data_in[6]" into an OR gate
-    Warning (13047): Converted the fan-out from the tri-state buffer "I2C_INTERFACE:inst14|inst1[7]" to the node "I2C_INTERFACE:inst14|i2c_ctrl:inst14|data_in[7]" into an OR gate
-    Warning (13047): Converted the fan-out from the tri-state buffer "I2C_INTERFACE:inst14|inst1[8]" to the node "I2C_INTERFACE:inst14|i2c_ctrl:inst14|data_in[8]" into an OR gate
-    Warning (13047): Converted the fan-out from the tri-state buffer "I2C_INTERFACE:inst14|inst1[9]" to the node "I2C_INTERFACE:inst14|i2c_ctrl:inst14|data_in[9]" into an OR gate
-    Warning (13047): Converted the fan-out from the tri-state buffer "I2C_INTERFACE:inst14|inst1[10]" to the node "I2C_INTERFACE:inst14|i2c_ctrl:inst14|data_in[10]" into an OR gate
-    Warning (13047): Converted the fan-out from the tri-state buffer "I2C_INTERFACE:inst14|inst1[11]" to the node "I2C_INTERFACE:inst14|i2c_ctrl:inst14|data_in[11]" into an OR gate
-    Warning (13047): Converted the fan-out from the tri-state buffer "I2C_INTERFACE:inst14|inst1[12]" to the node "I2C_INTERFACE:inst14|i2c_ctrl:inst14|data_in[12]" into an OR gate
-    Warning (13047): Converted the fan-out from the tri-state buffer "I2C_INTERFACE:inst14|inst1[13]" to the node "I2C_INTERFACE:inst14|i2c_ctrl:inst14|data_in[13]" into an OR gate
-    Warning (13047): Converted the fan-out from the tri-state buffer "I2C_INTERFACE:inst14|inst1[14]" to the node "I2C_INTERFACE:inst14|i2c_ctrl:inst14|data_in[14]" into an OR gate
-    Warning (13047): Converted the fan-out from the tri-state buffer "I2C_INTERFACE:inst14|inst1[15]" to the node "I2C_INTERFACE:inst14|i2c_ctrl:inst14|data_in[15]" into an OR gate
-Info (13000): Registers with preset signals will power-up high File: /home/justin/Documents/Courses/ece2031/project/ECE2031FinalProject/NeoPixelController.vhd Line: 55
+    Warning (13047): Converted the fan-out from the tri-state buffer "I2C_INTERFACE:inst14|inst1[0]" to the node "NeoPixelController:inst16|led_buffer[3]" into an OR gate
+    Warning (13047): Converted the fan-out from the tri-state buffer "I2C_INTERFACE:inst14|inst1[1]" to the node "NeoPixelController:inst16|led_buffer[4]" into an OR gate
+    Warning (13047): Converted the fan-out from the tri-state buffer "I2C_INTERFACE:inst14|inst1[2]" to the node "NeoPixelController:inst16|led_buffer[5]" into an OR gate
+    Warning (13047): Converted the fan-out from the tri-state buffer "I2C_INTERFACE:inst14|inst1[3]" to the node "NeoPixelController:inst16|led_buffer[6]" into an OR gate
+    Warning (13047): Converted the fan-out from the tri-state buffer "I2C_INTERFACE:inst14|inst1[4]" to the node "NeoPixelController:inst16|led_buffer[7]" into an OR gate
+    Warning (13047): Converted the fan-out from the tri-state buffer "I2C_INTERFACE:inst14|inst1[5]" to the node "NeoPixelController:inst16|led_buffer[18]" into an OR gate
+    Warning (13047): Converted the fan-out from the tri-state buffer "I2C_INTERFACE:inst14|inst1[6]" to the node "NeoPixelController:inst16|led_buffer[19]" into an OR gate
+    Warning (13047): Converted the fan-out from the tri-state buffer "I2C_INTERFACE:inst14|inst1[7]" to the node "NeoPixelController:inst16|led_buffer[20]" into an OR gate
+    Warning (13047): Converted the fan-out from the tri-state buffer "I2C_INTERFACE:inst14|inst1[8]" to the node "NeoPixelController:inst16|led_buffer[21]" into an OR gate
+    Warning (13047): Converted the fan-out from the tri-state buffer "I2C_INTERFACE:inst14|inst1[9]" to the node "NeoPixelController:inst16|led_buffer[22]" into an OR gate
+    Warning (13047): Converted the fan-out from the tri-state buffer "I2C_INTERFACE:inst14|inst1[10]" to the node "NeoPixelController:inst16|led_buffer[23]" into an OR gate
+    Warning (13047): Converted the fan-out from the tri-state buffer "I2C_INTERFACE:inst14|inst1[11]" to the node "NeoPixelController:inst16|led_buffer[11]" into an OR gate
+    Warning (13047): Converted the fan-out from the tri-state buffer "I2C_INTERFACE:inst14|inst1[12]" to the node "NeoPixelController:inst16|led_buffer[12]" into an OR gate
+    Warning (13047): Converted the fan-out from the tri-state buffer "I2C_INTERFACE:inst14|inst1[13]" to the node "NeoPixelController:inst16|led_buffer[13]" into an OR gate
+    Warning (13047): Converted the fan-out from the tri-state buffer "I2C_INTERFACE:inst14|inst1[14]" to the node "NeoPixelController:inst16|led_buffer[14]" into an OR gate
+    Warning (13047): Converted the fan-out from the tri-state buffer "I2C_INTERFACE:inst14|inst1[15]" to the node "NeoPixelController:inst16|led_buffer[15]" into an OR gate
+Info (13000): Registers with preset signals will power-up high File: /home/justin/Documents/Courses/ece2031/project/ECE2031FinalProject/NeoPixelController.vhd Line: 46
 Info (13003): DEV_CLRn pin will set, and not reset, register with preset signal due to NOT Gate Push-Back
 Warning (13024): Output pins are stuck at VCC or GND
     Warning (13410): Pin "I2CEN" is stuck at VCC
 Info (286030): Timing-Driven Synthesis is running
 Critical Warning (18061): Ignored Power-Up Level option on the following registers
-    Critical Warning (18010): Register NeoPixelController:inst16|reset_count[9] will power up to High File: /home/justin/Documents/Courses/ece2031/project/ECE2031FinalProject/NeoPixelController.vhd Line: 55
-    Critical Warning (18010): Register NeoPixelController:inst16|reset_count[8] will power up to High File: /home/justin/Documents/Courses/ece2031/project/ECE2031FinalProject/NeoPixelController.vhd Line: 55
-    Critical Warning (18010): Register NeoPixelController:inst16|reset_count[7] will power up to High File: /home/justin/Documents/Courses/ece2031/project/ECE2031FinalProject/NeoPixelController.vhd Line: 55
-    Critical Warning (18010): Register NeoPixelController:inst16|reset_count[6] will power up to High File: /home/justin/Documents/Courses/ece2031/project/ECE2031FinalProject/NeoPixelController.vhd Line: 55
-    Critical Warning (18010): Register NeoPixelController:inst16|reset_count[5] will power up to High File: /home/justin/Documents/Courses/ece2031/project/ECE2031FinalProject/NeoPixelController.vhd Line: 55
-    Critical Warning (18010): Register NeoPixelController:inst16|reset_count[3] will power up to High File: /home/justin/Documents/Courses/ece2031/project/ECE2031FinalProject/NeoPixelController.vhd Line: 55
-    Critical Warning (18010): Register NeoPixelController:inst16|bit_count[4] will power up to High File: /home/justin/Documents/Courses/ece2031/project/ECE2031FinalProject/NeoPixelController.vhd Line: 55
-    Critical Warning (18010): Register NeoPixelController:inst16|bit_count[2] will power up to High File: /home/justin/Documents/Courses/ece2031/project/ECE2031FinalProject/NeoPixelController.vhd Line: 55
-    Critical Warning (18010): Register NeoPixelController:inst16|bit_count[1] will power up to High File: /home/justin/Documents/Courses/ece2031/project/ECE2031FinalProject/NeoPixelController.vhd Line: 55
-    Critical Warning (18010): Register NeoPixelController:inst16|bit_count[0] will power up to High File: /home/justin/Documents/Courses/ece2031/project/ECE2031FinalProject/NeoPixelController.vhd Line: 55
+    Critical Warning (18010): Register NeoPixelController:inst16|reset_count[9] will power up to High File: /home/justin/Documents/Courses/ece2031/project/ECE2031FinalProject/NeoPixelController.vhd Line: 46
+    Critical Warning (18010): Register NeoPixelController:inst16|reset_count[8] will power up to High File: /home/justin/Documents/Courses/ece2031/project/ECE2031FinalProject/NeoPixelController.vhd Line: 46
+    Critical Warning (18010): Register NeoPixelController:inst16|reset_count[7] will power up to High File: /home/justin/Documents/Courses/ece2031/project/ECE2031FinalProject/NeoPixelController.vhd Line: 46
+    Critical Warning (18010): Register NeoPixelController:inst16|reset_count[6] will power up to High File: /home/justin/Documents/Courses/ece2031/project/ECE2031FinalProject/NeoPixelController.vhd Line: 46
+    Critical Warning (18010): Register NeoPixelController:inst16|reset_count[5] will power up to High File: /home/justin/Documents/Courses/ece2031/project/ECE2031FinalProject/NeoPixelController.vhd Line: 46
+    Critical Warning (18010): Register NeoPixelController:inst16|reset_count[3] will power up to High File: /home/justin/Documents/Courses/ece2031/project/ECE2031FinalProject/NeoPixelController.vhd Line: 46
+    Critical Warning (18010): Register NeoPixelController:inst16|bit_count[4] will power up to High File: /home/justin/Documents/Courses/ece2031/project/ECE2031FinalProject/NeoPixelController.vhd Line: 46
+    Critical Warning (18010): Register NeoPixelController:inst16|bit_count[2] will power up to High File: /home/justin/Documents/Courses/ece2031/project/ECE2031FinalProject/NeoPixelController.vhd Line: 46
+    Critical Warning (18010): Register NeoPixelController:inst16|bit_count[1] will power up to High File: /home/justin/Documents/Courses/ece2031/project/ECE2031FinalProject/NeoPixelController.vhd Line: 46
+    Critical Warning (18010): Register NeoPixelController:inst16|bit_count[0] will power up to High File: /home/justin/Documents/Courses/ece2031/project/ECE2031FinalProject/NeoPixelController.vhd Line: 46
 Info (17049): 1 registers lost all their fanouts during netlist optimizations.
 Info (16010): Generating hard_block partition "hard_block:auto_generated_inst"
     Info (16011): Adding 1 node(s), including 0 DDIO, 1 PLL, 0 transceiver and 0 LCELL
-Info (21057): Implemented 1616 device resources after synthesis - the final resource count might be different
+Info (21057): Implemented 1173 device resources after synthesis - the final resource count might be different
     Info (21058): Implemented 13 input pins
     Info (21059): Implemented 54 output pins
     Info (21060): Implemented 2 bidirectional pins
-    Info (21061): Implemented 1530 logic cells
+    Info (21061): Implemented 1087 logic cells
     Info (21064): Implemented 16 RAM segments
     Info (21065): Implemented 1 PLLs
-Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 33 warnings
-    Info: Peak virtual memory: 1071 megabytes
-    Info: Processing ended: Wed Nov 10 18:13:40 2021
-    Info: Elapsed time: 00:00:40
-    Info: Total CPU time (on all processors): 00:00:47
+Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 32 warnings
+    Info: Peak virtual memory: 1053 megabytes
+    Info: Processing ended: Sun Nov 14 17:49:44 2021
+    Info: Elapsed time: 00:00:09
+    Info: Total CPU time (on all processors): 00:00:20
 
 

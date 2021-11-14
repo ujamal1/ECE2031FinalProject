@@ -1,0 +1,27 @@
+-- Altera Memory Initialization File (MIF)
+
+DEPTH = 2048;
+WIDTH = 16;
+
+ADDRESS_RADIX = HEX;
+DATA_RADIX = HEX;
+
+CONTENT
+  BEGIN
+    000 : b800; -- LOADI	0
+    001 : 1004; -- STORE	Mode ; Reset the mode on reset
+    002 : 0809; -- LOAD REALLYRED
+    003 : 98a0; -- OUT		NEOPIXEL
+    004 : 0000; -- Mode:		 DW	0
+    005 : 0000; -- Color16:	 DW	0
+    006 : 0000; -- Color24_R:	 DW	0
+    007 : 0000; -- Color24_GB:	 DW	0
+    008 : 0000; -- AutoAddress: DW 0
+    009 : f800; -- REALLYRED:   DW &B1111100000000000
+    00a : 001f; -- FiveBits:	DW	31
+    00b : 003f; -- SixBits:	DW	63
+    00c : 00ff; -- EightBits:	DW	255
+
+    [00d..7ff] : 0000; -- Empty memory
+
+  END;

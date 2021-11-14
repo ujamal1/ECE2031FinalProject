@@ -82,7 +82,7 @@ GetColors16:
 	CALL	WaitForButton
 	IN		Switches
 	AND		FiveBits
-	SHIFT	7
+	SHIFT	11
 	STORE	Color16
 	
 	LOADI	8
@@ -91,7 +91,7 @@ GetColors16:
 	CALL	WaitForButton
 	IN		Switches
 	AND		SixBits
-	SHIFT	4
+	SHIFT	5
 	OR		Color16
 	STORE	Color16
 	
