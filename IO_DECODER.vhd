@@ -20,7 +20,6 @@ ENTITY IO_DECODER IS
     I2C_CMD_EN    		: OUT STD_LOGIC;
     I2C_DATA_EN   		: OUT STD_LOGIC;
     I2C_RDY_EN    		: OUT STD_LOGIC;
-    NeoPixel      		: OUT STD_LOGIC;
 	 ALL_COLOR_EN			: OUT STD_LOGIC;
 	 ONE_LED_ADDR_EN		: OUT STD_LOGIC;
 	 ONE_COLOR_16_EN		: OUT STD_LOGIC;
@@ -47,12 +46,11 @@ begin
   I2C_CMD_EN   		<= '1' WHEN (ADDR_INT = 16#090#) and (IO_CYCLE = '1') ELSE '0';
   I2C_DATA_EN  		<= '1' WHEN (ADDR_INT = 16#091#) and (IO_CYCLE = '1') ELSE '0';
   I2C_RDY_EN   		<= '1' WHEN (ADDR_INT = 16#092#) and (IO_CYCLE = '1') ELSE '0';
-  NeoPixel     		<= '1' WHEN (ADDR_INT = 16#0A0#) and (IO_CYCLE = '1') ELSE '0';
-  ALL_COLOR_EN			<= '1' WHEN (ADDR_INT = 16#0A1#) and (IO_CYCLE = '1') ELSE '0';
-  ONE_LED_ADDR_EN		<= '1' WHEN (ADDR_INT = 16#0A2#) and (IO_CYCLE = '1') ELSE '0';
-  ONE_COLOR_16_EN		<= '1' WHEN (ADDR_INT = 16#0A3#) and (IO_CYCLE = '1') ELSE '0';
+  ALL_COLOR_EN			<= '1' WHEN (ADDR_INT = 16#0A0#) and (IO_CYCLE = '1') ELSE '0';
+  ONE_LED_ADDR_EN		<= '1' WHEN (ADDR_INT = 16#0A1#) and (IO_CYCLE = '1') ELSE '0';
+  ONE_COLOR_16_EN		<= '1' WHEN (ADDR_INT = 16#0A2#) and (IO_CYCLE = '1') ELSE '0';
   GB_ONE_COLOR_24_EN	<= '1' WHEN (ADDR_INT = 16#0A4#) and (IO_CYCLE = '1') ELSE '0';
-  R_ONE_COLOR_24_EN	<= '1' WHEN (ADDR_INT = 16#0A5#) and (IO_CYCLE = '1') ELSE '0';
+  R_ONE_COLOR_24_EN	<= '1' WHEN (ADDR_INT = 16#0A3#) and (IO_CYCLE = '1') ELSE '0';
   KEY1_EN				<= '1' WHEN (ADDR_INT = 16#0AF#) and (IO_CYCLE = '1') ELSE '0';
       
 END a;

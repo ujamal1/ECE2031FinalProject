@@ -9,8 +9,12 @@ entity NeoPixelController is
 	port(
 		clk_10M  : in   std_logic;
 		resetn   : in   std_logic;
-		latch    : in   std_logic;
 		data     : in   std_logic_vector(15 downto 0);
+		ALL_COLOR_EN    : in   std_logic;
+		--ONE_LED_ADDR_EN : in   std_logic;
+		--ONE_COLOR_16_EN : in   std_logic;
+		--GB_ONE_COLOR_24_EN : in   std_logic;
+		--R_ONE_COLOR_24_EN : in   std_logic;
 		sda      : out  std_logic
 	); 
 
@@ -104,7 +108,7 @@ begin
 			
 			-- This IF block controls sda
 			if reset_count > 0 then
-				-- sda is 0 during reset/latch
+				-- sda is 0 during reset/ALL_COLOR_EN
 				sda <= '0';
 			elsif 
 				-- sda is 1 if it's the first part of a bit, which depends on if it's 1 or 0
@@ -120,9 +124,9 @@ begin
 	end process;
 	
 	-- Process to handle OUTs from SCOMP
-	process(latch)
+	process(ALL_COLOR_EN)
 	begin
-		if rising_edge(latch) then
+		if rising_edge(ALL_COLOR_EN) then
 			-- Convert RGB 565 to Neopixel format (GRB),
 			-- in this case just padding with 0s.
 			led_buffer <= data(10 downto 5) & "00" & data(15 downto 11) & "000" & data(4 downto 0) & "000" ;
