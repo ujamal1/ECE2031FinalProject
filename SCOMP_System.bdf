@@ -1594,11 +1594,51 @@ https://fpgasoftware.intel.com/eula.
 	(pt 536 1112)
 	(pt 568 1112)
 )
+(connector
+	(text "ONE_LED_ADDR_EN" (rect 1216 352 1315 369)(font "Intel Clear" ))
+	(pt 1368 368)
+	(pt 1048 368)
+)
+(connector
+	(text "ONE_COLOR_16_EN" (rect 1216 368 1316 385)(font "Intel Clear" ))
+	(pt 1352 384)
+	(pt 1048 384)
+)
+(connector
+	(text "GB_ONE_COLOR_24_EN" (rect 1216 384 1336 401)(font "Intel Clear" ))
+	(pt 1336 400)
+	(pt 1048 400)
+)
+(connector
+	(text "R_ONE_COLOR_24_EN" (rect 1216 400 1329 417)(font "Intel Clear" ))
+	(pt 1048 416)
+	(pt 1288 416)
+)
+(connector
+	(text "ONE_LED_ADDR_EN" (rect 176 1160 275 1177)(font "Intel Clear" ))
+	(pt 160 1176)
+	(pt 304 1176)
+)
+(connector
+	(text "ONE_COLOR_16_EN" (rect 176 1176 276 1193)(font "Intel Clear" ))
+	(pt 160 1192)
+	(pt 304 1192)
+)
+(connector
+	(text "GB_ONE_COLOR_24_EN" (rect 176 1192 296 1209)(font "Intel Clear" ))
+	(pt 160 1208)
+	(pt 304 1208)
+)
+(connector
+	(text "R_ONE_COLOR_24_EN" (rect 176 1208 289 1225)(font "Intel Clear" ))
+	(pt 160 1224)
+	(pt 304 1224)
+)
 (junction (pt 512 280))
 (title_block
 	(rect 1104 1160 1472 1280)
 	(section (rect 0 24 368 48)(text "COMPANY" (rect 2 0 57 12)(font "Arial" ))(text "GaTech DDL" (rect 56 2 170 20)(font "Arial" (font_size 12)))(border))
-	(section (rect 0 96 240 120)(text "DATE" (rect 2 0 30 12)(font "Arial" ))(text "Sun Nov 14 18:20:22 2021" (rect 56 3 235 19)(font "Arial" (font_size 10)))(date)(border))
+	(section (rect 0 96 240 120)(text "DATE" (rect 2 0 30 12)(font "Arial" ))(text "Sun Nov 14 18:46:44 2021" (rect 56 3 235 19)(font "Arial" (font_size 10)))(date)(border))
 	(section (rect 0 48 368 72)(text "DESIGNER" (rect 2 0 59 12)(font "Arial" ))(text "Kevin Johnson, Tom Collins" (rect 56 2 286 20)(font "Arial" (font_size 12)))(border))
 	(section (rect 0 72 280 96)(text "NUMBER" (rect 2 0 49 12)(font "Arial" ))(text "1.00" (rect 56 1 85 17)(font "Arial" (font_size 10)))(border))
 	(section (rect 310 96 368 120)(text "OF" (rect 10 0 25 12)(font "Arial" ))(text "1" (rect 34 4 42 20)(font "Arial" (font_size 10))))
