@@ -11,10 +11,10 @@ entity NeoPixelController is
 		resetn   : in   std_logic;
 		data     : in   std_logic_vector(15 downto 0);
 		ALL_COLOR_EN    : in   std_logic;
-		--ONE_LED_ADDR_EN : in   std_logic;
-		--ONE_COLOR_16_EN : in   std_logic;
-		--GB_ONE_COLOR_24_EN : in   std_logic;
-		--R_ONE_COLOR_24_EN : in   std_logic;
+		ONE_LED_ADDR_EN : in   std_logic;
+		ONE_COLOR_16_EN : in   std_logic;
+		GB_ONE_COLOR_24_EN : in   std_logic;
+		R_ONE_COLOR_24_EN : in   std_logic;
 		sda      : out  std_logic
 	); 
 
@@ -28,6 +28,7 @@ architecture internals of NeoPixelController is
 	type color_array is array (0 to 255) of std_logic_vector(23 downto 0);
 	
 	signal data_arr : color_array;
+	signal index : integer;
 	
 	
 begin
@@ -124,7 +125,7 @@ begin
 	end process;
 	
 	-- Process to handle OUTs from SCOMP
-	process(ALL_COLOR_EN)
+	process(ALL_COLOR_EN, ONE_LED_ADDR_EN, ONE_COLOR_16_EN, GB_ONE_COLOR_24_EN, R_ONE_COLOR_24_EN)
 	begin
 		if rising_edge(ALL_COLOR_EN) then
 			-- Convert RGB 565 to Neopixel format (GRB),
@@ -133,6 +134,14 @@ begin
 			for I in 0 to 255 loop
 				data_arr(I) <= data(10 downto 5) & "00" & data(15 downto 11) & "000" & data(4 downto 0) & "000";
 			end loop;
+		elsif rising_edge(ONE_LED_ADDR_EN) then
+			
+		elsif rising_edge(ONE_COLOR_16_EN) then
+			
+		elsif rising_edge(GB_ONE_COLOR_24_EN) then
+			
+		elsif rising_edge(R_ONE_COLOR_24_EN) then
+			
 		end if;
 	end process;
 
