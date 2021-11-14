@@ -1,0 +1,117 @@
+-- Altera Memory Initialization File (MIF)
+
+DEPTH = 2048;
+WIDTH = 16;
+
+ADDRESS_RADIX = HEX;
+DATA_RADIX = HEX;
+
+CONTENT
+  BEGIN
+    000 : b800; -- LOADI	0
+    001 : 105f; -- STORE	Mode ; Reset the mode on reset
+    002 : b801; -- LOADI	1
+    003 : 9801; -- OUT		LEDs
+    004 : 8027; -- CALL	WaitForButton
+    005 : 9000; -- IN		Switches		; Get the values of the switches after
+    006 : 400d; -- JZERO	SetSingle16		; the confirmation button is pressed
+    007 : 6fff; -- ADDI	-1
+    008 : 4012; -- JZERO	SetSingle24
+    009 : 6fff; -- ADDI	-1
+    00a : 4019; -- JZERO	SetAll16
+    00b : 6fff; -- ADDI	-1
+    00c : 401d; -- JZERO	AutoIncrement
+    00d : 802c; -- CALL	OutAddress
+    00e : 8033; -- CALL	GetColors16
+    00f : 0860; -- LOAD	Color16
+    010 : 98a2; -- OUT		Neo_Single16
+    011 : 2802; -- JUMP	ChooseMode
+    012 : 802c; -- CALL	OutAddress
+    013 : 804a; -- CALL	GetColors24
+    014 : 0861; -- LOAD	Color24_R
+    015 : 98a3; -- OUT		Neo_Single24_R
+    016 : 0862; -- LOAD	Color24_GB
+    017 : 98a4; -- OUT		Neo_Single24_GB
+    018 : 2802; -- JUMP	ChooseMode
+    019 : 8033; -- CALL	GetColors16
+    01a : 0860; -- LOAD	Color16
+    01b : 98a0; -- OUT		Neo_All16
+    01c : 2802; -- JUMP	ChooseMode
+    01d : b800; -- LOADI 0
+    01e : 1063; -- STORE AutoAddress
+    01f : 0863; -- LOAD	AutoAddress
+    020 : 98a1; -- OUT		Neo_Addr
+    021 : 8033; -- CALL	GetColors16
+    022 : 98a2; -- OUT		Neo_Single16
+    023 : 0863; -- LOAD	AutoAddress
+    024 : 6801; -- ADDI	1
+    025 : 1063; -- STORE	AutoAddress
+    026 : 281f; -- JUMP IncLoop
+    027 : 90af; -- IN		Key1
+    028 : 3827; -- JPOS	WaitForButton	; Button is not pressed, check again
+    029 : 90af; -- IN		Key1		; Button was just pressed, wait for it to be released
+    02a : 4029; -- JZERO	WaitForRelease
+    02b : 8800; -- RETURN
+    02c : b802; -- LOADI	2
+    02d : 9801; -- OUT		LEDs
+    02e : 8027; -- CALL	WaitForButton
+    02f : 9000; -- IN		Switches
+    030 : 4866; -- AND		EightBits		; Mask off the rightmost eight bits to fit the
+    031 : 98a1; -- OUT		Neo_Addr		; address length and store them in the peripheral
+    032 : 8800; -- RETURN
+    033 : b804; -- LOADI	4
+    034 : 9801; -- OUT		LEDs
+    035 : 8027; -- CALL	WaitForButton
+    036 : 9000; -- IN		Switches
+    037 : 4864; -- AND		FiveBits
+    038 : 600b; -- SHIFT	11
+    039 : 1060; -- STORE	Color16
+    03a : b808; -- LOADI	8
+    03b : 9801; -- OUT		LEDs
+    03c : 8027; -- CALL	WaitForButton
+    03d : 9000; -- IN		Switches
+    03e : 4865; -- AND		SixBits
+    03f : 6005; -- SHIFT	5
+    040 : 5060; -- OR		Color16
+    041 : 1060; -- STORE	Color16
+    042 : b810; -- LOADI	16
+    043 : 9801; -- OUT		LEDs
+    044 : 8027; -- CALL	WaitForButton
+    045 : 9000; -- IN		Switches
+    046 : 4864; -- AND		FiveBits
+    047 : 5060; -- OR		Color16
+    048 : 1060; -- STORE	Color16
+    049 : 8800; -- RETURN
+    04a : b804; -- LOADI	4
+    04b : 9801; -- OUT		LEDs
+    04c : 8027; -- CALL	WaitForButton
+    04d : 9000; -- IN		Switches
+    04e : 4866; -- AND		EightBits
+    04f : 1061; -- STORE	Color24_R
+    050 : b808; -- LOADI	8
+    051 : 9801; -- OUT		LEDs
+    052 : 8027; -- CALL	WaitForButton
+    053 : 9000; -- IN		Switches
+    054 : 4866; -- AND		EightBits
+    055 : 6008; -- SHIFT	8
+    056 : 1062; -- STORE	Color24_GB
+    057 : b810; -- LOADI	16
+    058 : 9801; -- OUT		LEDs
+    059 : 8027; -- CALL	WaitForButton
+    05a : 9000; -- IN		Switches
+    05b : 4866; -- AND		EightBits
+    05c : 5062; -- OR		Color24_GB
+    05d : 1062; -- STORE	Color24_GB
+    05e : 8800; -- RETURN
+    05f : 0000; -- Mode:		 DW	0
+    060 : 0000; -- Color16:	 DW	0
+    061 : 0000; -- Color24_R:	 DW	0
+    062 : 0000; -- Color24_GB:	 DW	0
+    063 : 0000; -- AutoAddress: DW  0
+    064 : 001f; -- FiveBits:	DW	31
+    065 : 003f; -- SixBits:	DW	63
+    066 : 00ff; -- EightBits:	DW	255
+
+    [067..7ff] : 0000; -- Empty memory
+
+  END;
