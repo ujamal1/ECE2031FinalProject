@@ -138,10 +138,11 @@ begin
 			index <= to_integer(unsigned(data));			
 		elsif ONE_COLOR_16_EN = '1' then
 			data_arr(index) <= data(10 downto 5) & "00" & data(15 downto 11) & "000" & data(4 downto 0) & "000";
-		--elsif rising_edge(GB_ONE_COLOR_24_EN) then
-			
-		--elsif rising_edge(R_ONE_COLOR_24_EN) then
-			
+		elsif GB_ONE_COLOR_24_EN = '1' then
+			data_arr(index)(23 downto 16) <= data(15 downto 8);
+			data_arr(index)(7 downto 0) <= data(7 downto 0);
+		elsif R_ONE_COLOR_24_EN = '1' then
+			data_arr(index)(15 downto 8) <= data(7 downto 0);
 		end if;
 	end process;
 
