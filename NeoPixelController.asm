@@ -15,6 +15,8 @@ ChooseMode:
 	JZERO	SetAll16
 	ADDI	-1
 	JZERO	AutoIncrement
+	ADDI	-1
+	JUMP	Game			; Else, jump to game
 
 SetSingle16:
 	CALL	OutAddress
@@ -55,6 +57,90 @@ AutoIncrement:
 		
 		JUMP IncLoop
 		
+Game:
+	LOADI	32
+	OUT		LEDs
+	CALL	WaitForButton
+	IN		Switches
+	STORE	NumNeos				; The value from the switches will be our number of Neopixels to work with for the game
+	
+	LOADI	1
+	STORE	GameDir
+	
+	LOADI	0
+	STORE	GameAddress
+	
+	GameLoop:
+		; First, do game logic and checks
+		LOAD	GameAddress			; If the current address to be set is out of bounds, then the player failed
+		JNEG	GameFail			; To be in bounds, the address must be: 0 ≤ address < NumNeos which is the same as 0 ≤ address ≤ NumNeos - 1
+		SUB		NumNeos
+		ADDI	-1
+		JPOS	GameFail
+		
+		; Next, check if the user has changed direction
+		CALL	GameCheckButton
+		
+		MoveGameLED:
+			; Erase the old green game marker
+			LOAD	GameAddress
+			OUT		Neo_Addr
+			LOADI	0
+			OUT		Neo_Single16
+			
+			; And light up the new one in the direction of GameDir
+			LOAD	GameAddress
+			ADD		GameDir
+			STORE	GameAddress
+			OUT		Neo_Addr
+			LOAD	Green16
+			OUT		Neo_Single16
+			
+			CALL	Delay			; Wait for a fifth of a second before running the loop again
+			
+			JUMP	GameLoop
+	
+	GameFail:
+		; Set all the Neopixels to red to indicate the failure, then go and wait the game to start again
+		LOAD	Red16
+		OUT		Neo_All16
+		JUMP	Game
+	
+	GameCheckButton:
+		IN		Key1
+		JZERO	GameCheckButton_Pressed
+		; This is logic for when the button is NOT pressed
+		; First let's check if it was pressed before
+		LOAD	KeyPressed
+		; If it wasn't, then there's nothing left to do
+		JZERO	ExitFunc
+		; If it was, then we should change direction
+		LOAD	GameDir
+		JPOS	SubDir			; If the GameDir is currently 1, then we should subtract 2 from it to make it -1 by going to SubDir
+		ADDI	2				; Otherwise, add 2 to go from -1 -> 1
+		STORE	GameDir
+		RETURN
+		SubDir:
+		ADDI	-2
+		STORE	GameDir
+		RETURN
+		
+		GameCheckButton_Pressed:
+		STORE	KeyPressed
+		RETURN
+		
+		ExitFunc:
+		RETURN
+
+Delay:
+	OUT    Timer
+WaitingLoop:
+	CALL	GameCheckButton
+	IN		Timer
+	ADDI	-2
+	JNEG	WaitingLoop
+	RETURN
+	
 
 WaitForButton:
 	IN		Key1
@@ -76,6 +162,10 @@ OutAddress:
 
 ; Gets the values for a 16 bit color and stores the value in the Color16 variable
 GetColors16:
+	; Color Format:
+	; Red   Green  Blue
+	; 00000 000000 00000
+
 	LOADI	4
 	OUT		LEDs
 	; Read in the red color
@@ -143,16 +233,22 @@ GetColors24:
 
 
 ; Variables
-Mode:		 DW	0
-Color16:	 DW	0
-Color24_R:	 DW	0
-Color24_GB:	 DW	0
-AutoAddress: DW  0
+Mode:			DW 0
+Color16:		DW 0
+Color24_R:		DW 0
+Color24_GB:		DW 0
+AutoAddress:	DW 0
+GameAddress:	DW 0
+GameDir:		DW 0 ; Game Direction
+NumNeos:		DW 0
+KeyPressed:		DW 0
 
 ; Constants
 FiveBits:	DW	31
 SixBits:	DW	63
 EightBits:	DW	255
+Green16:	DW	&B11111100000;
+Red16:		DW	&B1111100000000000;
 
 ; IO address constants
 Switches:	EQU &H000
