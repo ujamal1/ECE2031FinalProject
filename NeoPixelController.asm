@@ -67,15 +67,21 @@ Game:
 	LOADI	1
 	STORE	GameDir
 	
+	LOADI	2
+	STORE	GameSpeed
+	
 	LOADI	0
 	STORE	GameAddress
+	
+	LOADI	0
+	OUT		Neo_All16
 	
 	GameLoop:
 		; First, do game logic and checks
 		LOAD	GameAddress			; If the current address to be set is out of bounds, then the player failed
 		JNEG	GameFail			; To be in bounds, the address must be: 0 ≤ address < NumNeos which is the same as 0 ≤ address ≤ NumNeos - 1
 		SUB		NumNeos
-		ADDI	-1
+		ADDI	1
 		JPOS	GameFail
 		
 		; Next, check if the user has changed direction
@@ -108,28 +114,29 @@ Game:
 	
 	GameCheckButton:
 		IN		Key1
-		JZERO	GameCheckButton_Pressed
+		JZERO	ExitFunc
 		; This is logic for when the button is NOT pressed
 		; First let's check if it was pressed before
 		LOAD	KeyPressed
 		; If it wasn't, then there's nothing left to do
-		JZERO	ExitFunc
+		JPOS	ExitFunc
 		; If it was, then we should change direction
 		LOAD	GameDir
 		JPOS	SubDir			; If the GameDir is currently 1, then we should subtract 2 from it to make it -1 by going to SubDir
-		ADDI	2				; Otherwise, add 2 to go from -1 -> 1
+		ADD		GameSpeed		; Otherwise, add 2 to go from -1 -> 1
 		STORE	GameDir
-		RETURN
+		JUMP	IncSpeed
 		SubDir:
-		ADDI	-2
+		SUB		GameSpeed
 		STORE	GameDir
-		RETURN
 		
-		GameCheckButton_Pressed:
-		STORE	KeyPressed
-		RETURN
-		
+		IncSpeed:
+		LOAD	GameSpeed
+		ADDI	1
+		STORE	GameSpeed
 		ExitFunc:
+		IN		Key1
+		STORE	KeyPressed
 		RETURN
 
 Delay:
@@ -137,7 +144,7 @@ Delay:
 WaitingLoop:
 	CALL	GameCheckButton
 	IN		Timer
-	ADDI	-2
+	ADDI	-1
 	JNEG	WaitingLoop
 	RETURN
 	
@@ -240,6 +247,7 @@ Color24_GB:		DW 0
 AutoAddress:	DW 0
 GameAddress:	DW 0
 GameDir:		DW 0 ; Game Direction
+GameSpeed:		DW 0
 NumNeos:		DW 0
 KeyPressed:		DW 0
 

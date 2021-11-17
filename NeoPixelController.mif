@@ -11,10 +11,10 @@ CONTENT
     [000..7FF] : 0000;  -- Default to NOP
 
            000 : B800;  -- 	LOADI	0
-           001 : 1094;  -- 	STORE	Mode ; Reset the mode on reset
+           001 : 109A;  -- 	STORE	Mode ; Reset the mode on reset
            002 : B801;  -- 	LOADI	1
            003 : 9801;  -- 	OUT		LEDs
-           004 : 805C;  -- 	CALL	WaitForButton
+           004 : 8062;  -- 	CALL	WaitForButton
            005 : 9000;  -- 	IN		Switches		; Get the values of the switches after
            006 : 400F;  -- 	JZERO	SetSingle16		; the confirmation button is pressed
            007 : 6FFF;  -- 	ADDI	-1
@@ -25,151 +25,158 @@ CONTENT
            00C : 401F;  -- 	JZERO	AutoIncrement
            00D : 6FFF;  -- 	ADDI	-1
            00E : 2829;  -- 	JUMP	Game			; Else, jump to game
-           00F : 8061;  -- 	CALL	OutAddress
-           010 : 8068;  -- 	CALL	GetColors16
-           011 : 0895;  -- 	LOAD	Color16
+           00F : 8067;  -- 	CALL	OutAddress
+           010 : 806E;  -- 	CALL	GetColors16
+           011 : 089B;  -- 	LOAD	Color16
            012 : 98A2;  -- 	OUT		Neo_Single16
            013 : 2802;  -- 	JUMP	ChooseMode
-           014 : 8061;  -- 	CALL	OutAddress
-           015 : 807F;  -- 	CALL	GetColors24
-           016 : 0896;  -- 	LOAD	Color24_R
+           014 : 8067;  -- 	CALL	OutAddress
+           015 : 8085;  -- 	CALL	GetColors24
+           016 : 089C;  -- 	LOAD	Color24_R
            017 : 98A3;  -- 	OUT		Neo_Single24_R
-           018 : 0897;  -- 	LOAD	Color24_GB
+           018 : 089D;  -- 	LOAD	Color24_GB
            019 : 98A4;  -- 	OUT		Neo_Single24_GB
            01A : 2802;  -- 	JUMP	ChooseMode
-           01B : 8068;  -- 	CALL	GetColors16
-           01C : 0895;  -- 	LOAD	Color16
+           01B : 806E;  -- 	CALL	GetColors16
+           01C : 089B;  -- 	LOAD	Color16
            01D : 98A0;  -- 	OUT		Neo_All16
            01E : 2802;  -- 	JUMP	ChooseMode
            01F : B800;  -- 	LOADI 0
-           020 : 1098;  -- 	STORE AutoAddress
-           021 : 0898;  -- 		LOAD	AutoAddress
+           020 : 109E;  -- 	STORE AutoAddress
+           021 : 089E;  -- 		LOAD	AutoAddress
            022 : 98A1;  -- 		OUT		Neo_Addr
-           023 : 8068;  -- 		CALL	GetColors16
+           023 : 806E;  -- 		CALL	GetColors16
            024 : 98A2;  -- 		OUT		Neo_Single16
-           025 : 0898;  -- 		LOAD	AutoAddress
+           025 : 089E;  -- 		LOAD	AutoAddress
            026 : 6801;  -- 		ADDI	1
-           027 : 1098;  -- 		STORE	AutoAddress
+           027 : 109E;  -- 		STORE	AutoAddress
            028 : 2821;  -- 		JUMP IncLoop
            029 : B820;  -- 	LOADI	32
            02A : 9801;  -- 	OUT		LEDs
-           02B : 805C;  -- 	CALL	WaitForButton
+           02B : 8062;  -- 	CALL	WaitForButton
            02C : 9000;  -- 	IN		Switches
-           02D : 109B;  -- 	STORE	NumNeos				; The value from the switches will be our number of Neopixels to work with for the game
+           02D : 10A2;  -- 	STORE	NumNeos				; The value from the switches will be our number of Neopixels to work with for the game
            02E : B801;  -- 	LOADI	1
-           02F : 109A;  -- 	STORE	GameDir
-           030 : B800;  -- 	LOADI	0
-           031 : 1099;  -- 	STORE	GameAddress
-           032 : 0899;  -- 		LOAD	GameAddress			; If the current address to be set is out of bounds, then the player failed
-           033 : 3044;  -- 		JNEG	GameFail			; To be in bounds, the address must be: 0 ≤ address < NumNeos which is the same as 0 ≤ address ≤ NumNeos - 1
-           034 : 209B;  -- 		SUB		NumNeos
-           035 : 6FFF;  -- 		ADDI	-1
-           036 : 3844;  -- 		JPOS	GameFail
-           037 : 8047;  -- 		CALL	GameCheckButton
-           038 : 0899;  -- 			LOAD	GameAddress
-           039 : 98A1;  -- 			OUT		Neo_Addr
-           03A : B800;  -- 			LOADI	0
-           03B : 98A2;  -- 			OUT		Neo_Single16
-           03C : 0899;  -- 			LOAD	GameAddress
-           03D : 189A;  -- 			ADD		GameDir
-           03E : 1099;  -- 			STORE	GameAddress
-           03F : 98A1;  -- 			OUT		Neo_Addr
-           040 : 08A0;  -- 			LOAD	Green16
-           041 : 98A2;  -- 			OUT		Neo_Single16
-           042 : 8056;  -- 			CALL	Delay			; Wait for a fifth of a second before running the loop again
-           043 : 2832;  -- 			JUMP	GameLoop
-           044 : 08A1;  -- 		LOAD	Red16
-           045 : 98A0;  -- 		OUT		Neo_All16
-           046 : 2829;  -- 		JUMP	Game
-           047 : 90AF;  -- 		IN		Key1
-           048 : 4053;  -- 		JZERO	GameCheckButton_Pressed
-           049 : 089C;  -- 		LOAD	KeyPressed
-           04A : 4055;  -- 		JZERO	ExitFunc
-           04B : 089A;  -- 		LOAD	GameDir
-           04C : 3850;  -- 		JPOS	SubDir			; If the GameDir is currently 1, then we should subtract 2 from it to make it -1 by going to SubDir
-           04D : 6802;  -- 		ADDI	2				; Otherwise, add 2 to go from -1 -> 1
-           04E : 109A;  -- 		STORE	GameDir
-           04F : 8800;  -- 		RETURN
-           050 : 6FFE;  -- 		ADDI	-2
-           051 : 109A;  -- 		STORE	GameDir
-           052 : 8800;  -- 		RETURN
-           053 : 109C;  -- 		STORE	KeyPressed
-           054 : 8800;  -- 		RETURN
-           055 : 8800;  -- 		RETURN
-           056 : 9802;  -- 	OUT    Timer
-           057 : 8047;  -- 	CALL	GameCheckButton
-           058 : 9002;  -- 	IN		Timer
-           059 : 6FFE;  -- 	ADDI	-2
-           05A : 3057;  -- 	JNEG	WaitingLoop
-           05B : 8800;  -- 	RETURN
-           05C : 90AF;  -- 	IN		Key1
-           05D : 385C;  -- 	JPOS	WaitForButton	; Button is not pressed, check again
-           05E : 90AF;  -- 		IN		Key1		; Button was just pressed, wait for it to be released
-           05F : 405E;  -- 		JZERO	WaitForRelease
-           060 : 8800;  -- 	RETURN
-           061 : B802;  -- 	LOADI	2
-           062 : 9801;  -- 	OUT		LEDs
-           063 : 805C;  -- 	CALL	WaitForButton
-           064 : 9000;  -- 	IN		Switches
-           065 : 489F;  -- 	AND		EightBits		; Mask off the rightmost eight bits to fit the
-           066 : 98A1;  -- 	OUT		Neo_Addr		; address length and store them in the peripheral
-           067 : 8800;  -- 	RETURN
-           068 : B804;  -- 	LOADI	4
-           069 : 9801;  -- 	OUT		LEDs
-           06A : 805C;  -- 	CALL	WaitForButton
-           06B : 9000;  -- 	IN		Switches
-           06C : 489D;  -- 	AND		FiveBits
-           06D : 600B;  -- 	SHIFT	11
-           06E : 1095;  -- 	STORE	Color16
-           06F : B808;  -- 	LOADI	8
-           070 : 9801;  -- 	OUT		LEDs
-           071 : 805C;  -- 	CALL	WaitForButton
-           072 : 9000;  -- 	IN		Switches
-           073 : 489E;  -- 	AND		SixBits
-           074 : 6005;  -- 	SHIFT	5
-           075 : 5095;  -- 	OR		Color16
-           076 : 1095;  -- 	STORE	Color16
-           077 : B810;  -- 	LOADI	16
-           078 : 9801;  -- 	OUT		LEDs
-           079 : 805C;  -- 	CALL	WaitForButton
-           07A : 9000;  -- 	IN		Switches
-           07B : 489D;  -- 	AND		FiveBits
-           07C : 5095;  -- 	OR		Color16
-           07D : 1095;  -- 	STORE	Color16
-           07E : 8800;  -- 	RETURN
-           07F : B804;  -- 	LOADI	4
-           080 : 9801;  -- 	OUT		LEDs
-           081 : 805C;  -- 	CALL	WaitForButton
-           082 : 9000;  -- 	IN		Switches
-           083 : 489F;  -- 	AND		EightBits
-           084 : 1096;  -- 	STORE	Color24_R
-           085 : B808;  -- 	LOADI	8
+           02F : 10A0;  -- 	STORE	GameDir
+           030 : B802;  -- 	LOADI	2
+           031 : 10A1;  -- 	STORE	GameSpeed
+           032 : B800;  -- 	LOADI	0
+           033 : 109F;  -- 	STORE	GameAddress
+           034 : B800;  -- 	LOADI	0
+           035 : 98A0;  -- 	OUT		Neo_All16
+           036 : 089F;  -- 		LOAD	GameAddress			; If the current address to be set is out of bounds, then the player failed
+           037 : 3048;  -- 		JNEG	GameFail			; To be in bounds, the address must be: 0 ≤ address < NumNeos which is the same as 0 ≤ address ≤ NumNeos - 1
+           038 : 20A2;  -- 		SUB		NumNeos
+           039 : 6801;  -- 		ADDI	1
+           03A : 3848;  -- 		JPOS	GameFail
+           03B : 804B;  -- 		CALL	GameCheckButton
+           03C : 089F;  -- 			LOAD	GameAddress
+           03D : 98A1;  -- 			OUT		Neo_Addr
+           03E : B800;  -- 			LOADI	0
+           03F : 98A2;  -- 			OUT		Neo_Single16
+           040 : 089F;  -- 			LOAD	GameAddress
+           041 : 18A0;  -- 			ADD		GameDir
+           042 : 109F;  -- 			STORE	GameAddress
+           043 : 98A1;  -- 			OUT		Neo_Addr
+           044 : 08A7;  -- 			LOAD	Green16
+           045 : 98A2;  -- 			OUT		Neo_Single16
+           046 : 805C;  -- 			CALL	Delay			; Wait for a fifth of a second before running the loop again
+           047 : 2836;  -- 			JUMP	GameLoop
+           048 : 08A8;  -- 		LOAD	Red16
+           049 : 98A0;  -- 		OUT		Neo_All16
+           04A : 2829;  -- 		JUMP	Game
+           04B : 90AF;  -- 		IN		Key1
+           04C : 4059;  -- 		JZERO	ExitFunc
+           04D : 08A3;  -- 		LOAD	KeyPressed
+           04E : 3859;  -- 		JPOS	ExitFunc
+           04F : 08A0;  -- 		LOAD	GameDir
+           050 : 3854;  -- 		JPOS	SubDir			; If the GameDir is currently 1, then we should subtract 2 from it to make it -1 by going to SubDir
+           051 : 18A1;  -- 		ADD		GameSpeed		; Otherwise, add 2 to go from -1 -> 1
+           052 : 10A0;  -- 		STORE	GameDir
+           053 : 2856;  -- 		JUMP	IncSpeed
+           054 : 20A1;  -- 		SUB		GameSpeed
+           055 : 10A0;  -- 		STORE	GameDir
+           056 : 08A1;  -- 		LOAD	GameSpeed
+           057 : 6801;  -- 		ADDI	1
+           058 : 10A1;  -- 		STORE	GameSpeed
+           059 : 90AF;  -- 		IN		Key1
+           05A : 10A3;  -- 		STORE	KeyPressed
+           05B : 8800;  -- 		RETURN
+           05C : 9802;  -- 	OUT    Timer
+           05D : 804B;  -- 	CALL	GameCheckButton
+           05E : 9002;  -- 	IN		Timer
+           05F : 6FFF;  -- 	ADDI	-1
+           060 : 305D;  -- 	JNEG	WaitingLoop
+           061 : 8800;  -- 	RETURN
+           062 : 90AF;  -- 	IN		Key1
+           063 : 3862;  -- 	JPOS	WaitForButton	; Button is not pressed, check again
+           064 : 90AF;  -- 		IN		Key1		; Button was just pressed, wait for it to be released
+           065 : 4064;  -- 		JZERO	WaitForRelease
+           066 : 8800;  -- 	RETURN
+           067 : B802;  -- 	LOADI	2
+           068 : 9801;  -- 	OUT		LEDs
+           069 : 8062;  -- 	CALL	WaitForButton
+           06A : 9000;  -- 	IN		Switches
+           06B : 48A6;  -- 	AND		EightBits		; Mask off the rightmost eight bits to fit the
+           06C : 98A1;  -- 	OUT		Neo_Addr		; address length and store them in the peripheral
+           06D : 8800;  -- 	RETURN
+           06E : B804;  -- 	LOADI	4
+           06F : 9801;  -- 	OUT		LEDs
+           070 : 8062;  -- 	CALL	WaitForButton
+           071 : 9000;  -- 	IN		Switches
+           072 : 48A4;  -- 	AND		FiveBits
+           073 : 600B;  -- 	SHIFT	11
+           074 : 109B;  -- 	STORE	Color16
+           075 : B808;  -- 	LOADI	8
+           076 : 9801;  -- 	OUT		LEDs
+           077 : 8062;  -- 	CALL	WaitForButton
+           078 : 9000;  -- 	IN		Switches
+           079 : 48A5;  -- 	AND		SixBits
+           07A : 6005;  -- 	SHIFT	5
+           07B : 509B;  -- 	OR		Color16
+           07C : 109B;  -- 	STORE	Color16
+           07D : B810;  -- 	LOADI	16
+           07E : 9801;  -- 	OUT		LEDs
+           07F : 8062;  -- 	CALL	WaitForButton
+           080 : 9000;  -- 	IN		Switches
+           081 : 48A4;  -- 	AND		FiveBits
+           082 : 509B;  -- 	OR		Color16
+           083 : 109B;  -- 	STORE	Color16
+           084 : 8800;  -- 	RETURN
+           085 : B804;  -- 	LOADI	4
            086 : 9801;  -- 	OUT		LEDs
-           087 : 805C;  -- 	CALL	WaitForButton
+           087 : 8062;  -- 	CALL	WaitForButton
            088 : 9000;  -- 	IN		Switches
-           089 : 489F;  -- 	AND		EightBits
-           08A : 6008;  -- 	SHIFT	8
-           08B : 1097;  -- 	STORE	Color24_GB
-           08C : B810;  -- 	LOADI	16
-           08D : 9801;  -- 	OUT		LEDs
-           08E : 805C;  -- 	CALL	WaitForButton
-           08F : 9000;  -- 	IN		Switches
-           090 : 489F;  -- 	AND		EightBits
-           091 : 5097;  -- 	OR		Color24_GB
-           092 : 1097;  -- 	STORE	Color24_GB
-           093 : 8800;  -- 	RETURN
-           094 : 0000;  -- Mode:			DW 0
-           095 : 0000;  -- Color16:		DW 0
-           096 : 0000;  -- Color24_R:		DW 0
-           097 : 0000;  -- Color24_GB:		DW 0
-           098 : 0000;  -- AutoAddress:	DW 0
-           099 : 0000;  -- GameAddress:	DW 0
-           09A : 0000;  -- GameDir:		DW 0 ; Game Direction
-           09B : 0000;  -- NumNeos:		DW 0
-           09C : 0000;  -- KeyPressed:		DW 0
-           09D : 001F;  -- FiveBits:	DW	31
-           09E : 003F;  -- SixBits:	DW	63
-           09F : 00FF;  -- EightBits:	DW	255
-           0A0 : 07E0;  -- Green16:	DW	&B11111100000;
-           0A1 : F800;  -- Red16:		DW	&B1111100000000000;
+           089 : 48A6;  -- 	AND		EightBits
+           08A : 109C;  -- 	STORE	Color24_R
+           08B : B808;  -- 	LOADI	8
+           08C : 9801;  -- 	OUT		LEDs
+           08D : 8062;  -- 	CALL	WaitForButton
+           08E : 9000;  -- 	IN		Switches
+           08F : 48A6;  -- 	AND		EightBits
+           090 : 6008;  -- 	SHIFT	8
+           091 : 109D;  -- 	STORE	Color24_GB
+           092 : B810;  -- 	LOADI	16
+           093 : 9801;  -- 	OUT		LEDs
+           094 : 8062;  -- 	CALL	WaitForButton
+           095 : 9000;  -- 	IN		Switches
+           096 : 48A6;  -- 	AND		EightBits
+           097 : 509D;  -- 	OR		Color24_GB
+           098 : 109D;  -- 	STORE	Color24_GB
+           099 : 8800;  -- 	RETURN
+           09A : 0000;  -- Mode:			DW 0
+           09B : 0000;  -- Color16:		DW 0
+           09C : 0000;  -- Color24_R:		DW 0
+           09D : 0000;  -- Color24_GB:		DW 0
+           09E : 0000;  -- AutoAddress:	DW 0
+           09F : 0000;  -- GameAddress:	DW 0
+           0A0 : 0000;  -- GameDir:		DW 0 ; Game Direction
+           0A1 : 0000;  -- GameSpeed:		DW 0
+           0A2 : 0000;  -- NumNeos:		DW 0
+           0A3 : 0000;  -- KeyPressed:		DW 0
+           0A4 : 001F;  -- FiveBits:	DW	31
+           0A5 : 003F;  -- SixBits:	DW	63
+           0A6 : 00FF;  -- EightBits:	DW	255
+           0A7 : 07E0;  -- Green16:	DW	&B11111100000;
+           0A8 : F800;  -- Red16:		DW	&B1111100000000000;
   END;
