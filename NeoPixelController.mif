@@ -8,175 +8,622 @@ DATA_RADIX = HEX;
 
 CONTENT
   BEGIN
-    [000..7FF] : 0000;  -- Default to NOP
+    000 : b800; -- LOADI	0
+    001 : 122a; -- STORE	Mode ; Reset the mode on reset
+    002 : b801; -- LOADI	1
+    003 : 9801; -- OUT		LEDs
+    004 : 81bc; -- CALL	WaitForButton
+    005 : 9000; -- IN		Switches		; Get the values of the switches after
+    006 : 4010; -- JZERO	SetSingle16		; the confirmation button is pressed
+    007 : 6fff; -- ADDI	-1
+    008 : 4015; -- JZERO	SetSingle24
+    009 : 6fff; -- ADDI	-1
+    00a : 401c; -- JZERO	SetAll16
+    00b : 6fff; -- ADDI	-1
+    00c : 4020; -- JZERO	AutoIncrement
+    00d : 6fff; -- ADDI	-1
+    00e : 402a; -- JZERO	Game
+    00f : 285d; -- JUMP    SnakeGame       ; Else, jump to SnakeGame
+    010 : 81c1; -- CALL	OutAddress
+    011 : 81c8; -- CALL	GetColors16
+    012 : 0a2b; -- LOAD	Color16
+    013 : 98a2; -- OUT		Neo_Single16
+    014 : 2802; -- JUMP	ChooseMode
+    015 : 81c1; -- CALL	OutAddress
+    016 : 81df; -- CALL	GetColors24
+    017 : 0a2c; -- LOAD	Color24_R
+    018 : 98a3; -- OUT		Neo_Single24_R
+    019 : 0a2d; -- LOAD	Color24_GB
+    01a : 98a4; -- OUT		Neo_Single24_GB
+    01b : 2802; -- JUMP	ChooseMode
+    01c : 81c8; -- CALL	GetColors16
+    01d : 0a2b; -- LOAD	Color16
+    01e : 98a0; -- OUT		Neo_All16
+    01f : 2802; -- JUMP	ChooseMode
+    020 : b800; -- LOADI 0
+    021 : 122e; -- STORE AutoAddress
+    022 : 0a2e; -- LOAD	AutoAddress
+    023 : 98a1; -- OUT		Neo_Addr
+    024 : 81c8; -- CALL	GetColors16
+    025 : 98a2; -- OUT		Neo_Single16
+    026 : 0a2e; -- LOAD	AutoAddress
+    027 : 6801; -- ADDI	1
+    028 : 122e; -- STORE	AutoAddress
+    029 : 2822; -- JUMP IncLoop
+    02a : b820; -- LOADI	32
+    02b : 9801; -- OUT		LEDs
+    02c : 81bc; -- CALL	WaitForButton
+    02d : 9000; -- IN		Switches
+    02e : 1232; -- STORE	NumNeos				; The value from the switches will be our number of Neopixels to work with for the game
+    02f : b801; -- LOADI	1
+    030 : 1230; -- STORE	GameDir
+    031 : b802; -- LOADI	2
+    032 : 1231; -- STORE	GameSpeed
+    033 : b800; -- LOADI	0
+    034 : 122f; -- STORE	GameAddress
+    035 : b800; -- LOADI	0
+    036 : 98a0; -- OUT		Neo_All16
+    037 : 0a2f; -- LOAD	GameAddress			; If the current address to be set is out of bounds, then the player failed
+    038 : 3049; -- JNEG	GameFail			; To be in bounds, the address must be: 0 ≤ address < NumNeos which is the same as 0 ≤ address ≤ NumNeos - 1
+    039 : 2232; -- SUB		NumNeos
+    03a : 6801; -- ADDI	1
+    03b : 3849; -- JPOS	GameFail
+    03c : 804c; -- CALL	GameCheckButton
+    03d : 0a2f; -- LOAD	GameAddress
+    03e : 98a1; -- OUT		Neo_Addr
+    03f : b800; -- LOADI	0
+    040 : 98a2; -- OUT		Neo_Single16
+    041 : 0a2f; -- LOAD	GameAddress
+    042 : 1a30; -- ADD		GameDir
+    043 : 122f; -- STORE	GameAddress
+    044 : 98a1; -- OUT		Neo_Addr
+    045 : 0a59; -- LOAD	Green16
+    046 : 98a2; -- OUT		Neo_Single16
+    047 : 81b6; -- CALL	Delay			; Wait for a fifth of a second before running the loop again
+    048 : 2837; -- JUMP	GameLoop
+    049 : 0a5a; -- LOAD	Red16
+    04a : 98a0; -- OUT		Neo_All16
+    04b : 282a; -- JUMP	Game
+    04c : 90af; -- IN		Key1
+    04d : 405a; -- JZERO	ExitFunc
+    04e : 0a33; -- LOAD	KeyPressed
+    04f : 385a; -- JPOS	ExitFunc
+    050 : 0a30; -- LOAD	GameDir
+    051 : 3855; -- JPOS	SubDir			; If the GameDir is currently 1, then we should subtract 2 from it to make it -1 by going to SubDir
+    052 : 1a31; -- ADD		GameSpeed		; Otherwise, add 2 to go from -1 -> 1
+    053 : 1230; -- STORE	GameDir
+    054 : 2857; -- JUMP	IncSpeed
+    055 : 2231; -- SUB		GameSpeed
+    056 : 1230; -- STORE	GameDir
+    057 : 0a31; -- LOAD	GameSpeed
+    058 : 6801; -- ADDI	1
+    059 : 1231; -- STORE	GameSpeed
+    05a : 90af; -- IN		Key1
+    05b : 1233; -- STORE	KeyPressed
+    05c : 8800; -- RETURN
+    05d : b840; -- LOADI	64
+    05e : 9801; -- OUT		LEDs
+    05f : b801; -- LOADI 1
+    060 : 123e; -- STORE CurBodySize
+    061 : b801; -- LOADI 1 ; start moving rightwards
+    062 : 1238; -- STORE CurDir
+    063 : 0a49; -- LOAD ScreenWidth
+    064 : 6011; -- SHIFT -1
+    065 : 123f; -- STORE Body1X
+    066 : 0a4a; -- LOAD ScreenHeight
+    067 : 6011; -- SHIFT -1
+    068 : 1240; -- STORE Body1Y
+    069 : 0a4f; -- LOAD	Background
+    06a : 98a0; -- OUT		Neo_All16
+    06b : 0a3f; -- LOAD Body1X
+    06c : 124b; -- STORE   XYToIndexX
+    06d : 0a40; -- LOAD Body1Y
+    06e : 124c; -- STORE   XYToIndexY
+    06f : 817a; -- CALL    XYToIndex ; get head's index
+    070 : 4a58; -- AND		EightBits
+    071 : 98a1; -- OUT		Neo_Addr
+    072 : 0a50; -- LOAD	SnakeColor
+    073 : 98a2; -- OUT		Neo_Single16
+    074 : 8189; -- CALL GetNewApplePos
+    075 : 81aa; -- CALL DrawNewApplePos
+    076 : b802; -- LOADI 2
+    077 : 81b4; -- CALL DEBUG
+    078 : b805; -- LOADI 5
+    079 : 821f; -- CALL DELAYAC ; wait 0.1 seconds
+    07a : 81fe; -- CALL ReadY
+    07b : 1235; -- STORE CurReadY
+    07c : 8226; -- CALL Abs
+    07d : 1254; -- STORE ReadYAbsTemp
+    07e : 81f4; -- CALL ReadX
+    07f : 1234; -- STORE CurReadX
+    080 : 8226; -- CALL Abs
+    081 : 2254; -- SUB ReadYAbsTemp ; ACC = abs(readX) - abs(readY)
+    082 : 3884; -- JPOS MoreX ; if readx > ready: go to moreX
+    083 : 288d; -- JUMP MoreY ; if ready > go to moreY
+    084 : 0a34; -- LOAD CurReadX
+    085 : 3887; -- JPOS MoreLeft
+    086 : 288a; -- JUMP MoreRight
+    087 : bfff; -- LOADI -1
+    088 : 1239; -- STORE NewDir
+    089 : 2896; -- JUMP DirOutput
+    08a : b801; -- LOADI 1
+    08b : 1239; -- Store NewDir
+    08c : 2896; -- JUMP DirOutput
+    08d : 0a35; -- LOAD CurReadY
+    08e : 3890; -- JPOS MoreDown
+    08f : 2893; -- JUMP MoreUp
+    090 : bffe; -- LOADI -2
+    091 : 1239; -- Store NewDir
+    092 : 2896; -- JUMP DirOutput
+    093 : b802; -- LOADI 2
+    094 : 1239; -- Store NewDir
+    095 : 2896; -- JUMP DirOutput
+    096 : 0a39; -- LOAD NewDir
+    097 : 1a38; -- ADD CurDir
+    098 : 409b; -- JZERO SkipSetCurDir ; set curDir = newDir if newDir != opposite of curDir
+    099 : 0a39; -- LOAD NewDir
+    09a : 1238; -- STORE CurDir
+    09b : 0a38; -- LOAD CurDir
+    09c : b804; -- LOADI 4
+    09d : 81b4; -- CALL DEBUG
+    09e : 0a38; -- LOAD CurDir
+    09f : 6fff; -- ADDI -1
+    0a0 : 40ab; -- JZERO MovingRight
+    0a1 : 0a38; -- LOAD CurDir
+    0a2 : 6801; -- ADDI 1
+    0a3 : 40b1; -- JZERO MovingLeft
+    0a4 : 0a38; -- LOAD CurDir
+    0a5 : 6ffe; -- ADDI -2
+    0a6 : 40b7; -- JZERO MovingUp
+    0a7 : 0a38; -- LOAD CurDir
+    0a8 : 6802; -- ADDI 2
+    0a9 : 40bd; -- JZERO MovingDown
+    0aa : 28bd; -- JUMP MovingDown
+    0ab : 0a3f; -- LOAD Body1X
+    0ac : 6801; -- ADDI 1
+    0ad : 1236; -- STORE NextX
+    0ae : 0a40; -- LOAD Body1Y
+    0af : 1237; -- STORE NextY
+    0b0 : 28c3; -- JUMP EndMoving
+    0b1 : 0a3f; -- LOAD Body1X
+    0b2 : 6fff; -- ADDI -1
+    0b3 : 1236; -- STORE NextX
+    0b4 : 0a40; -- LOAD Body1Y
+    0b5 : 1237; -- STORE NextY
+    0b6 : 28c3; -- JUMP EndMoving
+    0b7 : 0a3f; -- LOAD Body1X
+    0b8 : 1236; -- STORE NextX
+    0b9 : 0a40; -- LOAD Body1Y
+    0ba : 6801; -- ADDI 1
+    0bb : 1237; -- STORE NextY
+    0bc : 28c3; -- JUMP EndMoving
+    0bd : 0a3f; -- LOAD Body1X
+    0be : 1236; -- STORE NextX
+    0bf : 0a40; -- LOAD Body1Y
+    0c0 : 6fff; -- ADDI -1
+    0c1 : 1237; -- STORE NextY
+    0c2 : 28c3; -- JUMP EndMoving
+    0c3 : 0a36; -- LOAD NextX
+    0c4 : 9804; -- OUT Hex0
+    0c5 : b808; -- LOADI 8
+    0c6 : 81b4; -- CALL DEBUG
+    0c7 : 0a3e; -- LOAD CurBodySize
+    0c8 : 223d; -- SUB MaxBodySize
+    0c9 : 4172; -- JZERO SnakeWin ; if curbodysize >= max body size: you win
+    0ca : 3972; -- JPOS SnakeWin
+    0cb : 0a36; -- LOAD NextX
+    0cc : 316a; -- JNEG SnakeLose ; if x < 0
+    0cd : 2249; -- SUB ScreenWidth
+    0ce : 416a; -- JZERO SnakeLose ; if x >= width
+    0cf : 396a; -- JPOS SnakeLose
+    0d0 : 0a37; -- LOAD NextY
+    0d1 : 316a; -- JNEG SnakeLose ; if y < 0
+    0d2 : 224a; -- SUB ScreenHeight
+    0d3 : 416a; -- JZERO SnakeLose ; if y >= height
+    0d4 : 396a; -- JPOS SnakeLose
+    0d5 : 0a3a; -- LOAD AppleX
+    0d6 : 2236; -- SUB NextX
+    0d7 : 30e0; -- JNEG NotEatingApple
+    0d8 : 38e0; -- JPOS NotEatingApple
+    0d9 : 0a3b; -- LOAD AppleY
+    0da : 2237; -- SUB NextY
+    0db : 30e0; -- JNEG NotEatingApple
+    0dc : 38e0; -- JPOS NotEatingApple
+    0dd : b801; -- LOADI 1
+    0de : 123c; -- STORE EatingApple
+    0df : 28e3; -- JUMP EndEatingApple
+    0e0 : b800; -- LOADI 0
+    0e1 : 123c; -- STORE EatingApple
+    0e2 : 28e3; -- JUMP EndEatingApple
+    0e3 : 0a36; -- LOAD NextX
+    0e4 : 223f; -- SUB Body1X
+    0e5 : 30ec; -- JNEG EndBodyCheck1
+    0e6 : 38ec; -- JPOS EndBodyCheck1
+    0e7 : 0a37; -- LOAD NextY
+    0e8 : 2240; -- SUB Body1Y
+    0e9 : 30ec; -- JNEG EndBodyCheck1
+    0ea : 38ec; -- JPOS EndBodyCheck1
+    0eb : 296a; -- JUMP SnakeLose
+    0ec : 0a36; -- LOAD NextX
+    0ed : 2241; -- SUB Body2X
+    0ee : 30f5; -- JNEG EndBodyCheck2
+    0ef : 38f5; -- JPOS EndBodyCheck2
+    0f0 : 0a37; -- LOAD NextY
+    0f1 : 2242; -- SUB Body2Y
+    0f2 : 30f5; -- JNEG EndBodyCheck2
+    0f3 : 38f5; -- JPOS EndBodyCheck2
+    0f4 : 296a; -- JUMP SnakeLose
+    0f5 : 0a36; -- LOAD NextX
+    0f6 : 2243; -- SUB Body3X
+    0f7 : 30fe; -- JNEG EndBodyCheck3
+    0f8 : 38fe; -- JPOS EndBodyCheck3
+    0f9 : 0a37; -- LOAD NextY
+    0fa : 2244; -- SUB Body3Y
+    0fb : 30fe; -- JNEG EndBodyCheck3
+    0fc : 38fe; -- JPOS EndBodyCheck3
+    0fd : 296a; -- JUMP SnakeLose
+    0fe : 0a36; -- LOAD NextX
+    0ff : 2245; -- SUB Body4X
+    100 : 3107; -- JNEG EndBodyCheck4
+    101 : 3907; -- JPOS EndBodyCheck4
+    102 : 0a37; -- LOAD NextY
+    103 : 2246; -- SUB Body4Y
+    104 : 3107; -- JNEG EndBodyCheck4
+    105 : 3907; -- JPOS EndBodyCheck4
+    106 : 296a; -- JUMP SnakeLose
+    107 : 0a3c; -- LOAD EatingApple
+    108 : 390a; -- JPOS BodyCheck5 ; if eating apple, check last body part
+    109 : 2913; -- JUMP EndBodyCheck5
+    10a : 0a36; -- LOAD NextX
+    10b : 2247; -- SUB Body5X
+    10c : 3113; -- JNEG EndBodyCheck5
+    10d : 3913; -- JPOS EndBodyCheck5
+    10e : 0a37; -- LOAD NextY
+    10f : 2248; -- SUB Body5Y
+    110 : 3113; -- JNEG EndBodyCheck5
+    111 : 3913; -- JPOS EndBodyCheck5
+    112 : 296a; -- JUMP SnakeLose
+    113 : b810; -- LOADI 16
+    114 : 81b4; -- CALL DEBUG
+    115 : 0a45; -- LOAD Body4X
+    116 : 1247; -- STORE Body5X
+    117 : 0a46; -- LOAD Body4Y
+    118 : 1248; -- STORE Body5Y
+    119 : 0a43; -- LOAD Body3X
+    11a : 1245; -- STORE Body4X
+    11b : 0a44; -- LOAD Body3Y
+    11c : 1246; -- STORE Body4Y
+    11d : 0a41; -- LOAD Body2X
+    11e : 1243; -- STORE Body3X
+    11f : 0a42; -- LOAD Body2Y
+    120 : 1244; -- STORE Body3Y
+    121 : 0a3f; -- LOAD Body1X
+    122 : 1241; -- STORE Body2X
+    123 : 0a40; -- LOAD Body1Y
+    124 : 1242; -- STORE Body2Y
+    125 : 0a36; -- LOAD NextX
+    126 : 123f; -- STORE Body1X
+    127 : 0a37; -- LOAD NextY
+    128 : 1240; -- STORE Body1Y
+    129 : b820; -- LOADI 32
+    12a : 81b4; -- CALL DEBUG
+    12b : 0a36; -- LOAD NextX
+    12c : 124b; -- STORE   XYToIndexX
+    12d : 0a37; -- LOAD NextY
+    12e : 124c; -- STORE   XYToIndexY
+    12f : 817a; -- CALL    XYToIndex ; get head's index
+    130 : 4a58; -- AND		EightBits
+    131 : 98a1; -- OUT		Neo_Addr
+    132 : 0a50; -- LOAD	SnakeColor
+    133 : 98a2; -- OUT		Neo_Single16
+    134 : 0a3c; -- LOAD EatingApple
+    135 : 3937; -- JPOS IncSize
+    136 : 293a; -- JUMP EndIncSize
+    137 : 0a3e; -- LOAD CurBodySize ; inc size
+    138 : 6801; -- ADDI 1
+    139 : 123e; -- STORE CurBodySize
+    13a : 0a3c; -- LOAD EatingApple
+    13b : 413d; -- JZERO EraseTail ; erase tail if we didnt eat an apple
+    13c : 295f; -- JUMP EndEraseTail
+    13d : 0a3e; -- LOAD CurBodySize
+    13e : 6fff; -- ADDI -1
+    13f : 4146; -- JZERO EraseBody2 ; if new body size is 1, erase body 2
+    140 : 6fff; -- ADDI -1
+    141 : 414b; -- JZERO EraseBody3 ; if new body size is 2, erase body 3, etc...
+    142 : 6fff; -- ADDI -1
+    143 : 4150; -- JZERO EraseBody4
+    144 : 6fff; -- ADDI -1
+    145 : 4155; -- JZERO EraseBody5
+    146 : 0a41; -- LOAD Body2X
+    147 : 124b; -- STORE   XYToIndexX
+    148 : 0a42; -- LOAD Body2Y
+    149 : 124c; -- STORE   XYToIndexY
+    14a : 295a; -- JUMP EndEraseBody
+    14b : 0a43; -- LOAD Body3X
+    14c : 124b; -- STORE   XYToIndexX
+    14d : 0a44; -- LOAD Body3Y
+    14e : 124c; -- STORE   XYToIndexY
+    14f : 295a; -- JUMP EndEraseBody
+    150 : 0a45; -- LOAD Body4X
+    151 : 124b; -- STORE   XYToIndexX
+    152 : 0a46; -- LOAD Body4Y
+    153 : 124c; -- STORE   XYToIndexY
+    154 : 295a; -- JUMP EndEraseBody
+    155 : 0a47; -- LOAD Body5X
+    156 : 124b; -- STORE   XYToIndexX
+    157 : 0a48; -- LOAD Body5Y
+    158 : 124c; -- STORE   XYToIndexY
+    159 : 295a; -- JUMP EndEraseBody
+    15a : 817a; -- CALL    XYToIndex ; get old tail's index
+    15b : 4a58; -- AND		EightBits
+    15c : 98a1; -- OUT		Neo_Addr
+    15d : 0a4f; -- LOAD	Background ; set to background color
+    15e : 98a2; -- OUT		Neo_Single16
+    15f : 0a3c; -- LOAD EatingApple
+    160 : 3962; -- JPOS GetNewApplePosLabel
+    161 : 2964; -- JUMP EndGetNewApplePosLabel
+    162 : 8189; -- CALL GetNewApplePos
+    163 : 2964; -- JUMP EndGetNewApplePosLabel
+    164 : b840; -- LOADI 64
+    165 : 81b4; -- CALL DEBUG
+    166 : 81aa; -- CALL DrawNewApplePos
+    167 : b880; -- LOADI 128
+    168 : 81b4; -- CALL DEBUG
+    169 : 2878; -- JUMP SnakeGameLoop
+    16a : 0a51; -- LOAD	LoseColor
+    16b : 98a0; -- OUT		Neo_All16
+    16c : 0a3e; -- LOAD CurBodySize
+    16d : 9804; -- OUT Hex0
+    16e : b900; -- LOADI 256
+    16f : 81b4; -- CALL DEBUG
+    170 : 81bc; -- CALL	WaitForButton
+    171 : 285d; -- JUMP 	SnakeGame
+    172 : 0a52; -- LOAD	WinColor
+    173 : 98a0; -- OUT		Neo_All16
+    174 : 0a3e; -- LOAD CurBodySize
+    175 : 9804; -- OUT Hex0
+    176 : ba00; -- LOADI 512
+    177 : 81b4; -- CALL DEBUG
+    178 : 81bc; -- CALL	WaitForButton
+    179 : 285d; -- JUMP    SnakeGame
+    17a : 0a4c; -- LOAD XYToIndexY
+    17b : 4a5b; -- AND Bit0
+    17c : 3984; -- JPOS XYToIndexOdd
+    17d : 297e; -- JUMP XYToIndexEven
+    17e : 0a4c; -- LOAD XYToIndexY
+    17f : 6801; -- ADDI 1
+    180 : 6005; -- SHIFT 5
+    181 : 224b; -- SUB XYToIndexX
+    182 : 6fff; -- ADDI -1
+    183 : 2988; -- JUMP EndXYToIndex
+    184 : 0a4c; -- LOAD XYToIndexY
+    185 : 6005; -- SHIFT 5 ; * 32
+    186 : 1a4b; -- ADD XYToIndexX
+    187 : 2988; -- JUMP EndXYToIndex
+    188 : 8800; -- RETURN
+    189 : b801; -- LOADI 1 ; reset prevkey1
+    18a : 124d; -- STORE PrevKey1
+    18b : b800; -- LOADI 0 ; reset ApplePosCounter
+    18c : 124e; -- STORE ApplePosCounter
+    18d : 0a4e; -- LOAD ApplePosCounter
+    18e : 6801; -- ADDI 1
+    18f : 4a58; -- AND EightBits ; keep within [0-255]
+    190 : 124e; -- STORE ApplePosCounter
+    191 : 0a4d; -- LOAD PrevKey1
+    192 : 1255; -- STORE PrevKey1Temp
+    193 : 90af; -- IN		Key1
+    194 : 124d; -- STORE PrevKey1
+    195 : 418d; -- JZERO	GetNewApplePosLoop ; user is pressing key1, loop until they let go
+    196 : 0a55; -- LOAD PrevKey1Temp
+    197 : 4199; -- JZERO GetNewApplePosLoopEnd; they used to be pressing key1, finish loop
+    198 : 298d; -- JUMP GetNewApplePosLoop
+    199 : 0a4e; -- LOAD ApplePosCounter
+    19a : 6013; -- SHIFT -3
+    19b : 4a5d; -- AND LowFiveBits ; XXXXX
+    19c : 123a; -- STORE AppleX
+    19d : 0a4e; -- LOAD ApplePosCounter
+    19e : 4a5c; -- AND LowThreeBits ; YYY
+    19f : 6ffb; -- ADDI -5
+    1a0 : 39a5; -- JPOS AppleSubTwo
+    1a1 : 0a4e; -- LOAD ApplePosCounter
+    1a2 : 4a5c; -- AND LowThreeBits
+    1a3 : 123b; -- STORE AppleY
+    1a4 : 29a9; -- JUMP EndAppleSub
+    1a5 : 0a4e; -- LOAD ApplePosCounter
+    1a6 : 4a5c; -- AND LowThreeBits
+    1a7 : 6ffc; -- ADDI -4
+    1a8 : 123b; -- STORE AppleY
+    1a9 : 8800; -- RETURN
+    1aa : 0a3a; -- LOAD AppleX
+    1ab : 124b; -- STORE XYToIndexX
+    1ac : 0a3b; -- LOAD AppleY
+    1ad : 124c; -- STORE XYToIndexY
+    1ae : 817a; -- CALL    XYToIndex ; get old tail's index
+    1af : 4a58; -- AND		EightBits
+    1b0 : 98a1; -- OUT		Neo_Addr
+    1b1 : 0a53; -- LOAD	FruitColor ; set to fruit color
+    1b2 : 98a2; -- OUT		Neo_Single16
+    1b3 : 8800; -- RETURN
+    1b4 : 9801; -- OUT LEDs
+    1b5 : 8800; -- RETURN
+    1b6 : 9802; -- OUT    Timer
+    1b7 : 804c; -- CALL	GameCheckButton
+    1b8 : 9002; -- IN		Timer
+    1b9 : 6fff; -- ADDI	-1
+    1ba : 3221; -- JNEG	WaitingLoop
+    1bb : 8800; -- RETURN
+    1bc : 90af; -- IN		Key1
+    1bd : 39bc; -- JPOS	WaitForButton	; Button is not pressed, check again
+    1be : 90af; -- IN		Key1		; Button was just pressed, wait for it to be released
+    1bf : 41be; -- JZERO	WaitForRelease
+    1c0 : 8800; -- RETURN
+    1c1 : b802; -- LOADI	2
+    1c2 : 9801; -- OUT		LEDs
+    1c3 : 81bc; -- CALL	WaitForButton
+    1c4 : 9000; -- IN		Switches
+    1c5 : 4a58; -- AND		EightBits		; Mask off the rightmost eight bits to fit the
+    1c6 : 98a1; -- OUT		Neo_Addr		; address length and store them in the peripheral
+    1c7 : 8800; -- RETURN
+    1c8 : b804; -- LOADI	4
+    1c9 : 9801; -- OUT		LEDs
+    1ca : 81bc; -- CALL	WaitForButton
+    1cb : 9000; -- IN		Switches
+    1cc : 4a56; -- AND		FiveBits
+    1cd : 600b; -- SHIFT	11
+    1ce : 122b; -- STORE	Color16
+    1cf : b808; -- LOADI	8
+    1d0 : 9801; -- OUT		LEDs
+    1d1 : 81bc; -- CALL	WaitForButton
+    1d2 : 9000; -- IN		Switches
+    1d3 : 4a57; -- AND		SixBits
+    1d4 : 6005; -- SHIFT	5
+    1d5 : 522b; -- OR		Color16
+    1d6 : 122b; -- STORE	Color16
+    1d7 : b810; -- LOADI	16
+    1d8 : 9801; -- OUT		LEDs
+    1d9 : 81bc; -- CALL	WaitForButton
+    1da : 9000; -- IN		Switches
+    1db : 4a56; -- AND		FiveBits
+    1dc : 522b; -- OR		Color16
+    1dd : 122b; -- STORE	Color16
+    1de : 8800; -- RETURN
+    1df : b804; -- LOADI	4
+    1e0 : 9801; -- OUT		LEDs
+    1e1 : 81bc; -- CALL	WaitForButton
+    1e2 : 9000; -- IN		Switches
+    1e3 : 4a58; -- AND		EightBits
+    1e4 : 122c; -- STORE	Color24_R
+    1e5 : b808; -- LOADI	8
+    1e6 : 9801; -- OUT		LEDs
+    1e7 : 81bc; -- CALL	WaitForButton
+    1e8 : 9000; -- IN		Switches
+    1e9 : 4a58; -- AND		EightBits
+    1ea : 6008; -- SHIFT	8
+    1eb : 122d; -- STORE	Color24_GB
+    1ec : b810; -- LOADI	16
+    1ed : 9801; -- OUT		LEDs
+    1ee : 81bc; -- CALL	WaitForButton
+    1ef : 9000; -- IN		Switches
+    1f0 : 4a58; -- AND		EightBits
+    1f1 : 522d; -- OR		Color24_GB
+    1f2 : 122d; -- STORE	Color24_GB
+    1f3 : 8800; -- RETURN
+    1f4 : 8212; -- CALL   BlockI2C    ; ensure bus is idle
+    1f5 : 0a63; -- LOAD   I2CRCmd     ; load read command
+    1f6 : 9890; -- OUT    I2C_CMD     ; send read command to I2C_CMD register
+    1f7 : 0a64; -- LOAD   AccXAddr    ; load ADXL345 register address for X acceleration
+    1f8 : 9891; -- OUT    I2C_DATA    ; send to I2C_DATA register
+    1f9 : 9892; -- OUT    I2C_RDY     ; start the communication
+    1fa : 8212; -- CALL   BlockI2C    ; wait for it to finish
+    1fb : 9091; -- IN     I2C_data    ; put the data in AC
+    1fc : 8208; -- CALL   SwapBytes   ; bytes are returned in wrong order; swap them
+    1fd : 8800; -- RETURN
+    1fe : 8212; -- CALL   BlockI2C    ; ensure bus is idle
+    1ff : 0a63; -- LOAD   I2CRCmd     ; load read command
+    200 : 9890; -- OUT    I2C_CMD     ; send read command to I2C_CMD register
+    201 : 0a65; -- LOAD   AccYAddr    ; load ADXL345 register address for X acceleration
+    202 : 9891; -- OUT    I2C_DATA    ; send to I2C_DATA register
+    203 : 9892; -- OUT    I2C_RDY     ; start the communication
+    204 : 8212; -- CALL   BlockI2C    ; wait for it to finish
+    205 : 9091; -- IN     I2C_data    ; put the data in AC
+    206 : 8208; -- CALL   SwapBytes   ; bytes are returned in wrong order; swap them
+    207 : 8800; -- RETURN
+    208 : 1210; -- STORE  SBT1
+    209 : 6008; -- SHIFT  8
+    20a : 1211; -- STORE  SBT2
+    20b : 0a10; -- LOAD   SBT1
+    20c : 6018; -- SHIFT  -8
+    20d : 4a5e; -- AND    LoByte
+    20e : 5211; -- OR     SBT2
+    20f : 8800; -- RETURN
+    210 : 0000; -- SBT1: DW 0
+    211 : 0000; -- SBT2: DW 0
+    212 : 0a60; -- LOAD   Zero
+    213 : 1266; -- STORE  I2CTemp        ; Used to check for timeout
+    214 : 0a66; -- LOAD   I2CTemp
+    215 : 6801; -- ADDI   1           ; this will result in ~0.1s timeout
+    216 : 1266; -- STORE  I2CTemp
+    217 : 421b; -- JZERO  I2CError    ; Timeout occurred; error
+    218 : 9092; -- IN     I2C_RDY     ; Read busy signal
+    219 : 3a14; -- JPOS   BI2CL       ; If not 0, try again
+    21a : 8800; -- RETURN             ; Else return
+    21b : 0a60; -- LOAD   Zero
+    21c : 692c; -- ADDI   &H12C       ; "I2C"
+    21d : 9804; -- OUT    Hex0        ; display error message
+    21e : 2a1b; -- JUMP   I2CError
+    21f : 1225; -- STORE  DelayTime   ; Save the desired delay
+    220 : 9802; -- OUT    Timer       ; Reset the timer
+    221 : 9002; -- IN     Timer       ; Get the current timer value
+    222 : 2225; -- SUB    DelayTime
+    223 : 3221; -- JNEG   WaitingLoop ; Repeat until timer = delay value
+    224 : 8800; -- RETURN
+    225 : 0000; -- DelayTime: DW 0
+    226 : 3a29; -- JPOS   Abs_r
+    227 : 5a61; -- XOR    NegOne       ; Flip all bits
+    228 : 6801; -- ADDI   1            ; Add one (i.e. negate 2's complement number)
+    229 : 8800; -- RETURN
+    22a : 0000; -- Mode:			DW 0
+    22b : 0000; -- Color16:		DW 0
+    22c : 0000; -- Color24_R:		DW 0
+    22d : 0000; -- Color24_GB:		DW 0
+    22e : 0000; -- AutoAddress:	DW 0
+    22f : 0000; -- GameAddress:	DW 0
+    230 : 0000; -- GameDir:		DW 0 ; Game Direction
+    231 : 0000; -- GameSpeed:		DW 0
+    232 : 0000; -- NumNeos:		DW 0
+    233 : 0000; -- KeyPressed:		DW 0
+    234 : 0000; -- CurReadX: DW 0
+    235 : 0000; -- CurReadY: DW 0
+    236 : 0000; -- NextX:    DW 0
+    237 : 0000; -- NextY:    DW 0
+    238 : 0000; -- CurDir:   DW 0
+    239 : 0000; -- NewDir:   DW 0
+    23a : 0000; -- AppleX:   DW 0
+    23b : 0000; -- AppleY:   DW 0
+    23c : 0000; -- EatingApple: DW 0
+    23d : 0005; -- MaxBodySize: DW 5 ; constant value    board is 32 wide, 6 tall
+    23e : 0001; -- CurBodySize:   DW 1
+    23f : 0010; -- Body1X:        DW 16 ; this is head
+    240 : 0003; -- Body1Y:        DW 3
+    241 : 0000; -- Body2X:        DW 0
+    242 : 0000; -- Body2Y:        DW 0
+    243 : 0000; -- Body3X:        DW 0
+    244 : 0000; -- Body3Y:        DW 0
+    245 : 0000; -- Body4X:        DW 0
+    246 : 0000; -- Body4Y:        DW 0
+    247 : 0000; -- Body5X:        DW 0
+    248 : 0000; -- Body5Y:        DW 0
+    249 : 0020; -- ScreenWidth: DW 32
+    24a : 0006; -- ScreenHeight: DW 6
+    24b : 0000; -- XYToIndexX:   DW 0
+    24c : 0000; -- XYToIndexY:   DW 0
+    24d : 0000; -- PrevKey1:     DW 0
+    24e : 0000; -- ApplePosCounter: DW 0
+    24f : 001f; -- Background:  DW &B0000000000011111 ; blue
+    250 : ffe0; -- SnakeColor:  DW &B1111111111100000 ; yellow
+    251 : f800; -- LoseColor:   DW &B1111100000000000 ; red
+    252 : 07e0; -- WinColor:    DW &B0000011111100000 ; green
+    253 : f800; -- FruitColor:  DW &B1111100000000000 ; red
+    254 : 0000; -- ReadYAbsTemp: DW 0
+    255 : 0000; -- PrevKey1Temp: DW 0
+    256 : 001f; -- FiveBits:	DW	31
+    257 : 003f; -- SixBits:	DW	63
+    258 : 00ff; -- EightBits:	DW	255
+    259 : 07e0; -- Green16:	DW	&B11111100000;
+    25a : f800; -- Red16:		DW	&B1111100000000000;
+    25b : 0001; -- Bit0:      DW &B0000000001
+    25c : 0007; -- LowThreeBits: DW &B111
+    25d : 001f; -- LowFiveBits: DW &B11111
+    25e : 00ff; -- LoByte:    DW &H00FF
+    25f : ff00; -- HiByte:    DW &HFF00
+    260 : 0000; -- Zero:      DW 0
+    261 : ffff; -- NegOne:    DW -1
+    262 : 203a; -- I2CWCmd:  DW &H203A    ; write two i2c bytes, addr 0x3A
+    263 : 123a; -- I2CRCmd:  DW &H123A    ; write one byte, read two bytes, addr 0x3A
+    264 : 0032; -- AccXAddr: DW &H32      ; X acceleration register address.
+    265 : 0034; -- AccYAddr: DW &H34      ; X acceleration register address.
+    266 : 0000; -- I2CTemp:  DW 0
 
-           000 : B800;  -- 	LOADI	0
-           001 : 109A;  -- 	STORE	Mode ; Reset the mode on reset
-           002 : B801;  -- 	LOADI	1
-           003 : 9801;  -- 	OUT		LEDs
-           004 : 8062;  -- 	CALL	WaitForButton
-           005 : 9000;  -- 	IN		Switches		; Get the values of the switches after
-           006 : 400F;  -- 	JZERO	SetSingle16		; the confirmation button is pressed
-           007 : 6FFF;  -- 	ADDI	-1
-           008 : 4014;  -- 	JZERO	SetSingle24
-           009 : 6FFF;  -- 	ADDI	-1
-           00A : 401B;  -- 	JZERO	SetAll16
-           00B : 6FFF;  -- 	ADDI	-1
-           00C : 401F;  -- 	JZERO	AutoIncrement
-           00D : 6FFF;  -- 	ADDI	-1
-           00E : 2829;  -- 	JUMP	Game			; Else, jump to game
-           00F : 8067;  -- 	CALL	OutAddress
-           010 : 806E;  -- 	CALL	GetColors16
-           011 : 089B;  -- 	LOAD	Color16
-           012 : 98A2;  -- 	OUT		Neo_Single16
-           013 : 2802;  -- 	JUMP	ChooseMode
-           014 : 8067;  -- 	CALL	OutAddress
-           015 : 8085;  -- 	CALL	GetColors24
-           016 : 089C;  -- 	LOAD	Color24_R
-           017 : 98A3;  -- 	OUT		Neo_Single24_R
-           018 : 089D;  -- 	LOAD	Color24_GB
-           019 : 98A4;  -- 	OUT		Neo_Single24_GB
-           01A : 2802;  -- 	JUMP	ChooseMode
-           01B : 806E;  -- 	CALL	GetColors16
-           01C : 089B;  -- 	LOAD	Color16
-           01D : 98A0;  -- 	OUT		Neo_All16
-           01E : 2802;  -- 	JUMP	ChooseMode
-           01F : B800;  -- 	LOADI 0
-           020 : 109E;  -- 	STORE AutoAddress
-           021 : 089E;  -- 		LOAD	AutoAddress
-           022 : 98A1;  -- 		OUT		Neo_Addr
-           023 : 806E;  -- 		CALL	GetColors16
-           024 : 98A2;  -- 		OUT		Neo_Single16
-           025 : 089E;  -- 		LOAD	AutoAddress
-           026 : 6801;  -- 		ADDI	1
-           027 : 109E;  -- 		STORE	AutoAddress
-           028 : 2821;  -- 		JUMP IncLoop
-           029 : B820;  -- 	LOADI	32
-           02A : 9801;  -- 	OUT		LEDs
-           02B : 8062;  -- 	CALL	WaitForButton
-           02C : 9000;  -- 	IN		Switches
-           02D : 10A2;  -- 	STORE	NumNeos				; The value from the switches will be our number of Neopixels to work with for the game
-           02E : B801;  -- 	LOADI	1
-           02F : 10A0;  -- 	STORE	GameDir
-           030 : B802;  -- 	LOADI	2
-           031 : 10A1;  -- 	STORE	GameSpeed
-           032 : B800;  -- 	LOADI	0
-           033 : 109F;  -- 	STORE	GameAddress
-           034 : B800;  -- 	LOADI	0
-           035 : 98A0;  -- 	OUT		Neo_All16
-           036 : 089F;  -- 		LOAD	GameAddress			; If the current address to be set is out of bounds, then the player failed
-           037 : 3048;  -- 		JNEG	GameFail			; To be in bounds, the address must be: 0 ≤ address < NumNeos which is the same as 0 ≤ address ≤ NumNeos - 1
-           038 : 20A2;  -- 		SUB		NumNeos
-           039 : 6801;  -- 		ADDI	1
-           03A : 3848;  -- 		JPOS	GameFail
-           03B : 804B;  -- 		CALL	GameCheckButton
-           03C : 089F;  -- 			LOAD	GameAddress
-           03D : 98A1;  -- 			OUT		Neo_Addr
-           03E : B800;  -- 			LOADI	0
-           03F : 98A2;  -- 			OUT		Neo_Single16
-           040 : 089F;  -- 			LOAD	GameAddress
-           041 : 18A0;  -- 			ADD		GameDir
-           042 : 109F;  -- 			STORE	GameAddress
-           043 : 98A1;  -- 			OUT		Neo_Addr
-           044 : 08A7;  -- 			LOAD	Green16
-           045 : 98A2;  -- 			OUT		Neo_Single16
-           046 : 805C;  -- 			CALL	Delay			; Wait for a fifth of a second before running the loop again
-           047 : 2836;  -- 			JUMP	GameLoop
-           048 : 08A8;  -- 		LOAD	Red16
-           049 : 98A0;  -- 		OUT		Neo_All16
-           04A : 2829;  -- 		JUMP	Game
-           04B : 90AF;  -- 		IN		Key1
-           04C : 4059;  -- 		JZERO	ExitFunc
-           04D : 08A3;  -- 		LOAD	KeyPressed
-           04E : 3859;  -- 		JPOS	ExitFunc
-           04F : 08A0;  -- 		LOAD	GameDir
-           050 : 3854;  -- 		JPOS	SubDir			; If the GameDir is currently 1, then we should subtract 2 from it to make it -1 by going to SubDir
-           051 : 18A1;  -- 		ADD		GameSpeed		; Otherwise, add 2 to go from -1 -> 1
-           052 : 10A0;  -- 		STORE	GameDir
-           053 : 2856;  -- 		JUMP	IncSpeed
-           054 : 20A1;  -- 		SUB		GameSpeed
-           055 : 10A0;  -- 		STORE	GameDir
-           056 : 08A1;  -- 		LOAD	GameSpeed
-           057 : 6801;  -- 		ADDI	1
-           058 : 10A1;  -- 		STORE	GameSpeed
-           059 : 90AF;  -- 		IN		Key1
-           05A : 10A3;  -- 		STORE	KeyPressed
-           05B : 8800;  -- 		RETURN
-           05C : 9802;  -- 	OUT    Timer
-           05D : 804B;  -- 	CALL	GameCheckButton
-           05E : 9002;  -- 	IN		Timer
-           05F : 6FFF;  -- 	ADDI	-1
-           060 : 305D;  -- 	JNEG	WaitingLoop
-           061 : 8800;  -- 	RETURN
-           062 : 90AF;  -- 	IN		Key1
-           063 : 3862;  -- 	JPOS	WaitForButton	; Button is not pressed, check again
-           064 : 90AF;  -- 		IN		Key1		; Button was just pressed, wait for it to be released
-           065 : 4064;  -- 		JZERO	WaitForRelease
-           066 : 8800;  -- 	RETURN
-           067 : B802;  -- 	LOADI	2
-           068 : 9801;  -- 	OUT		LEDs
-           069 : 8062;  -- 	CALL	WaitForButton
-           06A : 9000;  -- 	IN		Switches
-           06B : 48A6;  -- 	AND		EightBits		; Mask off the rightmost eight bits to fit the
-           06C : 98A1;  -- 	OUT		Neo_Addr		; address length and store them in the peripheral
-           06D : 8800;  -- 	RETURN
-           06E : B804;  -- 	LOADI	4
-           06F : 9801;  -- 	OUT		LEDs
-           070 : 8062;  -- 	CALL	WaitForButton
-           071 : 9000;  -- 	IN		Switches
-           072 : 48A4;  -- 	AND		FiveBits
-           073 : 600B;  -- 	SHIFT	11
-           074 : 109B;  -- 	STORE	Color16
-           075 : B808;  -- 	LOADI	8
-           076 : 9801;  -- 	OUT		LEDs
-           077 : 8062;  -- 	CALL	WaitForButton
-           078 : 9000;  -- 	IN		Switches
-           079 : 48A5;  -- 	AND		SixBits
-           07A : 6005;  -- 	SHIFT	5
-           07B : 509B;  -- 	OR		Color16
-           07C : 109B;  -- 	STORE	Color16
-           07D : B810;  -- 	LOADI	16
-           07E : 9801;  -- 	OUT		LEDs
-           07F : 8062;  -- 	CALL	WaitForButton
-           080 : 9000;  -- 	IN		Switches
-           081 : 48A4;  -- 	AND		FiveBits
-           082 : 509B;  -- 	OR		Color16
-           083 : 109B;  -- 	STORE	Color16
-           084 : 8800;  -- 	RETURN
-           085 : B804;  -- 	LOADI	4
-           086 : 9801;  -- 	OUT		LEDs
-           087 : 8062;  -- 	CALL	WaitForButton
-           088 : 9000;  -- 	IN		Switches
-           089 : 48A6;  -- 	AND		EightBits
-           08A : 109C;  -- 	STORE	Color24_R
-           08B : B808;  -- 	LOADI	8
-           08C : 9801;  -- 	OUT		LEDs
-           08D : 8062;  -- 	CALL	WaitForButton
-           08E : 9000;  -- 	IN		Switches
-           08F : 48A6;  -- 	AND		EightBits
-           090 : 6008;  -- 	SHIFT	8
-           091 : 109D;  -- 	STORE	Color24_GB
-           092 : B810;  -- 	LOADI	16
-           093 : 9801;  -- 	OUT		LEDs
-           094 : 8062;  -- 	CALL	WaitForButton
-           095 : 9000;  -- 	IN		Switches
-           096 : 48A6;  -- 	AND		EightBits
-           097 : 509D;  -- 	OR		Color24_GB
-           098 : 109D;  -- 	STORE	Color24_GB
-           099 : 8800;  -- 	RETURN
-           09A : 0000;  -- Mode:			DW 0
-           09B : 0000;  -- Color16:		DW 0
-           09C : 0000;  -- Color24_R:		DW 0
-           09D : 0000;  -- Color24_GB:		DW 0
-           09E : 0000;  -- AutoAddress:	DW 0
-           09F : 0000;  -- GameAddress:	DW 0
-           0A0 : 0000;  -- GameDir:		DW 0 ; Game Direction
-           0A1 : 0000;  -- GameSpeed:		DW 0
-           0A2 : 0000;  -- NumNeos:		DW 0
-           0A3 : 0000;  -- KeyPressed:		DW 0
-           0A4 : 001F;  -- FiveBits:	DW	31
-           0A5 : 003F;  -- SixBits:	DW	63
-           0A6 : 00FF;  -- EightBits:	DW	255
-           0A7 : 07E0;  -- Green16:	DW	&B11111100000;
-           0A8 : F800;  -- Red16:		DW	&B1111100000000000;
+    [267..7ff] : 0000; -- Empty memory
+
   END;

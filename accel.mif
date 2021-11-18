@@ -1,0 +1,690 @@
+-- Altera Memory Initialization File (MIF)
+
+DEPTH = 2048;
+WIDTH = 16;
+
+ADDRESS_RADIX = HEX;
+DATA_RADIX = HEX;
+
+CONTENT
+  BEGIN
+    000 : b801; -- LOADI 1
+    001 : 8155; -- CALL DEBUG
+    002 : b801; -- LOADI 1
+    003 : 127c; -- STORE CurBodySize
+    004 : b801; -- LOADI 1 ; start moving rightwards
+    005 : 1276; -- STORE CurDir
+    006 : 0a66; -- LOAD ScreenWidth
+    007 : 6011; -- SHIFT -1
+    008 : 127d; -- STORE Body1X
+    009 : 0a67; -- LOAD ScreenHeight
+    00a : 6011; -- SHIFT -1
+    00b : 127e; -- STORE Body1Y
+    00c : 0a6c; -- LOAD	Background
+    00d : 98a0; -- OUT		Neo_All16
+    00e : 0a7d; -- LOAD Body1X
+    00f : 1268; -- STORE   XYToIndexX
+    010 : 0a7e; -- LOAD Body1Y
+    011 : 1269; -- STORE   XYToIndexY
+    012 : 811b; -- CALL    XYToIndex ; get head's index
+    013 : 4a96; -- AND		EightBits
+    014 : 98a1; -- OUT		Neo_Addr
+    015 : 0a6d; -- LOAD	SnakeColor
+    016 : 98a2; -- OUT		Neo_Single16
+    017 : 812a; -- CALL GetNewApplePos
+    018 : 814b; -- CALL DrawNewApplePos
+    019 : b802; -- LOADI 2
+    01a : 8155; -- CALL DEBUG
+    01b : b805; -- LOADI 5
+    01c : 8198; -- CALL DELAYAC ; wait 0.1 seconds
+    01d : 8177; -- CALL ReadY
+    01e : 1273; -- STORE CurReadY
+    01f : 819f; -- CALL Abs
+    020 : 1271; -- STORE ReadYAbsTemp
+    021 : 816d; -- CALL ReadX
+    022 : 1272; -- STORE CurReadX
+    023 : 819f; -- CALL Abs
+    024 : 2271; -- SUB ReadYAbsTemp ; ACC = abs(readX) - abs(readY)
+    025 : 3827; -- JPOS MoreX ; if readx > ready: go to moreX
+    026 : 2830; -- JUMP MoreY ; if ready > go to moreY
+    027 : 0a72; -- LOAD CurReadX
+    028 : 382a; -- JPOS MoreLeft
+    029 : 282d; -- JUMP MoreRight
+    02a : bfff; -- LOADI -1
+    02b : 1277; -- STORE NewDir
+    02c : 2839; -- JUMP DirOutput
+    02d : b801; -- LOADI 1
+    02e : 1277; -- Store NewDir
+    02f : 2839; -- JUMP DirOutput
+    030 : 0a73; -- LOAD CurReadY
+    031 : 3833; -- JPOS MoreDown
+    032 : 2836; -- JUMP MoreUp
+    033 : bffe; -- LOADI -2
+    034 : 1277; -- Store NewDir
+    035 : 2839; -- JUMP DirOutput
+    036 : b802; -- LOADI 2
+    037 : 1277; -- Store NewDir
+    038 : 2839; -- JUMP DirOutput
+    039 : 0a77; -- LOAD NewDir
+    03a : 1a76; -- ADD CurDir
+    03b : 403e; -- JZERO SkipSetCurDir ; set curDir = newDir if newDir != opposite of curDir
+    03c : 0a77; -- LOAD NewDir
+    03d : 1276; -- STORE CurDir
+    03e : 0a76; -- LOAD CurDir
+    03f : b804; -- LOADI 4
+    040 : 8155; -- CALL DEBUG
+    041 : 0a76; -- LOAD CurDir
+    042 : 6fff; -- ADDI -1
+    043 : 404e; -- JZERO MovingRight
+    044 : 0a76; -- LOAD CurDir
+    045 : 6801; -- ADDI 1
+    046 : 4054; -- JZERO MovingLeft
+    047 : 0a76; -- LOAD CurDir
+    048 : 6ffe; -- ADDI -2
+    049 : 405a; -- JZERO MovingUp
+    04a : 0a76; -- LOAD CurDir
+    04b : 6802; -- ADDI 2
+    04c : 4060; -- JZERO MovingDown
+    04d : 2860; -- JUMP MovingDown
+    04e : 0a7d; -- LOAD Body1X
+    04f : 6801; -- ADDI 1
+    050 : 1274; -- STORE NextX
+    051 : 0a7e; -- LOAD Body1Y
+    052 : 1275; -- STORE NextY
+    053 : 2866; -- JUMP EndMoving
+    054 : 0a7d; -- LOAD Body1X
+    055 : 6fff; -- ADDI -1
+    056 : 1274; -- STORE NextX
+    057 : 0a7e; -- LOAD Body1Y
+    058 : 1275; -- STORE NextY
+    059 : 2866; -- JUMP EndMoving
+    05a : 0a7d; -- LOAD Body1X
+    05b : 1274; -- STORE NextX
+    05c : 0a7e; -- LOAD Body1Y
+    05d : 6801; -- ADDI 1
+    05e : 1275; -- STORE NextY
+    05f : 2866; -- JUMP EndMoving
+    060 : 0a7d; -- LOAD Body1X
+    061 : 1274; -- STORE NextX
+    062 : 0a7e; -- LOAD Body1Y
+    063 : 6fff; -- ADDI -1
+    064 : 1275; -- STORE NextY
+    065 : 2866; -- JUMP EndMoving
+    066 : 0a74; -- LOAD NextX
+    067 : 9804; -- OUT Hex0
+    068 : b808; -- LOADI 8
+    069 : 8155; -- CALL DEBUG
+    06a : 0a7c; -- LOAD CurBodySize
+    06b : 227b; -- SUB MaxBodySize
+    06c : 4114; -- JZERO SnakeWin ; if curbodysize >= max body size: you win
+    06d : 3914; -- JPOS SnakeWin
+    06e : 0a74; -- LOAD NextX
+    06f : 310d; -- JNEG SnakeLose ; if x < 0
+    070 : 2266; -- SUB ScreenWidth
+    071 : 410d; -- JZERO SnakeLose ; if x >= width
+    072 : 390d; -- JPOS SnakeLose
+    073 : 0a75; -- LOAD NextY
+    074 : 310d; -- JNEG SnakeLose ; if y < 0
+    075 : 2267; -- SUB ScreenHeight
+    076 : 410d; -- JZERO SnakeLose ; if y >= height
+    077 : 390d; -- JPOS SnakeLose
+    078 : 0a78; -- LOAD AppleX
+    079 : 2274; -- SUB NextX
+    07a : 3083; -- JNEG NotEatingApple
+    07b : 3883; -- JPOS NotEatingApple
+    07c : 0a79; -- LOAD AppleY
+    07d : 2275; -- SUB NextY
+    07e : 3083; -- JNEG NotEatingApple
+    07f : 3883; -- JPOS NotEatingApple
+    080 : b801; -- LOADI 1
+    081 : 127a; -- STORE EatingApple
+    082 : 2886; -- JUMP EndEatingApple
+    083 : b800; -- LOADI 0
+    084 : 127a; -- STORE EatingApple
+    085 : 2886; -- JUMP EndEatingApple
+    086 : 0a74; -- LOAD NextX
+    087 : 227d; -- SUB Body1X
+    088 : 308f; -- JNEG EndBodyCheck1
+    089 : 388f; -- JPOS EndBodyCheck1
+    08a : 0a75; -- LOAD NextY
+    08b : 227e; -- SUB Body1Y
+    08c : 308f; -- JNEG EndBodyCheck1
+    08d : 388f; -- JPOS EndBodyCheck1
+    08e : 290d; -- JUMP SnakeLose
+    08f : 0a74; -- LOAD NextX
+    090 : 227f; -- SUB Body2X
+    091 : 3098; -- JNEG EndBodyCheck2
+    092 : 3898; -- JPOS EndBodyCheck2
+    093 : 0a75; -- LOAD NextY
+    094 : 2280; -- SUB Body2Y
+    095 : 3098; -- JNEG EndBodyCheck2
+    096 : 3898; -- JPOS EndBodyCheck2
+    097 : 290d; -- JUMP SnakeLose
+    098 : 0a74; -- LOAD NextX
+    099 : 2281; -- SUB Body3X
+    09a : 30a1; -- JNEG EndBodyCheck3
+    09b : 38a1; -- JPOS EndBodyCheck3
+    09c : 0a75; -- LOAD NextY
+    09d : 2282; -- SUB Body3Y
+    09e : 30a1; -- JNEG EndBodyCheck3
+    09f : 38a1; -- JPOS EndBodyCheck3
+    0a0 : 290d; -- JUMP SnakeLose
+    0a1 : 0a74; -- LOAD NextX
+    0a2 : 2283; -- SUB Body4X
+    0a3 : 30aa; -- JNEG EndBodyCheck4
+    0a4 : 38aa; -- JPOS EndBodyCheck4
+    0a5 : 0a75; -- LOAD NextY
+    0a6 : 2284; -- SUB Body4Y
+    0a7 : 30aa; -- JNEG EndBodyCheck4
+    0a8 : 38aa; -- JPOS EndBodyCheck4
+    0a9 : 290d; -- JUMP SnakeLose
+    0aa : 0a7a; -- LOAD EatingApple
+    0ab : 38ad; -- JPOS BodyCheck5 ; if eating apple, check last body part
+    0ac : 28b6; -- JUMP EndBodyCheck5
+    0ad : 0a74; -- LOAD NextX
+    0ae : 2285; -- SUB Body5X
+    0af : 30b6; -- JNEG EndBodyCheck5
+    0b0 : 38b6; -- JPOS EndBodyCheck5
+    0b1 : 0a75; -- LOAD NextY
+    0b2 : 2286; -- SUB Body5Y
+    0b3 : 30b6; -- JNEG EndBodyCheck5
+    0b4 : 38b6; -- JPOS EndBodyCheck5
+    0b5 : 290d; -- JUMP SnakeLose
+    0b6 : b810; -- LOADI 16
+    0b7 : 8155; -- CALL DEBUG
+    0b8 : 0a83; -- LOAD Body4X
+    0b9 : 1285; -- STORE Body5X
+    0ba : 0a84; -- LOAD Body4Y
+    0bb : 1286; -- STORE Body5Y
+    0bc : 0a81; -- LOAD Body3X
+    0bd : 1283; -- STORE Body4X
+    0be : 0a82; -- LOAD Body3Y
+    0bf : 1284; -- STORE Body4Y
+    0c0 : 0a7f; -- LOAD Body2X
+    0c1 : 1281; -- STORE Body3X
+    0c2 : 0a80; -- LOAD Body2Y
+    0c3 : 1282; -- STORE Body3Y
+    0c4 : 0a7d; -- LOAD Body1X
+    0c5 : 127f; -- STORE Body2X
+    0c6 : 0a7e; -- LOAD Body1Y
+    0c7 : 1280; -- STORE Body2Y
+    0c8 : 0a74; -- LOAD NextX
+    0c9 : 127d; -- STORE Body1X
+    0ca : 0a75; -- LOAD NextY
+    0cb : 127e; -- STORE Body1Y
+    0cc : b820; -- LOADI 32
+    0cd : 8155; -- CALL DEBUG
+    0ce : 0a74; -- LOAD NextX
+    0cf : 1268; -- STORE   XYToIndexX
+    0d0 : 0a75; -- LOAD NextY
+    0d1 : 1269; -- STORE   XYToIndexY
+    0d2 : 811b; -- CALL    XYToIndex ; get head's index
+    0d3 : 4a96; -- AND		EightBits
+    0d4 : 98a1; -- OUT		Neo_Addr
+    0d5 : 0a6d; -- LOAD	SnakeColor
+    0d6 : 98a2; -- OUT		Neo_Single16
+    0d7 : 0a7a; -- LOAD EatingApple
+    0d8 : 38da; -- JPOS IncSize
+    0d9 : 28dd; -- JUMP EndIncSize
+    0da : 0a7c; -- LOAD CurBodySize ; inc size
+    0db : 6801; -- ADDI 1
+    0dc : 127c; -- STORE CurBodySize
+    0dd : 0a7a; -- LOAD EatingApple
+    0de : 40e0; -- JZERO EraseTail ; erase tail if we didnt eat an apple
+    0df : 2902; -- JUMP EndEraseTail
+    0e0 : 0a7c; -- LOAD CurBodySize
+    0e1 : 6fff; -- ADDI -1
+    0e2 : 40e9; -- JZERO EraseBody2 ; if new body size is 1, erase body 2
+    0e3 : 6fff; -- ADDI -1
+    0e4 : 40ee; -- JZERO EraseBody3 ; if new body size is 2, erase body 3, etc...
+    0e5 : 6fff; -- ADDI -1
+    0e6 : 40f3; -- JZERO EraseBody4
+    0e7 : 6fff; -- ADDI -1
+    0e8 : 40f8; -- JZERO EraseBody5
+    0e9 : 0a7f; -- LOAD Body2X
+    0ea : 1268; -- STORE   XYToIndexX
+    0eb : 0a80; -- LOAD Body2Y
+    0ec : 1269; -- STORE   XYToIndexY
+    0ed : 28fd; -- JUMP EndEraseBody
+    0ee : 0a81; -- LOAD Body3X
+    0ef : 1268; -- STORE   XYToIndexX
+    0f0 : 0a82; -- LOAD Body3Y
+    0f1 : 1269; -- STORE   XYToIndexY
+    0f2 : 28fd; -- JUMP EndEraseBody
+    0f3 : 0a83; -- LOAD Body4X
+    0f4 : 1268; -- STORE   XYToIndexX
+    0f5 : 0a84; -- LOAD Body4Y
+    0f6 : 1269; -- STORE   XYToIndexY
+    0f7 : 28fd; -- JUMP EndEraseBody
+    0f8 : 0a85; -- LOAD Body5X
+    0f9 : 1268; -- STORE   XYToIndexX
+    0fa : 0a86; -- LOAD Body5Y
+    0fb : 1269; -- STORE   XYToIndexY
+    0fc : 28fd; -- JUMP EndEraseBody
+    0fd : 811b; -- CALL    XYToIndex ; get old tail's index
+    0fe : 4a96; -- AND		EightBits
+    0ff : 98a1; -- OUT		Neo_Addr
+    100 : 0a6c; -- LOAD	Background ; set to background color
+    101 : 98a2; -- OUT		Neo_Single16
+    102 : 0a7a; -- LOAD EatingApple
+    103 : 3905; -- JPOS GetNewApplePosLabel
+    104 : 2907; -- JUMP EndGetNewApplePosLabel
+    105 : 812a; -- CALL GetNewApplePos
+    106 : 2907; -- JUMP EndGetNewApplePosLabel
+    107 : b840; -- LOADI 64
+    108 : 8155; -- CALL DEBUG
+    109 : 814b; -- CALL DrawNewApplePos
+    10a : b880; -- LOADI 128
+    10b : 8155; -- CALL DEBUG
+    10c : 281b; -- JUMP SnakeGameLoop
+    10d : 0a6e; -- LOAD	LoseColor
+    10e : 98a0; -- OUT		Neo_All16
+    10f : 0a7c; -- LOAD CurBodySize
+    110 : 9804; -- OUT Hex0
+    111 : b900; -- LOADI 256
+    112 : 8155; -- CALL DEBUG
+    113 : 290d; -- JUMP SnakeLose
+    114 : 0a6f; -- LOAD	WinColor
+    115 : 98a0; -- OUT		Neo_All16
+    116 : 0a7c; -- LOAD CurBodySize
+    117 : 9804; -- OUT Hex0
+    118 : ba00; -- LOADI 512
+    119 : 8155; -- CALL DEBUG
+    11a : 2914; -- JUMP SnakeWin
+    11b : 0a69; -- LOAD XYToIndexY
+    11c : 4a8a; -- AND Bit0
+    11d : 3925; -- JPOS XYToIndexOdd
+    11e : 291f; -- JUMP XYToIndexEven
+    11f : 0a69; -- LOAD XYToIndexY
+    120 : 6801; -- ADDI 1
+    121 : 6005; -- SHIFT 5
+    122 : 2268; -- SUB XYToIndexX
+    123 : 6fff; -- ADDI -1
+    124 : 2929; -- JUMP EndXYToIndex
+    125 : 0a69; -- LOAD XYToIndexY
+    126 : 6005; -- SHIFT 5 ; * 32
+    127 : 1a68; -- ADD XYToIndexX
+    128 : 2929; -- JUMP EndXYToIndex
+    129 : 8800; -- RETURN
+    12a : b801; -- LOADI 1 ; reset prevkey1
+    12b : 126a; -- STORE PrevKey1
+    12c : b800; -- LOADI 0 ; reset ApplePosCounter
+    12d : 126b; -- STORE ApplePosCounter
+    12e : 0a6b; -- LOAD ApplePosCounter
+    12f : 6801; -- ADDI 1
+    130 : 4a96; -- AND EightBits ; keep within [0-255]
+    131 : 126b; -- STORE ApplePosCounter
+    132 : 0a6a; -- LOAD PrevKey1
+    133 : 1263; -- STORE Temp
+    134 : 90af; -- IN		Key1
+    135 : 126a; -- STORE PrevKey1
+    136 : 412e; -- JZERO	GetNewApplePosLoop ; user is pressing key1, loop until they let go
+    137 : 0a63; -- LOAD Temp
+    138 : 413a; -- JZERO GetNewApplePosLoopEnd; they used to be pressing key1, finish loop
+    139 : 292e; -- JUMP GetNewApplePosLoop
+    13a : 0a6b; -- LOAD ApplePosCounter
+    13b : 6013; -- SHIFT -3
+    13c : 4a98; -- AND LowFiveBits ; XXXXX
+    13d : 1278; -- STORE AppleX
+    13e : 0a6b; -- LOAD ApplePosCounter
+    13f : 4a97; -- AND LowThreeBits ; YYY
+    140 : 6ffb; -- ADDI -5
+    141 : 3946; -- JPOS AppleSubTwo
+    142 : 0a6b; -- LOAD ApplePosCounter
+    143 : 4a97; -- AND LowThreeBits
+    144 : 1279; -- STORE AppleY
+    145 : 294a; -- JUMP EndAppleSub
+    146 : 0a6b; -- LOAD ApplePosCounter
+    147 : 4a97; -- AND LowThreeBits
+    148 : 6ffc; -- ADDI -4
+    149 : 1279; -- STORE AppleY
+    14a : 8800; -- RETURN
+    14b : 0a78; -- LOAD AppleX
+    14c : 1268; -- STORE XYToIndexX
+    14d : 0a79; -- LOAD AppleY
+    14e : 1269; -- STORE XYToIndexY
+    14f : 811b; -- CALL    XYToIndex ; get old tail's index
+    150 : 4a96; -- AND		EightBits
+    151 : 98a1; -- OUT		Neo_Addr
+    152 : 0a70; -- LOAD	FruitColor ; set to fruit color
+    153 : 98a2; -- OUT		Neo_Single16
+    154 : 8800; -- RETURN
+    155 : 9801; -- OUT LEDs
+    156 : 8800; -- RETURN
+    157 : 0a9d; -- LOAD   AccCfg      ; load the number of commands
+    158 : 116c; -- STORE  CmdCnt
+    159 : ba9d; -- LOADI  AccCfg      ; Load list address
+    15a : 6801; -- ADDI   1           ; Increment to first command
+    15b : 116b; -- STORE  CmdPtr
+    15c : 818b; -- CALL   BlockI2C    ; wait for idle
+    15d : 0a99; -- LOAD   I2CWCmd     ; load write command
+    15e : 9890; -- OUT    I2C_CMD     ; to I2C_CMD register
+    15f : 716b; -- ILOAD  CmdPtr      ; load current command
+    160 : 9891; -- OUT    I2C_DATA    ; to I2C_DATA register
+    161 : 9892; -- OUT    I2C_RDY     ; start the communication
+    162 : 818b; -- CALL   BlockI2C    ; wait for it to finish
+    163 : 096b; -- LOAD   CmdPtr
+    164 : 6801; -- ADDI   1           ; Increment to next command
+    165 : 116b; -- STORE  CmdPtr
+    166 : 096c; -- LOAD   CmdCnt
+    167 : 6fff; -- ADDI   -1          ; Check if finished
+    168 : 116c; -- STORE  CmdCnt
+    169 : 395c; -- JPOS   I2CCmdLoop
+    16a : 8800; -- RETURN
+    16b : 0000; -- CmdPtr: DW 0
+    16c : 0000; -- CmdCnt: DW 0
+    16d : 818b; -- CALL   BlockI2C    ; ensure bus is idle
+    16e : 0a9a; -- LOAD   I2CRCmd     ; load read command
+    16f : 9890; -- OUT    I2C_CMD     ; send read command to I2C_CMD register
+    170 : 0a9b; -- LOAD   AccXAddr    ; load ADXL345 register address for X acceleration
+    171 : 9891; -- OUT    I2C_DATA    ; send to I2C_DATA register
+    172 : 9892; -- OUT    I2C_RDY     ; start the communication
+    173 : 818b; -- CALL   BlockI2C    ; wait for it to finish
+    174 : 9091; -- IN     I2C_data    ; put the data in AC
+    175 : 8181; -- CALL   SwapBytes   ; bytes are returned in wrong order; swap them
+    176 : 8800; -- RETURN
+    177 : 818b; -- CALL   BlockI2C    ; ensure bus is idle
+    178 : 0a9a; -- LOAD   I2CRCmd     ; load read command
+    179 : 9890; -- OUT    I2C_CMD     ; send read command to I2C_CMD register
+    17a : 0a9c; -- LOAD   AccYAddr    ; load ADXL345 register address for X acceleration
+    17b : 9891; -- OUT    I2C_DATA    ; send to I2C_DATA register
+    17c : 9892; -- OUT    I2C_RDY     ; start the communication
+    17d : 818b; -- CALL   BlockI2C    ; wait for it to finish
+    17e : 9091; -- IN     I2C_data    ; put the data in AC
+    17f : 8181; -- CALL   SwapBytes   ; bytes are returned in wrong order; swap them
+    180 : 8800; -- RETURN
+    181 : 1189; -- STORE  SBT1
+    182 : 6008; -- SHIFT  8
+    183 : 118a; -- STORE  SBT2
+    184 : 0989; -- LOAD   SBT1
+    185 : 6018; -- SHIFT  -8
+    186 : 4a94; -- AND    LoByte
+    187 : 518a; -- OR     SBT2
+    188 : 8800; -- RETURN
+    189 : 0000; -- SBT1: DW 0
+    18a : 0000; -- SBT2: DW 0
+    18b : 0a87; -- LOAD   Zero
+    18c : 1263; -- STORE  Temp        ; Used to check for timeout
+    18d : 0a63; -- LOAD   Temp
+    18e : 6801; -- ADDI   1           ; this will result in ~0.1s timeout
+    18f : 1263; -- STORE  Temp
+    190 : 4194; -- JZERO  I2CError    ; Timeout occurred; error
+    191 : 9092; -- IN     I2C_RDY     ; Read busy signal
+    192 : 398d; -- JPOS   BI2CL       ; If not 0, try again
+    193 : 8800; -- RETURN             ; Else return
+    194 : 0a87; -- LOAD   Zero
+    195 : 692c; -- ADDI   &H12C       ; "I2C"
+    196 : 9804; -- OUT    Hex0        ; display error message
+    197 : 2994; -- JUMP   I2CError
+    198 : 119e; -- STORE  DelayTime   ; Save the desired delay
+    199 : 9802; -- OUT    Timer       ; Reset the timer
+    19a : 9002; -- IN     Timer       ; Get the current timer value
+    19b : 219e; -- SUB    DelayTime
+    19c : 319a; -- JNEG   WaitingLoop ; Repeat until timer = delay value
+    19d : 8800; -- RETURN
+    19e : 0000; -- DelayTime: DW 0
+    19f : 39a2; -- JPOS   Abs_r
+    1a0 : 5a88; -- XOR    NegOne       ; Flip all bits
+    1a1 : 6801; -- ADDI   1            ; Add one (i.e. negate 2's complement number)
+    1a2 : 8800; -- RETURN
+    1a3 : 6968; -- ADDI   360          ; Add 360 if we are in octant 8
+    1a4 : 8800; -- RETURN
+    1a5 : 81b7; -- CALL   A2_calc      ; Octants 4, 5
+    1a6 : 68b4; -- ADDI   180          ; theta' = theta + 180
+    1a7 : 8800; -- RETURN
+    1a8 : 09f7; -- LOAD   AtanY        ; Swap input arguments
+    1a9 : 11f9; -- STORE  AtanT
+    1aa : 09f6; -- LOAD   AtanX
+    1ab : 11f7; -- STORE  AtanY
+    1ac : 09f9; -- LOAD   AtanT
+    1ad : 11f6; -- STORE  AtanX
+    1ae : 39b3; -- JPOS   A2_R2        ; If Y positive, octants 2,3
+    1af : 81b7; -- CALL   A2_calc      ; else octants 6, 7
+    1b0 : 81a0; -- CALL   Negate       ; Negatge the number
+    1b1 : 690e; -- ADDI   270          ; theta' = 270 - theta
+    1b2 : 8800; -- RETURN
+    1b3 : 81b7; -- CALL   A2_calc      ; Octants 2, 3
+    1b4 : 81a0; -- CALL   Negate       ; negate the angle
+    1b5 : 685a; -- ADDI   90           ; theta' = 90 - theta
+    1b6 : 8800; -- RETURN
+    1b7 : 09f7; -- LOAD   AtanY
+    1b8 : 1256; -- STORE  d16sN        ; Y in numerator
+    1b9 : 09f6; -- LOAD   AtanX
+    1ba : 1257; -- STORE  d16sD        ; X in denominator
+    1bb : 81e3; -- CALL   A2_div       ; divide
+    1bc : 0a5c; -- LOAD   dres16sQ     ; get the quotient (remainder ignored)
+    1bd : 11f8; -- STORE  AtanRatio
+    1be : 121f; -- STORE  m16sA
+    1bf : 1220; -- STORE  m16sB
+    1c0 : 81da; -- CALL   A2_mult      ; X^2
+    1c1 : 121f; -- STORE  m16sA
+    1c2 : 09fa; -- LOAD   A2c
+    1c3 : 1220; -- STORE  m16sB
+    1c4 : 81da; -- CALL   A2_mult
+    1c5 : 6900; -- ADDI   256          ; 256/256+0.28125X^2
+    1c6 : 1257; -- STORE  d16sD
+    1c7 : 09f8; -- LOAD   AtanRatio
+    1c8 : 1256; -- STORE  d16sN        ; Ratio in numerator
+    1c9 : 81e3; -- CALL   A2_div       ; divide
+    1ca : 0a5c; -- LOAD   dres16sQ     ; get the quotient (remainder ignored)
+    1cb : 121f; -- STORE  m16sA        ; <= result in radians
+    1cc : 09fb; -- LOAD   A2cd         ; degree conversion factor
+    1cd : 1220; -- STORE  m16sB
+    1ce : 81da; -- CALL   A2_mult      ; convert to degrees
+    1cf : 11f9; -- STORE  AtanT
+    1d0 : 6017; -- SHIFT  -7           ; check 7th bit
+    1d1 : 4a89; -- AND    One
+    1d2 : 41d7; -- JZERO  A2_rdwn      ; round down
+    1d3 : 09f9; -- LOAD   AtanT
+    1d4 : 6018; -- SHIFT  -8
+    1d5 : 6801; -- ADDI   1            ; round up
+    1d6 : 8800; -- RETURN
+    1d7 : 09f9; -- LOAD   AtanT
+    1d8 : 6018; -- SHIFT  -8           ; round down
+    1d9 : 8800; -- RETURN
+    1da : 81fc; -- CALL   Mult16s
+    1db : 0a24; -- LOAD   mres16sH
+    1dc : 6008; -- SHIFT  8            ; move high word of result up 8 bits
+    1dd : 1224; -- STORE  mres16sH
+    1de : 0a23; -- LOAD   mres16sL
+    1df : 6018; -- SHIFT  -8           ; move low word of result down 8 bits
+    1e0 : 4a94; -- AND    LoByte
+    1e1 : 5224; -- OR     mres16sH     ; combine high and low words of result
+    1e2 : 8800; -- RETURN
+    1e3 : b809; -- LOADI  9            ; loop 8 times (256 = 2^8)
+    1e4 : 11f9; -- STORE  AtanT
+    1e5 : 09f9; -- LOAD   AtanT
+    1e6 : 6fff; -- ADDI   -1
+    1e7 : 39ea; -- JPOS   A2_DN        ; not done; continue shifting
+    1e8 : 8225; -- CALL   Div16s       ; do the standard division
+    1e9 : 8800; -- RETURN
+    1ea : 11f9; -- STORE  AtanT
+    1eb : 0a56; -- LOAD   d16sN        ; start by trying to scale the numerator
+    1ec : 6001; -- SHIFT  1
+    1ed : 5a56; -- XOR    d16sN        ; if the sign changed,
+    1ee : 31f2; -- JNEG   A2_DD        ; switch to scaling the denominator
+    1ef : 5a56; -- XOR    d16sN        ; get back shifted version
+    1f0 : 1256; -- STORE  d16sN
+    1f1 : 29e5; -- JUMP   A2_DL
+    1f2 : 0a57; -- LOAD   d16sD
+    1f3 : 6011; -- SHIFT  -1           ; have to scale denominator
+    1f4 : 1257; -- STORE  d16sD
+    1f5 : 29e5; -- JUMP   A2_DL
+    1f6 : 0000; -- AtanX:      DW 0
+    1f7 : 0000; -- AtanY:      DW 0
+    1f8 : 0000; -- AtanRatio:  DW 0        ; =y/x
+    1f9 : 0000; -- AtanT:      DW 0        ; temporary value
+    1fa : 0048; -- A2c:        DW 72       ; 72/256=0.28125, with 8 fractional bits
+    1fb : 394c; -- A2cd:       DW 14668    ; = 180/pi with 8 fractional bits
+    1fc : b800; -- LOADI  0
+    1fd : 1221; -- STORE  m16sc        ; clear carry
+    1fe : 1224; -- STORE  mres16sH     ; clear result
+    1ff : b810; -- LOADI  16           ; load 16 to counter
+    200 : 1222; -- STORE  mcnt16s
+    201 : 0a21; -- LOAD   m16sc        ; check the carry (from previous iteration)
+    202 : 4206; -- JZERO  Mult16s_noc  ; if no carry, move on
+    203 : 0a24; -- LOAD   mres16sH     ; if a carry,
+    204 : 1a1f; -- ADD    m16sA        ;  add multiplicand to result H
+    205 : 1224; -- STORE  mres16sH
+    206 : 0a20; -- LOAD   m16sB
+    207 : 4a89; -- AND    One          ; check bit 0 of multiplier
+    208 : 1221; -- STORE  m16sc        ; save as next carry
+    209 : 420d; -- JZERO  Mult16s_sh   ; if no carry, move on to shift
+    20a : 0a24; -- LOAD   mres16sH     ; if bit 0 set,
+    20b : 221f; -- SUB    m16sA        ;  subtract multiplicand from result H
+    20c : 1224; -- STORE  mres16sH
+    20d : 0a20; -- LOAD   m16sB
+    20e : 6011; -- SHIFT  -1           ; shift result L >>1
+    20f : 4a1e; -- AND    c7FFF        ; clear msb
+    210 : 1220; -- STORE  m16sB
+    211 : 0a24; -- LOAD   mres16sH     ; load result H
+    212 : 600f; -- SHIFT  15           ; move lsb to msb
+    213 : 5220; -- OR     m16sB
+    214 : 1220; -- STORE  m16sB        ; result L now includes carry out from H
+    215 : 0a24; -- LOAD   mres16sH
+    216 : 6011; -- SHIFT  -1
+    217 : 1224; -- STORE  mres16sH     ; shift result H >>1
+    218 : 0a22; -- LOAD   mcnt16s
+    219 : 6fff; -- ADDI   -1           ; check counter
+    21a : 3a00; -- JPOS   Mult16s_loop ; need to iterate 16 times
+    21b : 0a20; -- LOAD   m16sB
+    21c : 1223; -- STORE  mres16sL     ; multiplier and result L shared a word
+    21d : 8800; -- RETURN              ; Done
+    21e : 7fff; -- c7FFF: DW &H7FFF
+    21f : 0000; -- m16sA: DW 0 ; multiplicand
+    220 : 0000; -- m16sB: DW 0 ; multipler
+    221 : 0000; -- m16sc: DW 0 ; carry
+    222 : 0000; -- mcnt16s: DW 0 ; counter
+    223 : 0000; -- mres16sL: DW 0 ; result low
+    224 : 0000; -- mres16sH: DW 0 ; result high
+    225 : b800; -- LOADI  0
+    226 : 125d; -- STORE  dres16sR     ; clear remainder result
+    227 : 125a; -- STORE  d16sC1       ; clear carry
+    228 : 0a56; -- LOAD   d16sN
+    229 : 5a57; -- XOR    d16sD
+    22a : 1258; -- STORE  d16sS        ; sign determination = N XOR D
+    22b : b811; -- LOADI  17
+    22c : 1259; -- STORE  d16sT        ; preload counter with 17 (16+1)
+    22d : 0a57; -- LOAD   d16sD
+    22e : 819f; -- CALL   Abs          ; take absolute value of denominator
+    22f : 1257; -- STORE  d16sD
+    230 : 0a56; -- LOAD   d16sN
+    231 : 819f; -- CALL   Abs          ; take absolute value of numerator
+    232 : 1256; -- STORE  d16sN
+    233 : 0a56; -- LOAD   d16sN
+    234 : 601f; -- SHIFT  -15          ; get msb
+    235 : 4a89; -- AND    One          ; only msb (because shift is arithmetic)
+    236 : 125b; -- STORE  d16sC2       ; store as carry
+    237 : 0a56; -- LOAD   d16sN
+    238 : 6001; -- SHIFT  1            ; shift <<1
+    239 : 525a; -- OR     d16sC1       ; with carry
+    23a : 1256; -- STORE  d16sN
+    23b : 0a59; -- LOAD   d16sT
+    23c : 6fff; -- ADDI   -1           ; decrement counter
+    23d : 424d; -- JZERO  Div16s_sign  ; if finished looping, finalize result
+    23e : 1259; -- STORE  d16sT
+    23f : 0a5d; -- LOAD   dres16sR
+    240 : 6001; -- SHIFT  1            ; shift remainder
+    241 : 525b; -- OR     d16sC2       ; with carry from other shift
+    242 : 2257; -- SUB    d16sD        ; subtract denominator from remainder
+    243 : 3248; -- JNEG   Div16s_add   ; if negative, need to add it back
+    244 : 125d; -- STORE  dres16sR
+    245 : b801; -- LOADI  1
+    246 : 125a; -- STORE  d16sC1       ; set carry
+    247 : 2a33; -- JUMP   Div16s_loop
+    248 : 1a57; -- ADD    d16sD        ; add denominator back in
+    249 : 125d; -- STORE  dres16sR
+    24a : b800; -- LOADI  0
+    24b : 125a; -- STORE  d16sC1       ; clear carry
+    24c : 2a33; -- JUMP   Div16s_loop
+    24d : 0a56; -- LOAD   d16sN
+    24e : 125c; -- STORE  dres16sQ     ; numerator was used to hold quotient result
+    24f : 0a58; -- LOAD   d16sS        ; check the sign indicator
+    250 : 3252; -- JNEG   Div16s_neg
+    251 : 8800; -- RETURN
+    252 : 0a5c; -- LOAD   dres16sQ     ; need to negate the result
+    253 : 81a0; -- CALL   Negate
+    254 : 125c; -- STORE  dres16sQ
+    255 : 8800; -- RETURN
+    256 : 0000; -- d16sN: DW 0 ; numerator
+    257 : 0000; -- d16sD: DW 0 ; denominator
+    258 : 0000; -- d16sS: DW 0 ; sign value
+    259 : 0000; -- d16sT: DW 0 ; temp counter
+    25a : 0000; -- d16sC1: DW 0 ; carry value
+    25b : 0000; -- d16sC2: DW 0 ; carry value
+    25c : 0000; -- dres16sQ: DW 0 ; quotient result
+    25d : 0000; -- dres16sR: DW 0 ; remainder result
+    25e : 0000; -- L2A:  DW 0
+    25f : 0000; -- L2B:  DW 0
+    260 : 0000; -- L2T1: DW 0
+    261 : 0000; -- L2T2: DW 0
+    262 : 0000; -- L2T3: DW 0
+    263 : 0000; -- Temp:      DW 0
+    264 : 0000; -- Pattern:   DW 0
+    265 : 0000; -- Score:     DW 0
+    266 : 0020; -- ScreenWidth: DW 32
+    267 : 0006; -- ScreenHeight: DW 6
+    268 : 0000; -- XYToIndexX:   DW 0
+    269 : 0000; -- XYToIndexY:   DW 0
+    26a : 0000; -- PrevKey1:     DW 0
+    26b : 0000; -- ApplePosCounter: DW 0
+    26c : 001f; -- Background:  DW &B0000000000011111 ; blue
+    26d : ffe0; -- SnakeColor:  DW &B1111111111100000 ; yellow
+    26e : f800; -- LoseColor:   DW &B1111100000000000 ; red
+    26f : 07e0; -- WinColor:    DW &B0000011111100000 ; green
+    270 : f800; -- FruitColor:  DW &B1111100000000000 ; red
+    271 : 0000; -- ReadYAbsTemp: DW 0
+    272 : 0000; -- CurReadX: DW 0
+    273 : 0000; -- CurReadY: DW 0
+    274 : 0000; -- NextX:    DW 0
+    275 : 0000; -- NextY:    DW 0
+    276 : 0000; -- CurDir:   DW 0
+    277 : 0000; -- NewDir:   DW 0
+    278 : 0000; -- AppleX:   DW 0
+    279 : 0000; -- AppleY:   DW 0
+    27a : 0000; -- EatingApple: DW 0
+    27b : 0005; -- MaxBodySize: DW 5 ; constant value    board is 32 wide, 6 tall
+    27c : 0001; -- CurBodySize:   DW 1
+    27d : 0010; -- Body1X:        DW 16 ; this is head
+    27e : 0003; -- Body1Y:        DW 3
+    27f : 0000; -- Body2X:        DW 0
+    280 : 0000; -- Body2Y:        DW 0
+    281 : 0000; -- Body3X:        DW 0
+    282 : 0000; -- Body3Y:        DW 0
+    283 : 0000; -- Body4X:        DW 0
+    284 : 0000; -- Body4Y:        DW 0
+    285 : 0000; -- Body5X:        DW 0
+    286 : 0000; -- Body5Y:        DW 0
+    287 : 0000; -- Zero:      DW 0
+    288 : ffff; -- NegOne:    DW -1
+    289 : 0001; -- One:       DW 1
+    28a : 0001; -- Bit0:      DW &B0000000001
+    28b : 0002; -- Bit1:      DW &B0000000010
+    28c : 0004; -- Bit2:      DW &B0000000100
+    28d : 0008; -- Bit3:      DW &B0000001000
+    28e : 0010; -- Bit4:      DW &B0000010000
+    28f : 0020; -- Bit5:      DW &B0000100000
+    290 : 0040; -- Bit6:      DW &B0001000000
+    291 : 0080; -- Bit7:      DW &B0010000000
+    292 : 0100; -- Bit8:      DW &B0100000000
+    293 : 0200; -- Bit9:      DW &B1000000000
+    294 : 00ff; -- LoByte:    DW &H00FF
+    295 : ff00; -- HiByte:    DW &HFF00
+    296 : 00ff; -- EightBits: DW &HFF
+    297 : 0007; -- LowThreeBits: DW &B111
+    298 : 001f; -- LowFiveBits: DW &B11111
+    299 : 203a; -- I2CWCmd:  DW &H203A    ; write two i2c bytes, addr 0x3A
+    29a : 123a; -- I2CRCmd:  DW &H123A    ; write one byte, read two bytes, addr 0x3A
+    29b : 0032; -- AccXAddr: DW &H32      ; X acceleration register address.
+    29c : 0034; -- AccYAddr: DW &H34      ; X acceleration register address.
+    29d : 0006; -- DW 6           ; Number of commands to send
+    29e : 3100; -- DW &H3100      ; Dummy transaction to sync I2C bus if needed
+    29f : 3100; -- DW &H3100      ; Dummy transaction to sync I2C bus if needed
+    2a0 : 3100; -- DW &H3100      ; Right-justified 10-bit data, +/-2 G
+    2a1 : 3800; -- DW &H3800      ; No FIFO
+    2a2 : 2c07; -- DW &H2C07      ; 12.5 samples per second
+    2a3 : 2d08; -- DW &H2D08      ; No sleep
+
+    [2a4..7ff] : 0000; -- Empty memory
+
+  END;
