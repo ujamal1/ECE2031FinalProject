@@ -2,12 +2,20 @@ ORG 0
 Start:
 	LOADI	0
 	STORE	Mode ; Reset the mode on reset
+	LOADI	16
+	OUT		Neo_All16
 
 ChooseMode:
+	LOADI	0
+	OUT		Hex0
+	LOADI	255
+	OUT		Hex1
+
 	LOADI	1
 	OUT		LEDs
 	CALL	WaitForButton
 	IN		Switches		; Get the values of the switches after
+	OUT		Hex1
 	JZERO	SetSingle16		; the confirmation button is pressed
 	ADDI	-1
 	JZERO	SetSingle24
@@ -17,9 +25,16 @@ ChooseMode:
 	JZERO	AutoIncrement
 	ADDI	-1
 	JZERO	Game
+	ADDI	-1
+	JZERO	Gradient
 	JUMP    SnakeGame       ; Else, jump to SnakeGame
 
 SetSingle16:
+	LOADI	22
+	SHIFT	8
+	ADDI	1
+	OUT		Hex0
+
 	CALL	OutAddress
 	CALL	GetColors16
 	LOAD	Color16
@@ -28,6 +43,11 @@ SetSingle16:
 	
 
 SetSingle24:
+	LOADI	36
+	SHIFT	8
+	ADDI	1
+	OUT		Hex0
+	
 	CALL	OutAddress
 	CALL	GetColors24
 	LOAD	Color24_R
@@ -37,6 +57,11 @@ SetSingle24:
 	JUMP	ChooseMode
 
 SetAll16:
+	LOADI	22
+	SHIFT	8
+	ADDI	10
+	OUT		Hex0
+	
 	CALL	GetColors16
 	LOAD	Color16
 	OUT		Neo_All16
@@ -139,6 +164,71 @@ Game:
 		IN		Key1
 		STORE	KeyPressed
 		RETURN
+
+Gradient:
+	LOADI	64
+	OUT		LEDs
+	
+	; First let's clear all the LEDs
+	LOADI	0
+	OUT		Neo_All16
+	
+	; First, let's set the first 32 to green
+	LOADI	31
+	STORE	GradCounter
+	Grad16:
+		LOAD	GradCounter
+		JNEG	ResetGradCounter
+		OUT		Neo_Addr
+		; Create the color based on the address
+		LOAD	GradCounter
+		SHIFT	11
+		STORE	GradColor
+		LOAD	GradCounter
+		SHIFT	5
+		OR		GradColor
+		STORE	GradColor
+		LOAD	GradCounter
+		OR		GradColor
+		OUT		Neo_Single16
+		
+		LOADI	1
+		CALL	DelayAC
+		
+		LOAD	GradCounter
+		ADDI	-1
+		STORE	GradCounter
+		JUMP	Grad16
+	ResetGradCounter:
+		LOADI	63
+		STORE	GradCounter
+	Grad24:
+		LOAD	GradCounter
+		ADDI	-32
+		JNEG	ChooseMode
+		
+		LOAD	GradCounter
+		OUT		Neo_Addr
+		; Color is 63 - address so that it increases in the same direction as the first row
+		LOADI	63
+		SUB		GradCounter
+		STORE	GradColor
+		
+		LOAD	GradColor
+		OUT		Neo_Single24_R
+		LOAD	GradColor
+		SHIFT	8
+		OR		GradColor
+		OUT		Neo_Single24_GB
+		
+		LOADI	1
+		CALL	DelayAC
+		
+		LOAD	GradCounter
+		ADDI	-1
+		STORE	GradCounter
+		JUMP	Grad24
+		
 
 SnakeGame:
 	LOADI	64
@@ -592,11 +682,11 @@ DrawNewApplePos:
 
 Delay:
 	OUT    Timer
-WaitingLoop:
+GameWaitingLoop:
 	CALL	GameCheckButton
 	IN		Timer
 	ADDI	-1
-	JNEG	WaitingLoop
+	JNEG	GameWaitingLoop
 	RETURN
 	
 
@@ -790,6 +880,8 @@ GameDir:		DW 0 ; Game Direction
 GameSpeed:		DW 0
 NumNeos:		DW 0
 KeyPressed:		DW 0
+GradColor:		DW 0
+GradCounter:	DW 0
 
 ; SnakeGame variables
 CurReadX: DW 0
@@ -821,7 +913,7 @@ XYToIndexX:   DW 0
 XYToIndexY:   DW 0
 PrevKey1:     DW 0
 ApplePosCounter: DW 0
-Background:  DW &B0000000000011111 ; blue
+Background:  DW &B0001100001100011 ; dim white
 SnakeColor:  DW &B1111111111100000 ; yellow
 LoseColor:   DW &B1111100000000000 ; red
 WinColor:    DW &B0000011111100000 ; green
