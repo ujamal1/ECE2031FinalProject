@@ -925,9 +925,9 @@ https://fpgasoftware.intel.com/eula.
 	)
 )
 (symbol
-	(rect 304 1080 536 1256)
+	(rect 304 1080 536 1288)
 	(text "NeoPixelController" (rect 5 0 95 12)(font "Arial" ))
-	(text "inst16" (rect 8 160 37 172)(font "Arial" ))
+	(text "inst16" (rect 8 192 37 204)(font "Arial" ))
 	(port
 		(pt 0 32)
 		(input)
@@ -985,6 +985,20 @@ https://fpgasoftware.intel.com/eula.
 		(line (pt 0 144)(pt 16 144))
 	)
 	(port
+		(pt 0 160)
+		(input)
+		(text "READ_EN" (rect 0 0 51 12)(font "Arial" ))
+		(text "READ_EN" (rect 21 155 72 167)(font "Arial" ))
+		(line (pt 0 160)(pt 16 160))
+	)
+	(port
+		(pt 0 176)
+		(input)
+		(text "WRITE_EN" (rect 0 0 56 12)(font "Arial" ))
+		(text "WRITE_EN" (rect 21 171 77 183)(font "Arial" ))
+		(line (pt 0 176)(pt 16 176))
+	)
+	(port
 		(pt 232 32)
 		(output)
 		(text "sda" (rect 0 0 17 12)(font "Arial" ))
@@ -992,13 +1006,13 @@ https://fpgasoftware.intel.com/eula.
 		(line (pt 232 32)(pt 216 32))
 	)
 	(drawing
-		(rectangle (rect 16 16 216 160))
+		(rectangle (rect 16 16 216 192))
 	)
 )
 (symbol
-	(rect 760 192 1048 464)
+	(rect 752 192 1040 496)
 	(text "IO_DECODER" (rect 5 0 78 12)(font "Arial" ))
-	(text "inst3" (rect 8 256 31 268)(font "Arial" ))
+	(text "inst3" (rect 8 288 31 300)(font "Arial" ))
 	(port
 		(pt 0 32)
 		(input)
@@ -1107,12 +1121,26 @@ https://fpgasoftware.intel.com/eula.
 	(port
 		(pt 288 240)
 		(output)
-		(text "KEY1_EN" (rect 0 0 49 12)(font "Arial" ))
-		(text "KEY1_EN" (rect 226 235 267 247)(font "Arial" ))
+		(text "READ_EN" (rect 0 0 51 12)(font "Arial" ))
+		(text "READ_EN" (rect 224 235 267 247)(font "Arial" ))
 		(line (pt 288 240)(pt 272 240))
 	)
+	(port
+		(pt 288 256)
+		(output)
+		(text "WRITE_EN" (rect 0 0 56 12)(font "Arial" ))
+		(text "WRITE_EN" (rect 220 251 267 263)(font "Arial" ))
+		(line (pt 288 256)(pt 272 256))
+	)
+	(port
+		(pt 288 272)
+		(output)
+		(text "KEY1_EN" (rect 0 0 49 12)(font "Arial" ))
+		(text "KEY1_EN" (rect 226 267 267 279)(font "Arial" ))
+		(line (pt 288 272)(pt 272 272))
+	)
 	(drawing
-		(rectangle (rect 16 16 272 256))
+		(rectangle (rect 16 16 272 288))
 	)
 )
 (connector
@@ -1525,67 +1553,6 @@ https://fpgasoftware.intel.com/eula.
 	(bus)
 )
 (connector
-	(text "IO_ADDR[10..0]" (rect 674 208 748 225)(font "Intel Clear" ))
-	(pt 664 224)
-	(pt 760 224)
-	(bus)
-)
-(connector
-	(text "IO_CYCLE" (rect 674 224 723 241)(font "Intel Clear" ))
-	(pt 664 240)
-	(pt 760 240)
-)
-(connector
-	(text "SWITCH_EN" (rect 1218 208 1275 225)(font "Intel Clear" ))
-	(pt 1048 224)
-	(pt 1288 224)
-)
-(connector
-	(text "LED_EN" (rect 1218 224 1255 241)(font "Intel Clear" ))
-	(pt 1048 240)
-	(pt 1288 240)
-)
-(connector
-	(text "TIMER_EN" (rect 1218 240 1267 257)(font "Intel Clear" ))
-	(pt 1048 256)
-	(pt 1288 256)
-)
-(connector
-	(text "HEX0_EN" (rect 1218 256 1262 273)(font "Intel Clear" ))
-	(pt 1048 272)
-	(pt 1288 272)
-)
-(connector
-	(text "HEX1_EN" (rect 1218 272 1262 289)(font "Intel Clear" ))
-	(pt 1048 288)
-	(pt 1288 288)
-)
-(connector
-	(text "I2C_CMD_EN" (rect 1218 288 1281 305)(font "Intel Clear" ))
-	(pt 1048 304)
-	(pt 1288 304)
-)
-(connector
-	(text "I2C_DATA_EN" (rect 1218 304 1285 321)(font "Intel Clear" ))
-	(pt 1048 320)
-	(pt 1288 320)
-)
-(connector
-	(text "I2C_RDY_EN" (rect 1218 320 1279 337)(font "Intel Clear" ))
-	(pt 1048 336)
-	(pt 1288 336)
-)
-(connector
-	(text "ALL_COLOR_EN" (rect 1216 336 1296 353)(font "Intel Clear" ))
-	(pt 1048 352)
-	(pt 1288 352)
-)
-(connector
-	(text "KEY1_EN" (rect 1240 416 1284 433)(font "Intel Clear" ))
-	(pt 1048 432)
-	(pt 1312 432)
-)
-(connector
 	(text "ALL_COLOR_EN" (rect 176 1144 256 1161)(font "Intel Clear" ))
 	(pt 160 1160)
 	(pt 304 1160)
@@ -1593,26 +1560,6 @@ https://fpgasoftware.intel.com/eula.
 (connector
 	(pt 536 1112)
 	(pt 568 1112)
-)
-(connector
-	(text "ONE_LED_ADDR_EN" (rect 1216 352 1315 369)(font "Intel Clear" ))
-	(pt 1368 368)
-	(pt 1048 368)
-)
-(connector
-	(text "ONE_COLOR_16_EN" (rect 1216 368 1316 385)(font "Intel Clear" ))
-	(pt 1352 384)
-	(pt 1048 384)
-)
-(connector
-	(text "GB_ONE_COLOR_24_EN" (rect 1216 384 1336 401)(font "Intel Clear" ))
-	(pt 1336 400)
-	(pt 1048 400)
-)
-(connector
-	(text "R_ONE_COLOR_24_EN" (rect 1216 400 1329 417)(font "Intel Clear" ))
-	(pt 1048 416)
-	(pt 1288 416)
 )
 (connector
 	(text "ONE_LED_ADDR_EN" (rect 176 1160 275 1177)(font "Intel Clear" ))
@@ -1634,11 +1581,112 @@ https://fpgasoftware.intel.com/eula.
 	(pt 160 1224)
 	(pt 304 1224)
 )
+(connector
+	(text "IO_ADDR[10..0]" (rect 666 208 740 225)(font "Intel Clear" ))
+	(pt 656 224)
+	(pt 752 224)
+	(bus)
+)
+(connector
+	(text "IO_CYCLE" (rect 666 224 715 241)(font "Intel Clear" ))
+	(pt 656 240)
+	(pt 752 240)
+)
+(connector
+	(text "SWITCH_EN" (rect 1210 208 1267 225)(font "Intel Clear" ))
+	(pt 1040 224)
+	(pt 1280 224)
+)
+(connector
+	(text "LED_EN" (rect 1210 224 1247 241)(font "Intel Clear" ))
+	(pt 1040 240)
+	(pt 1280 240)
+)
+(connector
+	(text "TIMER_EN" (rect 1210 240 1259 257)(font "Intel Clear" ))
+	(pt 1040 256)
+	(pt 1280 256)
+)
+(connector
+	(text "HEX0_EN" (rect 1210 256 1254 273)(font "Intel Clear" ))
+	(pt 1040 272)
+	(pt 1280 272)
+)
+(connector
+	(text "HEX1_EN" (rect 1210 272 1254 289)(font "Intel Clear" ))
+	(pt 1040 288)
+	(pt 1280 288)
+)
+(connector
+	(text "I2C_CMD_EN" (rect 1210 288 1273 305)(font "Intel Clear" ))
+	(pt 1040 304)
+	(pt 1280 304)
+)
+(connector
+	(text "I2C_DATA_EN" (rect 1210 304 1277 321)(font "Intel Clear" ))
+	(pt 1040 320)
+	(pt 1280 320)
+)
+(connector
+	(text "I2C_RDY_EN" (rect 1210 320 1271 337)(font "Intel Clear" ))
+	(pt 1040 336)
+	(pt 1280 336)
+)
+(connector
+	(text "ALL_COLOR_EN" (rect 1208 336 1288 353)(font "Intel Clear" ))
+	(pt 1040 352)
+	(pt 1280 352)
+)
+(connector
+	(text "ONE_LED_ADDR_EN" (rect 1208 352 1307 369)(font "Intel Clear" ))
+	(pt 1040 368)
+	(pt 1360 368)
+)
+(connector
+	(text "ONE_COLOR_16_EN" (rect 1208 368 1308 385)(font "Intel Clear" ))
+	(pt 1040 384)
+	(pt 1344 384)
+)
+(connector
+	(text "GB_ONE_COLOR_24_EN" (rect 1208 384 1328 401)(font "Intel Clear" ))
+	(pt 1040 400)
+	(pt 1328 400)
+)
+(connector
+	(text "R_ONE_COLOR_24_EN" (rect 1208 400 1321 417)(font "Intel Clear" ))
+	(pt 1040 416)
+	(pt 1280 416)
+)
+(connector
+	(text "READ_EN" (rect 1232 416 1278 433)(font "Intel Clear" ))
+	(pt 1040 432)
+	(pt 1304 432)
+)
+(connector
+	(text "KEY1_EN" (rect 1050 448 1094 465)(font "Intel Clear" ))
+	(pt 1040 464)
+	(pt 1280 464)
+)
+(connector
+	(text "WRITE_EN" (rect 1050 432 1100 449)(font "Intel Clear" ))
+	(pt 1040 448)
+	(pt 1280 448)
+)
+(connector
+	(text "READ_EN" (rect 170 1224 216 1241)(font "Intel Clear" ))
+	(pt 304 1240)
+	(pt 160 1240)
+)
+(connector
+	(text "WRITE_EN" (rect 170 1240 220 1257)(font "Intel Clear" ))
+	(pt 304 1256)
+	(pt 160 1256)
+)
 (junction (pt 512 280))
 (title_block
 	(rect 1104 1160 1472 1280)
 	(section (rect 0 24 368 48)(text "COMPANY" (rect 2 0 57 12)(font "Arial" ))(text "GaTech DDL" (rect 56 2 170 20)(font "Arial" (font_size 12)))(border))
-	(section (rect 0 96 240 120)(text "DATE" (rect 2 0 30 12)(font "Arial" ))(text "Sun Nov 14 18:46:44 2021" (rect 56 3 235 19)(font "Arial" (font_size 10)))(date)(border))
+	(section (rect 0 96 240 120)(text "DATE" (rect 2 0 30 12)(font "Arial" ))(text "Mon Nov 22 13:54:26 2021" (rect 56 3 237 19)(font "Arial" (font_size 10)))(date)(border))
 	(section (rect 0 48 368 72)(text "DESIGNER" (rect 2 0 59 12)(font "Arial" ))(text "Kevin Johnson, Tom Collins" (rect 56 2 286 20)(font "Arial" (font_size 12)))(border))
 	(section (rect 0 72 280 96)(text "NUMBER" (rect 2 0 49 12)(font "Arial" ))(text "1.00" (rect 56 1 85 17)(font "Arial" (font_size 10)))(border))
 	(section (rect 310 96 368 120)(text "OF" (rect 10 0 25 12)(font "Arial" ))(text "1" (rect 34 4 42 20)(font "Arial" (font_size 10))))

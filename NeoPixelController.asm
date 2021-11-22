@@ -2,7 +2,7 @@ ORG 0
 Start:
 	LOADI	0
 	STORE	Mode ; Reset the mode on reset
-	LOADI	16
+	LOADI	8
 	OUT		Neo_All16
 
 ChooseMode:
@@ -18,16 +18,35 @@ ChooseMode:
 	OUT		Hex1
 	JZERO	SetSingle16		; the confirmation button is pressed
 	ADDI	-1
-	JZERO	SetSingle24
+	JZERO	SetSingle24		; 1
 	ADDI	-1
-	JZERO	SetAll16
+	JZERO	SetAll16		; 2
 	ADDI	-1
-	JZERO	AutoIncrement
+	JZERO	AutoIncrement	; 3
 	ADDI	-1
-	JZERO	Game
+	JZERO	Game			; 4
 	ADDI	-1
-	JZERO	Gradient
-	JUMP    SnakeGame       ; Else, jump to SnakeGame
+	JZERO	Gradient		; 5
+	ADDI	-1
+	JZERO	SnakeGame		; 6
+	ADDI	-1
+	JZERO	Read			; 7
+	ADDI	-1
+	JZERO	Write			; 8
+	JUMP    Reset       ; Else, jump to Reset
+
+Reset:
+	LOADI	8
+	OUT		Neo_All16
+	JUMP	ChooseMode
+
+Read:
+	OUT		READ_EN
+	JUMP	ChooseMode
+
+Write:
+	OUT		WRITE_EN
+	JUMP	ChooseMode
 
 SetSingle16:
 	LOADI	22
@@ -958,4 +977,6 @@ Neo_Addr:			EQU &H0A1
 Neo_Single16:		EQU &H0A2
 Neo_Single24_R:		EQU &H0A3
 Neo_Single24_GB:	EQU &H0A4
+READ_EN:			EQU &H0A5
+WRITE_EN:			EQU &H0A6
 Key1:				EQU &H0AF
