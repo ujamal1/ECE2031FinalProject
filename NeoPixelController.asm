@@ -412,62 +412,115 @@ SnakeGameLoop:
 	JUMP EndEatingApple
 	EndEatingApple:
 
-	; check if snake's NextX, NextY is touching any of its current body parts, including the last one if EatingApple
-	LOAD NextX
-	SUB Body1X
-	JNEG EndBodyCheck1
-	JPOS EndBodyCheck1
-	LOAD NextY
-	SUB Body1Y
-	JNEG EndBodyCheck1
-	JPOS EndBodyCheck1
-	JUMP SnakeLose
-	EndBodyCheck1:
-	LOAD NextX
-	SUB Body2X
-	JNEG EndBodyCheck2
-	JPOS EndBodyCheck2
-	LOAD NextY
-	SUB Body2Y
-	JNEG EndBodyCheck2
-	JPOS EndBodyCheck2
-	JUMP SnakeLose
-	EndBodyCheck2:
-	LOAD NextX
-	SUB Body3X
-	JNEG EndBodyCheck3
-	JPOS EndBodyCheck3
-	LOAD NextY
-	SUB Body3Y
-	JNEG EndBodyCheck3
-	JPOS EndBodyCheck3
-	JUMP SnakeLose
-	EndBodyCheck3:
-	LOAD NextX
-	SUB Body4X
-	JNEG EndBodyCheck4
-	JPOS EndBodyCheck4
-	LOAD NextY
-	SUB Body4Y
-	JNEG EndBodyCheck4
-	JPOS EndBodyCheck4
-	JUMP SnakeLose
-	EndBodyCheck4:
+	; ; check if snake's NextX, NextY is touching any of its current body parts, including the last one if EatingApple
+	; ; only check body1 if curLength > 2 or (curLength == 2 and eatingapple == 1)
+	; LOAD CurBodySize
+	; ADDI -1
+	; JNEG EndAllBodyChecks
+	; JZERO CheckEatingApple1
+	; JUMP StartBodyCheck1
+	; CheckEatingApple1:
+	; 	LOAD EatingApple
+	; 	JZERO EndAllBodyChecks
+	; StartBodyCheck1:
+	; LOAD NextX
+	; SUB Body1X
+	; JNEG EndBodyCheck1
+	; JPOS EndBodyCheck1
+	; LOAD NextY
+	; SUB Body1Y
+	; JNEG EndBodyCheck1
+	; JPOS EndBodyCheck1
+	; JUMP SnakeLose
+	; EndBodyCheck1:
+	; ; only check body2 if curLength > 2 or (curLength == 2 and eatingapple == 1)
+	; LOAD CurBodySize
+	; ADDI -2
+	; JNEG EndAllBodyChecks
+	; JZERO CheckEatingApple2
+	; JUMP StartBodyCheck2
+	; CheckEatingApple2:
+	; 	LOAD EatingApple
+	; 	JZERO EndAllBodyChecks
+	; StartBodyCheck2:
+	; LOAD NextX
+	; SUB Body2X
+	; JNEG EndBodyCheck2
+	; JPOS EndBodyCheck2
+	; LOAD NextY
+	; SUB Body2Y
+	; JNEG EndBodyCheck2
+	; JPOS EndBodyCheck2
+	; JUMP SnakeLose
+	; EndBodyCheck2:
+	; ; only check body3 if curLength > 2 or (curLength == 2 and eatingapple == 1)
+	; LOAD CurBodySize
+	; ADDI -3
+	; JNEG EndAllBodyChecks
+	; JZERO CheckEatingApple3
+	; JUMP StartBodyCheck3
+	; CheckEatingApple3:
+	; 	LOAD EatingApple
+	; 	JZERO EndAllBodyChecks
+	; StartBodyCheck3:
+	; LOAD NextX
+	; SUB Body3X
+	; JNEG EndBodyCheck3
+	; JPOS EndBodyCheck3
+	; LOAD NextY
+	; SUB Body3Y
+	; JNEG EndBodyCheck3
+	; JPOS EndBodyCheck3
+	; JUMP SnakeLose
+	; EndBodyCheck3:
+	; ; only check body2 if curLength > 2 or (curLength == 2 and eatingapple == 1)
+	; LOAD CurBodySize
+	; ADDI -4
+	; JNEG EndAllBodyChecks
+	; JZERO CheckEatingApple4
+	; JUMP StartBodyCheck4
+	; CheckEatingApple4:
+	; 	LOAD EatingApple
+	; 	JZERO EndAllBodyChecks
+	; StartBodyCheck4:
+	; LOAD NextX
+	; SUB Body4X
+	; JNEG EndBodyCheck4
+	; JPOS EndBodyCheck4
+	; LOAD NextY
+	; SUB Body4Y
+	; JNEG EndBodyCheck4
+	; JPOS EndBodyCheck4
+	; JUMP SnakeLose
+	; EndBodyCheck4:
 	
-	LOAD EatingApple
-	JPOS BodyCheck5 ; if eating apple, check last body part
-	JUMP EndBodyCheck5
-	BodyCheck5:
-	LOAD NextX
-	SUB Body5X
-	JNEG EndBodyCheck5
-	JPOS EndBodyCheck5
-	LOAD NextY
-	SUB Body5Y
-	JNEG EndBodyCheck5
-	JPOS EndBodyCheck5
-	JUMP SnakeLose
-	EndBodyCheck5:
+	; ; LOAD EatingApple
+	; ; JPOS BodyCheck5 ; if eating apple, check last body part
+	; ; JUMP EndBodyCheck5
+	; ; BodyCheck5:
+
+	; ; only check body2 if curLength > 2 or (curLength == 2 and eatingapple == 1)
+	; LOAD CurBodySize
+	; ADDI -5
+	; JNEG EndAllBodyChecks
+	; JZERO CheckEatingApple5
+	; JUMP StartBodyCheck5
+	; CheckEatingApple5:
+	; 	LOAD EatingApple
+	; 	JZERO EndAllBodyChecks
+	; StartBodyCheck5:
+	; LOAD NextX
+	; SUB Body5X
+	; JNEG EndBodyCheck5
+	; JPOS EndBodyCheck5
+	; LOAD NextY
+	; SUB Body5Y
+	; JNEG EndBodyCheck5
+	; JPOS EndBodyCheck5
+	; JUMP SnakeLose
+	; EndBodyCheck5:
+
+	; EndAllBodyChecks:
 
 	; Now we must shift all body parts back and add our new node to the front
 	; must shift back from back to front
