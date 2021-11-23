@@ -128,29 +128,31 @@ begin
 	end process;
 	
 	-- Process to handle OUTs from SCOMP
-	process(ALL_COLOR_EN, ONE_LED_ADDR_EN, ONE_COLOR_16_EN,
-		GB_ONE_COLOR_24_EN, R_ONE_COLOR_24_EN, SAVE_EN, LOAD_EN, data, index, data_arr2, data_arr)
+	process(clk_10M)
+	--ALL_COLOR_EN, ONE_LED_ADDR_EN, ONE_COLOR_16_EN, GB_ONE_COLOR_24_EN, R_ONE_COLOR_24_EN, SAVE_EN, LOAD_EN, data, index, data_arr2, data_arr
 	begin
-		if ALL_COLOR_EN = '1' then
-			-- Convert RGB 565 to Neopixel format (GRB),
-			-- in this case just padding with 0s.
-			led_buffer <= data(10 downto 5) & "00" & data(15 downto 11) & "000" & data(4 downto 0) & "000" ;
-			for I in 0 to 255 loop
-				data_arr(I) <= data(10 downto 5) & "00" & data(15 downto 11) & "000" & data(4 downto 0) & "000";
-			end loop;
-		elsif ONE_LED_ADDR_EN = '1' then
-			index <= to_integer(unsigned(data));			
-		elsif ONE_COLOR_16_EN = '1' then
-			data_arr(index) <= data(10 downto 5) & "00" & data(15 downto 11) & "000" & data(4 downto 0) & "000";
-		elsif GB_ONE_COLOR_24_EN = '1' then
-			data_arr(index)(23 downto 16) <= data(15 downto 8);
-			data_arr(index)(7 downto 0) <= data(7 downto 0);
-		elsif R_ONE_COLOR_24_EN = '1' then
-			data_arr(index)(15 downto 8) <= data(7 downto 0);
-		elsif SAVE_EN = '1' then
-			data_arr2 <= data_arr;
-		elsif LOAD_EN = '1' then
-			data_arr <= data_arr2;
+		if rising_edge(clk_10M) then
+			if ALL_COLOR_EN = '1' then
+				-- Convert RGB 565 to Neopixel format (GRB),
+				-- in this case just padding with 0s.
+				led_buffer <= data(10 downto 5) & "00" & data(15 downto 11) & "000" & data(4 downto 0) & "000" ;
+				for I in 0 to 255 loop
+					data_arr(I) <= data(10 downto 5) & "00" & data(15 downto 11) & "000" & data(4 downto 0) & "000";
+				end loop;
+			elsif ONE_LED_ADDR_EN = '1' then
+				index <= to_integer(unsigned(data));			
+			elsif ONE_COLOR_16_EN = '1' then
+				data_arr(index) <= data(10 downto 5) & "00" & data(15 downto 11) & "000" & data(4 downto 0) & "000";
+			elsif GB_ONE_COLOR_24_EN = '1' then
+				data_arr(index)(23 downto 16) <= data(15 downto 8);
+				data_arr(index)(7 downto 0) <= data(7 downto 0);
+			elsif R_ONE_COLOR_24_EN = '1' then
+				data_arr(index)(15 downto 8) <= data(7 downto 0);
+			elsif SAVE_EN = '1' then
+				data_arr2 <= data_arr;
+			elsif LOAD_EN = '1' then
+				data_arr <= data_arr2;
+			end if;
 		end if;
 	end process;
 
