@@ -10,11 +10,12 @@ entity NeoPixelController is
 		clk_10M  : in   std_logic;
 		resetn   : in   std_logic;
 		data     : in   std_logic_vector(15 downto 0);
-		ALL_COLOR_EN    : in   std_logic;
-		ONE_LED_ADDR_EN : in   std_logic;
-		ONE_COLOR_16_EN : in   std_logic;
+		ALL_COLOR_EN       : in   std_logic;
+		ONE_LED_ADDR_EN    : in   std_logic;
+		ONE_COLOR_16_EN    : in   std_logic;
 		GB_ONE_COLOR_24_EN : in   std_logic;
-		R_ONE_COLOR_24_EN : in   std_logic;
+		R_ONE_COLOR_24_EN  : in   std_logic;
+		AUTO_INC_EN        : in   std_logic;
 		sda      : out  std_logic
 	); 
 
@@ -125,7 +126,7 @@ begin
 	end process;
 	
 	-- Process to handle OUTs from SCOMP
-	process(ALL_COLOR_EN, ONE_LED_ADDR_EN, ONE_COLOR_16_EN, GB_ONE_COLOR_24_EN, R_ONE_COLOR_24_EN)
+	process(ALL_COLOR_EN, ONE_LED_ADDR_EN, ONE_COLOR_16_EN, GB_ONE_COLOR_24_EN, R_ONE_COLOR_24_EN, AUTO_INC_EN)
 	begin
 		if ALL_COLOR_EN = '1' then
 			-- Convert RGB 565 to Neopixel format (GRB),
@@ -143,6 +144,9 @@ begin
 			data_arr(index)(7 downto 0) <= data(7 downto 0);
 		elsif R_ONE_COLOR_24_EN = '1' then
 			data_arr(index)(15 downto 8) <= data(7 downto 0);
+		elsif rising_edge(AUTO_INC_EN) then
+			data_arr(index) <= data(10 downto 5) & "00" & data(15 downto 11) & "000" & data(4 downto 0) & "000";
+			index <= index + 1;
 		end if;
 	end process;
 

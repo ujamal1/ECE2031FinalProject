@@ -68,19 +68,11 @@ SetAll16:
 	JUMP	ChooseMode
 
 AutoIncrement:
-	LOADI 0
-	STORE AutoAddress
-	
+	CALL	OutAddress ; get initial address
 	IncLoop:
-		LOAD	AutoAddress
-		OUT		Neo_Addr
 		CALL	GetColors16
-		OUT		Neo_Single16
-		
-		LOAD	AutoAddress
-		ADDI	1
-		STORE	AutoAddress
-		
+		LOAD	Color16
+		OUT		Neo_Auto_Inc
 		JUMP IncLoop
 		
 Game:
@@ -1011,4 +1003,5 @@ Neo_Addr:			EQU &H0A1
 Neo_Single16:		EQU &H0A2
 Neo_Single24_R:		EQU &H0A3
 Neo_Single24_GB:	EQU &H0A4
+Neo_Auto_Inc:     	EQU &H0A5
 Key1:				EQU &H0AF
