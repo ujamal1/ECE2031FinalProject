@@ -27,7 +27,25 @@ ChooseMode:
 	JZERO	Game
 	ADDI	-1
 	JZERO	Gradient
+	ADDI	-1
+	JZERO	SaveData			
+	ADDI	-1
+	JZERO	LoadData			
 	JUMP    SnakeGame       ; Else, jump to SnakeGame
+	
+	
+SaveData:
+	LOADI	14
+	OUT		Hex1
+	OUT		SAVE_EN
+	JUMP	ChooseMode
+
+
+LoadData:
+	LOADI 	15
+	OUT 	Hex1
+	OUT		LOAD_EN
+	JUMP	ChooseMode
 
 SetSingle16:
 	LOADI	22
@@ -165,69 +183,69 @@ Game:
 		STORE	KeyPressed
 		RETURN
 
-Gradient:
-	LOADI	64
-	OUT		LEDs
+;Gradient:
+;	LOADI	64
+;	OUT		LEDs
 	
 	; First let's clear all the LEDs
-	LOADI	0
-	OUT		Neo_All16
+;	LOADI	0
+;	OUT		Neo_All16
 	
 	; First, let's set the first 32 to green
-	LOADI	31
-	STORE	GradCounter
-	Grad16:
-		LOAD	GradCounter
-		JNEG	ResetGradCounter
-		OUT		Neo_Addr
-		; Create the color based on the address
-		LOAD	GradCounter
-		SHIFT	11
-		STORE	GradColor
-		LOAD	GradCounter
-		SHIFT	5
-		OR		GradColor
-		STORE	GradColor
-		LOAD	GradCounter
-		OR		GradColor
-		OUT		Neo_Single16
+;	LOADI	31
+;	STORE	GradCounter
+;	Grad16:
+;		LOAD	GradCounter
+;		JNEG	ResetGradCounter
+;		OUT		Neo_Addr
+;		; Create the color based on the address
+;		LOAD	GradCounter
+;		SHIFT	11
+;		STORE	GradColor
+;		LOAD	GradCounter
+;		SHIFT	5
+;		OR		GradColor
+;		STORE	GradColor
+;		LOAD	GradCounter
+;		OR		GradColor
+;		OUT		Neo_Single16
 		
-		LOADI	1
-		CALL	DelayAC
+;		LOADI	1
+;		CALL	DelayAC
 		
-		LOAD	GradCounter
-		ADDI	-1
-		STORE	GradCounter
-		JUMP	Grad16
-	ResetGradCounter:
-		LOADI	63
-		STORE	GradCounter
-	Grad24:
-		LOAD	GradCounter
-		ADDI	-32
-		JNEG	ChooseMode
-		
-		LOAD	GradCounter
-		OUT		Neo_Addr
-		; Color is 63 - address so that it increases in the same direction as the first row
-		LOADI	63
-		SUB		GradCounter
-		STORE	GradColor
-		
-		LOAD	GradColor
-		OUT		Neo_Single24_R
-		LOAD	GradColor
-		SHIFT	8
-		OR		GradColor
-		OUT		Neo_Single24_GB
-		
-		LOADI	1
-		CALL	DelayAC
-		
-		LOAD	GradCounter
-		ADDI	-1
-		STORE	GradCounter
-		JUMP	Grad24
+;		LOAD	GradCounter
+;		ADDI	-1
+;		STORE	GradCounter
+;		JUMP	Grad16
+;	ResetGradCounter:
+;		LOADI	63
+;		STORE	GradCounter
+;	Grad24:
+;		LOAD	GradCounter
+;		ADDI	-32
+;		JNEG	ChooseMode
+;		
+;		LOAD	GradCounter
+;		OUT		Neo_Addr
+;		; Color is 63 - address so that it increases in the same direction as the first row
+;		LOADI	63
+;		SUB		GradCounter
+;		STORE	GradColor
+;		
+;		LOAD	GradColor
+;		OUT		Neo_Single24_R
+;		LOAD	GradColor
+;		SHIFT	8
+;		OR		GradColor
+;		OUT		Neo_Single24_GB
+;		
+;		LOADI	1
+;		CALL	DelayAC
+;		
+;		LOAD	GradCounter
+;		ADDI	-1
+;		STORE	GradCounter
+;		JUMP	Grad24
 		
 
 SnakeGame:
@@ -1012,3 +1030,5 @@ Neo_Single16:		EQU &H0A2
 Neo_Single24_R:		EQU &H0A3
 Neo_Single24_GB:	EQU &H0A4
 Key1:				EQU &H0AF
+SAVE_EN:				EQU &H0A5
+LOAD_EN:				EQU &H0A6

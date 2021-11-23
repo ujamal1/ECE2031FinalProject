@@ -25,6 +25,8 @@ ENTITY IO_DECODER IS
 	 ONE_COLOR_16_EN		: OUT STD_LOGIC;
 	 GB_ONE_COLOR_24_EN	: OUT STD_LOGIC;
 	 R_ONE_COLOR_24_EN	: OUT STD_LOGIC;
+	 SAVE_EN					: OUT STD_LOGIC;
+	 LOAD_EN					: OUT STD_LOGIC;
 	 KEY1_EN					: OUT STD_LOGIC
   );
 
@@ -51,6 +53,8 @@ begin
   ONE_COLOR_16_EN		<= '1' WHEN (ADDR_INT = 16#0A2#) and (IO_CYCLE = '1') ELSE '0';
   GB_ONE_COLOR_24_EN	<= '1' WHEN (ADDR_INT = 16#0A4#) and (IO_CYCLE = '1') ELSE '0';
   R_ONE_COLOR_24_EN	<= '1' WHEN (ADDR_INT = 16#0A3#) and (IO_CYCLE = '1') ELSE '0';
+  SAVE_EN				<= '1' WHEN (ADDR_INT = 16#0A5#) and (IO_CYCLE = '1') ELSE '0';
+  LOAD_EN				<= '1' WHEN (ADDR_INT = 16#0A6#) and (IO_CYCLE = '1') ELSE '0';
   KEY1_EN				<= '1' WHEN (ADDR_INT = 16#0AF#) and (IO_CYCLE = '1') ELSE '0';
       
 END a;
