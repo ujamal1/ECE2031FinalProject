@@ -17,6 +17,7 @@ entity NeoPixelController is
 		R_ONE_COLOR_24_EN : in   std_logic;
 		SAVE_EN			: in std_logic;
 		LOAD_EN			: in std_logic;
+		NEO_AUTO_INC_EN: in std_logic;
 		sda      : out  std_logic
 	); 
 
@@ -152,6 +153,9 @@ begin
 				data_arr2 <= data_arr;
 			elsif LOAD_EN = '1' then
 				data_arr <= data_arr2;
+			elsif NEO_AUTO_INC_EN = '1' then
+				data_arr(index) <= data(10 downto 5) & "00" & data(15 downto 11) & "000" & data(4 downto 0) & "000";
+				index <= index + 1;
 			end if;
 		end if;
 	end process;

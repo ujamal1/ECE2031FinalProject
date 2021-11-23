@@ -21,9 +21,9 @@ https://fpgasoftware.intel.com/eula.
 */
 (header "symbol" (version "1.1"))
 (symbol
-	(rect 16 16 304 320)
+	(rect 16 16 304 352)
 	(text "IO_DECODER" (rect 5 0 71 12)(font "Arial" ))
-	(text "inst" (rect 8 288 20 300)(font "Arial" ))
+	(text "inst" (rect 8 320 20 332)(font "Arial" ))
 	(port
 		(pt 0 32)
 		(input)
@@ -146,11 +146,18 @@ https://fpgasoftware.intel.com/eula.
 	(port
 		(pt 288 272)
 		(output)
-		(text "KEY1_EN" (rect 0 0 44 12)(font "Arial" ))
-		(text "KEY1_EN" (rect 223 267 267 279)(font "Arial" ))
+		(text "NEO_AUTO_INC_EN" (rect 0 0 97 12)(font "Arial" ))
+		(text "NEO_AUTO_INC_EN" (rect 170 267 267 279)(font "Arial" ))
 		(line (pt 288 272)(pt 272 272)(line_width 1))
 	)
+	(port
+		(pt 288 288)
+		(output)
+		(text "KEY1_EN" (rect 0 0 44 12)(font "Arial" ))
+		(text "KEY1_EN" (rect 223 283 267 295)(font "Arial" ))
+		(line (pt 288 288)(pt 272 288)(line_width 1))
+	)
 	(drawing
-		(rectangle (rect 16 16 272 288)(line_width 1))
+		(rectangle (rect 16 16 272 320)(line_width 1))
 	)
 )

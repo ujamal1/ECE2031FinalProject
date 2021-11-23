@@ -2,7 +2,7 @@ ORG 0
 Start:
 	LOADI	0
 	STORE	Mode ; Reset the mode on reset
-	LOADI	16
+	LOADI	8
 	OUT		Neo_All16
 
 ChooseMode:
@@ -16,24 +16,30 @@ ChooseMode:
 	CALL	WaitForButton
 	IN		Switches		; Get the values of the switches after
 	OUT		Hex1
-	JZERO	SetSingle16		; the confirmation button is pressed
+	JZERO	SetSingle16		; the confirmation button is pressed	0
 	ADDI	-1
-	JZERO	SetSingle24
+	JZERO	SetSingle24		; 1
 	ADDI	-1
-	JZERO	SetAll16
+	JZERO	SetAll16		; 2
 	ADDI	-1
-	JZERO	AutoIncrement
+	JZERO	AutoIncrement	; 3
 	ADDI	-1
-	JZERO	Game
+	JZERO	Game			; 4
 	ADDI	-1
-	JZERO	Gradient
+	JZERO	Gradient		; 5
 	ADDI	-1
-	JZERO	SaveData			
+	JZERO	SnakeGame		; 6
 	ADDI	-1
-	JZERO	LoadData			
-	JUMP    SnakeGame       ; Else, jump to SnakeGame
+	JZERO	SaveData		; 7
+	ADDI	-1
+	JZERO	LoadData		; 8
+	JUMP    Reset       ; Else, jump to Reset
 	
-	
+Reset:
+	LOADI	0
+	OUT		Neo_All16
+	JUMP	ChooseMode
+
 SaveData:
 	LOADI	14
 	OUT		Hex1
@@ -86,20 +92,16 @@ SetAll16:
 	JUMP	ChooseMode
 
 AutoIncrement:
-	LOADI 0
-	STORE AutoAddress
-	
+	Call OutAddress
 	IncLoop:
-		LOAD	AutoAddress
-		OUT		Neo_Addr
+
 		CALL	GetColors16
-		OUT		Neo_Single16
-		
-		LOAD	AutoAddress
-		ADDI	1
-		STORE	AutoAddress
-		
-		JUMP IncLoop
+		IN		Switches
+		ADDI	-512
+		JPOS	ChooseMode
+		LOAD	Color16
+		OUT		Neo_Auto_Inc		
+		JUMP 	IncLoop
 		
 Game:
 	LOADI	32
@@ -183,69 +185,69 @@ Game:
 		STORE	KeyPressed
 		RETURN
 
-;Gradient:
-;	LOADI	64
-;	OUT		LEDs
+Gradient:
+	LOADI	64
+	OUT		LEDs
 	
 	; First let's clear all the LEDs
-;	LOADI	0
-;	OUT		Neo_All16
+	LOADI	0
+	OUT		Neo_All16
 	
 	; First, let's set the first 32 to green
-;	LOADI	31
-;	STORE	GradCounter
-;	Grad16:
-;		LOAD	GradCounter
-;		JNEG	ResetGradCounter
-;		OUT		Neo_Addr
-;		; Create the color based on the address
-;		LOAD	GradCounter
-;		SHIFT	11
-;		STORE	GradColor
-;		LOAD	GradCounter
-;		SHIFT	5
-;		OR		GradColor
-;		STORE	GradColor
-;		LOAD	GradCounter
-;		OR		GradColor
-;		OUT		Neo_Single16
+	LOADI	31
+	STORE	GradCounter
+	Grad16:
+		LOAD	GradCounter
+		JNEG	ResetGradCounter
+		OUT		Neo_Addr
+		; Create the color based on the address
+		LOAD	GradCounter
+		SHIFT	11
+		STORE	GradColor
+		LOAD	GradCounter
+		SHIFT	5
+		OR		GradColor
+		STORE	GradColor
+		LOAD	GradCounter
+		OR		GradColor
+		OUT		Neo_Single16
 		
-;		LOADI	1
-;		CALL	DelayAC
+		LOADI	1
+		CALL	DelayAC
 		
-;		LOAD	GradCounter
-;		ADDI	-1
-;		STORE	GradCounter
-;		JUMP	Grad16
-;	ResetGradCounter:
-;		LOADI	63
-;		STORE	GradCounter
-;	Grad24:
-;		LOAD	GradCounter
-;		ADDI	-32
-;		JNEG	ChooseMode
-;		
-;		LOAD	GradCounter
-;		OUT		Neo_Addr
-;		; Color is 63 - address so that it increases in the same direction as the first row
-;		LOADI	63
-;		SUB		GradCounter
-;		STORE	GradColor
-;		
-;		LOAD	GradColor
-;		OUT		Neo_Single24_R
-;		LOAD	GradColor
-;		SHIFT	8
-;		OR		GradColor
-;		OUT		Neo_Single24_GB
-;		
-;		LOADI	1
-;		CALL	DelayAC
-;		
-;		LOAD	GradCounter
-;		ADDI	-1
-;		STORE	GradCounter
-;		JUMP	Grad24
+		LOAD	GradCounter
+		ADDI	-1
+		STORE	GradCounter
+		JUMP	Grad16
+	ResetGradCounter:
+		LOADI	63
+		STORE	GradCounter
+	Grad24:
+		LOAD	GradCounter
+		ADDI	-32
+		JNEG	ChooseMode
+		
+		LOAD	GradCounter
+		OUT		Neo_Addr
+		; Color is 63 - address so that it increases in the same direction as the first row
+		LOADI	63
+		SUB		GradCounter
+		STORE	GradColor
+		
+		LOAD	GradColor
+		OUT		Neo_Single24_R
+		LOAD	GradColor
+		SHIFT	8
+		OR		GradColor
+		OUT		Neo_Single24_GB
+		
+		LOADI	1
+		CALL	DelayAC
+		
+		LOAD	GradCounter
+		ADDI	-1
+		STORE	GradCounter
+		JUMP	Grad24
 		
 
 SnakeGame:
@@ -1029,6 +1031,7 @@ Neo_Addr:			EQU &H0A1
 Neo_Single16:		EQU &H0A2
 Neo_Single24_R:		EQU &H0A3
 Neo_Single24_GB:	EQU &H0A4
+Neo_Auto_Inc:		EQU &H0A7
 Key1:				EQU &H0AF
 SAVE_EN:				EQU &H0A5
 LOAD_EN:				EQU &H0A6
